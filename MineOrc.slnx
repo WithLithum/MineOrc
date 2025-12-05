@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="MineOrc.Foundation/MineOrc.Foundation.csproj" />
+  <Project Path="MineOrc.Tests/MineOrc.Tests.csproj" />
+  <Project Path="MineOrc/MineOrc.csproj" />
+</Solution>

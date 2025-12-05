@@ -1,0 +1,44 @@
+﻿// Natverk - application server for Minecraft: Java Edition
+// Copyright (C) 2025 WithLithum
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+// 
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+using System.Net.Http.Headers;
+using System.Reflection;
+using MineOrc.Foundation.Network;
+
+namespace MineOrc;
+
+public static class MineOrcApp
+{
+    public static readonly string BaseName = Path.GetFileNameWithoutExtension(Environment.ProcessPath)
+        ?? Assembly.GetEntryAssembly()?.GetName().Name
+        ?? "mineorc";
+    
+    public static readonly string Version = typeof(MineOrcApp).Assembly.GetName().Version?.ToString(3)
+        ?? "0.0.0-unknown";
+    
+    public static readonly HttpClient HttpClient = new()
+    {
+        DefaultRequestHeaders =
+        {
+            UserAgent =
+            {
+                new ProductInfoHeaderValue(BaseName, Version)
+            }
+        }
+    };
+
+    public static readonly PistonMeta PistonMetaClient = new(HttpClient);
+}
