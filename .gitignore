@@ -3,6 +3,9 @@
 ##
 ## Get latest from `dotnet new gitignore`
 
+# SPDX-FileCopyrightText: GitHub, Inc.
+# SPDX-License-Identifier: CC0-1.0
+
 # dotenv files
 .env
 

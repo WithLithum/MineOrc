@@ -60,6 +60,15 @@ namespace MineOrc.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Prints output in a machine-readable format.
+        /// </summary>
+        internal static string MachineOption {
+            get {
+                return ResourceManager.GetString("MachineOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The Minecraft Instance Orchestrator.
         /// </summary>
         internal static string RootDescription {

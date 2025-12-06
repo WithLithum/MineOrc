@@ -1,18 +1,5 @@
-﻿// Natverk - application server for Minecraft: Java Edition
-// Copyright (C) 2025 WithLithum
-// 
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU Affero General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-// 
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU Affero General Public License for more details.
-// 
-// You should have received a copy of the GNU Affero General Public License
-// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+﻿// SPDX-FileCopyrightText: 2025 WithLithum & contributors
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 using System.CommandLine;
 using System.Text.RegularExpressions;
@@ -50,6 +37,11 @@ internal static class SearchVersionCommand
         shortName: "-A",
         longName: "--include-old-alpha",
         description: Texts.VersionSearchAlphaOption);
+    
+    private static readonly Option<bool> MachineOption = CommandHelper.Switch(
+        shortName: "-m",
+        longName: "--machine",
+        description: Texts.MachineOption);
 
     public static Command CreateCommand()
     {
@@ -59,7 +51,8 @@ internal static class SearchVersionCommand
             RegexOption,
             SnapshotOption,
             OldBetaOption,
-            OldAlphaOption
+            OldAlphaOption,
+            MachineOption
         };
 
         command.Description = Texts.VersionSearchCommand;
@@ -75,6 +68,7 @@ internal static class SearchVersionCommand
         var includeSnapshot = parseResult.GetValue(SnapshotOption);
         var includeOldBeta = parseResult.GetValue(OldBetaOption);
         var includeOldAlpha = parseResult.GetValue(OldAlphaOption);
+        var machine = parseResult.GetValue(MachineOption);
         
         if (string.IsNullOrWhiteSpace(term))
         {
@@ -97,7 +91,7 @@ internal static class SearchVersionCommand
             return 1;
         }
 
-        PrintVersions(versions);
+        PrintVersions(versions, machine);
         return 0;
     }
 
@@ -149,18 +143,26 @@ internal static class SearchVersionCommand
         return result;
     }
 
-    private static void PrintVersions(IEnumerable<VersionExcerpt> versions)
+    private static void PrintVersions(IEnumerable<VersionExcerpt> versions,
+        bool machineFormat)
     {
         foreach (var version in versions)
         {
-            AnsiConsole.MarkupLineInterpolated($"[bold white]{version.Id}[/] [slateblue3]{version.Type}[/]");
-            AnsiConsole.MarkupLineInterpolated($"[grey]released[/] [grey66]{version.ReleaseTime}[/]");
-            if (version.ReleaseTime != version.Time)
+            if (machineFormat)
             {
-                AnsiConsole.MarkupLineInterpolated($"[grey]updated[/] [grey66]{version.Time}[/]");
+                AnsiConsole.WriteLine($"{version.Type}|{version.Id}|{version.Time.ToUniversalTime():O}|{version.ReleaseTime.ToUniversalTime():O}");
             }
+            else
+            {
+                AnsiConsole.MarkupLineInterpolated($"[bold white]{version.Id}[/] [slateblue3]{version.Type}[/]");
+                AnsiConsole.MarkupLineInterpolated($"[grey]released[/] [grey66]{version.ReleaseTime}[/]");
+                if (version.ReleaseTime != version.Time)
+                {
+                    AnsiConsole.MarkupLineInterpolated($"[grey]updated[/] [grey66]{version.Time}[/]");
+                }
 
-            AnsiConsole.WriteLine();
+                AnsiConsole.WriteLine();
+            }
         }
     }
 }

@@ -1,4 +1,7 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿// SPDX-FileCopyrightText: 2025 WithLithum & contributors
+// SPDX-License-Identifier: GPL-3.0-or-later
+
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 using MineOrc.Foundation.Json;
 

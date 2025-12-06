@@ -1,4 +1,7 @@
-﻿using System.Text.Json.Serialization;
+﻿// SPDX-FileCopyrightText: 2025 WithLithum & contributors
+// SPDX-License-Identifier: GPL-3.0-or-later
+
+using System.Text.Json.Serialization;
 using MineOrc.Foundation.Manifest.Libraries;
 using MineOrc.Foundation.Manifest.Network;
 using MineOrc.Foundation.Manifest.Options;

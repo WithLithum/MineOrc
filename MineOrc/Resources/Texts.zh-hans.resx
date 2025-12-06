@@ -1,4 +1,7 @@
-﻿<root>
+﻿<!-- SPDX-FileCopyrightText: 2025 WithLithum & contributors -->
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+
+<root>
     <resheader name="resmimetype">
         <value>text/microsoft-resx</value>
     </resheader>
@@ -34,5 +37,8 @@
     </data>
     <data name="RootDescription" xml:space="preserve">
         <value>Minecraft 实例配置器</value>
+    </data>
+    <data name="MachineOption" xml:space="preserve">
+        <value>以机器可读格式输出</value>
     </data>
 </root>

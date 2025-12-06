@@ -28,3 +28,6 @@ a feature, please use Issues.
 ## Licence
 
 This project is licensed under the GPL-3.0-or-later licence.
+
+<!-- SPDX-FileCopyrightText: 2025 WithLithum & contributors -->
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->

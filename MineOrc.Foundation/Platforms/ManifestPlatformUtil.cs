@@ -1,4 +1,7 @@
-﻿using System.Runtime.InteropServices;
+﻿// SPDX-FileCopyrightText: 2025 WithLithum & contributors
+// SPDX-License-Identifier: GPL-3.0-or-later
+
+using System.Runtime.InteropServices;
 
 namespace MineOrc.Foundation.Platforms;
 
