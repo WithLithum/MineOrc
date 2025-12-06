@@ -1,19 +1,29 @@
-﻿using MineOrc;
+﻿using System.CommandLine;
+using System.Diagnostics;
+using MineOrc;
 using MineOrc.Commands;
 using MineOrc.Resources;
-using Spectre.Console.Cli;
+using Command = System.CommandLine.Command;
 
-var commandApp = new CommandApp();
-commandApp.Configure(root =>
+var command = new RootCommand(Texts.RootDescription)
 {
-    root.SetApplicationName(MineOrcApp.BaseName);
-    root.PropagateExceptions();
-
-    root.AddBranch("version", client =>
+    new Command("version", Texts.VersionBranch)
     {
-        client.SetDescription(Messages.VersionBranchDescription!);
-        client.AddCommand<SearchVersionCommand>("search");
-    });
-});
+        SearchVersionCommand.CreateCommand()
+    }
+};
 
-return await commandApp.RunAsync(args);
+#if DEBUG
+try
+{
+#endif
+    return await command.Parse(args).InvokeAsync();
+#if DEBUG
+}
+catch (Exception ex)
+{
+    Debugger.Break();
+    MyOutput.Error(ex, "unhandled exception");
+    return 1;
+}
+#endif

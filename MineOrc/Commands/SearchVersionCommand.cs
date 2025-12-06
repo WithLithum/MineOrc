@@ -14,59 +14,83 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.ComponentModel;
+using System.CommandLine;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
 using MineOrc.Foundation.Manifest;
+using MineOrc.Resources;
 using Spectre.Console;
-using Spectre.Console.Cli;
 
 namespace MineOrc.Commands;
 
 [UsedImplicitly]
-[Description("Search for client versions")]
-internal sealed class SearchVersionCommand : AsyncCommand<SearchVersionCommand.Settings>
+internal static class SearchVersionCommand
 {
-    [UsedImplicitly(ImplicitUseKindFlags.Assign, ImplicitUseTargetFlags.Members)]
-    public sealed class Settings : CommandSettings
+    private static readonly Argument<string> TermArgument = new("term")
     {
-        [Description("The term to search. If '--regex' is specified, interperts the term as a regex.")]
-        [CommandArgument(0, "<term>")]
-        public required string Term { get; init; }
+        Description = Texts.VersionSearchTermArgument
+    };
 
-        [Description("If specified, treats the term as regex.")]
-        [CommandOption("-r|--regex")]
-        public bool Regex { get; init; }
+    private static readonly Option<bool> RegexOption = new("-r", "--regex")
+    {
+        Description = Texts.VersionSearchRegexOption
+    };
 
-        [Description("If specified, includes development versions")]
-        [CommandOption("-s|--snapshots")]
-        public bool IncludeSnapshots { get; init; }
+    private static readonly Option<bool> SnapshotOption = CommandHelper.Switch(
+        shortName: "-S",
+        longName: "--include-snapshots",
+        description: Texts.VersionSearchSnapshotOption);
+    
+    private static readonly Option<bool> OldBetaOption = CommandHelper.Switch(
+        shortName: "-B",
+        longName: "--include-old-beta",
+        description: Texts.VersionSearchBetaOption);
+    
+    private static readonly Option<bool> OldAlphaOption = CommandHelper.Switch(
+        shortName: "-A",
+        longName: "--include-old-alpha",
+        description: Texts.VersionSearchAlphaOption);
 
-        [Description("If specified, includes 'old_beta' versions")]
-        [CommandOption("-B|--old-beta")]
-        public bool IncludeOldBeta { get; init; }
+    public static Command CreateCommand()
+    {
+        var command = new Command("search")
+        {
+            TermArgument,
+            RegexOption,
+            SnapshotOption,
+            OldBetaOption,
+            OldAlphaOption
+        };
 
-        [Description("If specified, includes 'old_alpha' versions")]
-        [CommandOption("-A|--old-alpha")]
-        public bool IncludeOldAlpha { get; init; }
+        command.Description = Texts.VersionSearchCommand;
+        command.SetAction(ExecuteAsync);
+        return command;
     }
-
-    public override async Task<int> ExecuteAsync(CommandContext context,
-        Settings settings,
+    
+    private static async Task<int> ExecuteAsync(ParseResult parseResult,
         CancellationToken cancellationToken)
     {
-        if (string.IsNullOrWhiteSpace(settings.Term))
+        var term = parseResult.GetRequiredValue(TermArgument);
+        var isRegex = parseResult.GetValue(RegexOption);
+        var includeSnapshot = parseResult.GetValue(SnapshotOption);
+        var includeOldBeta = parseResult.GetValue(OldBetaOption);
+        var includeOldAlpha = parseResult.GetValue(OldAlphaOption);
+        
+        if (string.IsNullOrWhiteSpace(term))
         {
             MyOutput.Error("missing or empty search term");
             return 1;
         }
 
         var manifest = await MineOrcApp.PistonMetaClient.GetVersionManifest(cancellationToken);
-        var versions = FilterByOptions(manifest.Versions, settings);
+        var versions = FilterByOptions(manifest.Versions,
+            includeSnapshot,
+            includeOldBeta,
+            includeOldAlpha);
 
-        versions = settings.Regex
-            ? FindByRegex(settings.Term, versions)
-            : FindByTerm(settings.Term, versions);
+        versions = isRegex
+            ? FindByRegex(term, versions)
+            : FindByTerm(term, versions);
 
         if (versions == null)
         {
@@ -101,21 +125,23 @@ internal sealed class SearchVersionCommand : AsyncCommand<SearchVersionCommand.S
     }
 
     private static IEnumerable<VersionExcerpt> FilterByOptions(IEnumerable<VersionExcerpt> versions,
-        Settings settings)
+        bool includeSnapshot,
+        bool includeBeta,
+        bool includeAlpha)
     {
         var result = versions;
 
-        if (!settings.IncludeSnapshots)
+        if (!includeSnapshot)
         {
             result = result.Where(x => x.Type != VersionType.Snapshot);
         }
 
-        if (!settings.IncludeOldBeta)
+        if (!includeBeta)
         {
             result = result.Where(x => x.Type != VersionType.OldBeta);
         }
 
-        if (!settings.IncludeOldAlpha)
+        if (!includeAlpha)
         {
             result = result.Where(x => x.Type != VersionType.OldAlpha);
         }

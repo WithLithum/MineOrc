@@ -11,14 +11,8 @@
   <ItemGroup>
     <PackageReference Include="Downloader" Version="4.0.3" />
     <PackageReference Include="JetBrains.Annotations" Version="2025.2.4" />
-    <PackageReference Include="Meziantou.Framework.ResxSourceGenerator" Version="1.0.16">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <AdditionalFiles Include="**/*.resx" />
-    
     <PackageReference Include="Spectre.Console" Version="0.54.0" />
-    <PackageReference Include="Spectre.Console.Cli" Version="0.53.1" />
+    <PackageReference Include="System.CommandLine" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,10 +20,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Resources\Messages.resx">
+    <EmbeddedResource Update="Resources\Texts.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Messages.Designer.cs</LastGenOutput>
+      <LastGenOutput>Texts.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources\Texts.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Texts.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 </Project>

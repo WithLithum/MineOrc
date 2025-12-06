@@ -14,20 +14,20 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-using Spectre.Console;
+using System.CommandLine;
+using JetBrains.Annotations;
 
-namespace MineOrc;
+namespace MineOrc.Commands;
 
-public static class MyOutput
+public static class CommandHelper
 {
-    public static void Error(string message)
+    public static Option<bool> Switch([LocalizationRequired(false)] string shortName,
+        [LocalizationRequired(false)] string longName,
+        [LocalizationRequired] string description)
     {
-        AnsiConsole.MarkupLineInterpolated($"[bold white]{MineOrcApp.BaseName}:[/] [red]{message}[/]");
-    }
-
-    public static void Error(Exception exception, string message)
-    {
-        Error(message);
-        AnsiConsole.WriteException(exception, ExceptionFormats.ShortenEverything);
+        return new Option<bool>(shortName, longName)
+        {
+            Description = description
+        };
     }
 }

@@ -1,0 +1,38 @@
+﻿<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="VersionBranch" xml:space="preserve">
+        <value>搜索或下载 Minecraft 客户端</value>
+    </data>
+    <data name="VersionSearchCommand" xml:space="preserve">
+        <value>搜索 Minecraft 版本</value>
+    </data>
+    <data name="VersionSearchTermArgument" xml:space="preserve">
+        <value>用于搜索版本名称的字词</value>
+    </data>
+    <data name="VersionSearchRegexOption" xml:space="preserve">
+        <value>将搜索字词作为正则表达式使用</value>
+    </data>
+    <data name="VersionSearchSnapshotOption" xml:space="preserve">
+        <value>搜索开发版本</value>
+    </data>
+    <data name="VersionSearchBetaOption" xml:space="preserve">
+        <value>搜索 Beta 开发阶段的版本</value>
+    </data>
+    <data name="VersionSearchAlphaOption" xml:space="preserve">
+        <value>搜索 pre-Classic、Classic、Infdev 和 Alpha 开发阶段的版本</value>
+    </data>
+    <data name="RootDescription" xml:space="preserve">
+        <value>Minecraft 实例配置器</value>
+    </data>
+</root>
