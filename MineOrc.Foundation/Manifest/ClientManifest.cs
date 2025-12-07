@@ -1,6 +1,7 @@
 ﻿// SPDX-FileCopyrightText: 2025 WithLithum & contributors
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+using MineOrc.Foundation.Manifest.Libraries;
 using MineOrc.Foundation.Manifest.Network;
 using MineOrc.Foundation.Manifest.Options;
 
@@ -40,6 +41,8 @@ public sealed record ClientManifest
     public RuntimeVersionInfo? JavaVersion { get; init; }
     
     public VersionLoggingManifest? Logging { get; init; }
+    
+    public required IReadOnlyList<LibraryInfo> Libraries { get; init; }
 
     public ArtefactInfo? GetClientDownload()
     {

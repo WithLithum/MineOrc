@@ -1,0 +1,77 @@
+﻿// SPDX-FileCopyrightText: 2025 WithLithum & contributors
+// SPDX-License-Identifier: GPL-3.0-or-later
+
+using MineOrc.Foundation.Manifest.Libraries;
+using MineOrc.Foundation.Platforms;
+using MineOrc.Foundation.Runtime;
+using MineOrc.Foundation.Utilities;
+using Spectre.Console;
+
+namespace MineOrc.Instancing.Runtime;
+
+internal sealed class LibrariesRestorer : QueueDispatchAction<LibraryInfo>
+{
+    private readonly LibraryManager _libraryManager;
+    
+    public LibrariesRestorer(IReadOnlyCollection<LibraryInfo> payloads,
+        LibraryManager libraryManager) : base(payloads, 3)
+    {
+        _libraryManager = libraryManager;
+    }
+
+    protected override async Task<bool> ExecuteActionAsync(LibraryInfo payload, CancellationToken cancellationToken)
+    {
+        var primary = payload.Downloads.Artifact;
+        LibraryArtefactInfo? native = null;
+
+        if (payload is { Natives: not null, Downloads.Classifiers: not null })
+        {
+            var nativeKey = payload.Natives[ManifestPlatformUtil.GetSystemName()];
+            native = payload.Downloads.Classifiers[nativeKey];
+        }
+
+        var success = await DoFileAsync(primary, cancellationToken).ConfigureAwait(false);
+        if (native != null)
+        {
+            success = await DoFileAsync(native, cancellationToken).ConfigureAwait(false);
+        }
+
+        if (success)
+        {
+            AnsiConsole.WriteLine("Restored library '{0}'", payload.Name);
+        }
+
+        return success;
+    }
+
+    private async Task<bool> DoFileAsync(LibraryArtefactInfo artefactInfo,
+        CancellationToken cancellationToken)
+    {
+        if (await _libraryManager.VerifyArtefactAsync(artefactInfo,
+                cancellationToken).ConfigureAwait(false))
+        {
+            return true;
+        }
+
+        try
+        {
+            await DownloadAsync(artefactInfo, cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            MyOutput.Error(ex, "error occured when downloading");
+            return false;
+        }
+        
+        return true;
+    }
+
+    private async Task DownloadAsync(LibraryArtefactInfo artefactInfo, CancellationToken cancellationToken)
+    {
+        await using var source = await MineOrcApp.HttpClient.GetStreamAsync(artefactInfo.Url,
+            cancellationToken).ConfigureAwait(false);
+        await using var target = _libraryManager.CreateArtefact(artefactInfo);
+        
+        await source.CopyToAsync(target, cancellationToken).ConfigureAwait(false);
+    }
+}

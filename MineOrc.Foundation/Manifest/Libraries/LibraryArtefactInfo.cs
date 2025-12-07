@@ -5,9 +5,7 @@ using MineOrc.Foundation.Manifest.Network;
 
 namespace MineOrc.Foundation.Manifest.Libraries;
 
-public sealed record LibraryDownloadInfo
+public sealed record LibraryArtefactInfo : ArtefactInfo
 {
-    public required LibraryArtefactInfo Artifact { get; init; }
-    
-    public IReadOnlyDictionary<string, LibraryArtefactInfo>? Classifiers { get; init; }
+    public required string Path { get; init; }
 }
