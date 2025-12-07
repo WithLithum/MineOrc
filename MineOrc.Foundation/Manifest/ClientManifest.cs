@@ -22,6 +22,13 @@ public sealed record ClientManifest
     
     public required VersionArguments Arguments { get; init; }
     
+    /// <summary>
+    /// Gets the information leading to the download of the asset index.
+    /// </summary>
+    /// <remarks>
+    /// The asset index file is a dictionary with a string (asset file name) as the key and a
+    /// value of <see cref="Resources.AssetInfo"/> as the value.
+    /// </remarks>
     public required AssetIndexArtefactInfo AssetIndex { get; init; }
     
     public required string Assets { get; init; }
@@ -33,4 +40,9 @@ public sealed record ClientManifest
     public RuntimeVersionInfo? JavaVersion { get; init; }
     
     public VersionLoggingManifest? Logging { get; init; }
+
+    public ArtefactInfo? GetClientDownload()
+    {
+        return Downloads.GetValueOrDefault("client");
+    }
 }

@@ -5,6 +5,7 @@ using System.Text.Json.Serialization;
 using MineOrc.Foundation.Manifest.Libraries;
 using MineOrc.Foundation.Manifest.Network;
 using MineOrc.Foundation.Manifest.Options;
+using MineOrc.Foundation.Manifest.Resources;
 
 namespace MineOrc.Foundation.Manifest;
 
@@ -30,4 +31,5 @@ namespace MineOrc.Foundation.Manifest;
 [JsonSerializable(typeof(LibraryInfo))]
 [JsonSerializable(typeof(RuntimeVersionInfo))]
 [JsonSerializable(typeof(ClientManifest))]
+[JsonSerializable(typeof(AssetInfo))]
 public sealed partial class VersionManifestJsonContext : JsonSerializerContext;
