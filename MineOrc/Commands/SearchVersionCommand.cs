@@ -75,7 +75,9 @@ internal static class SearchVersionCommand
             return 1;
         }
 
-        var manifest = await MineOrcApp.PistonMetaClient.GetVersionManifestAsync(cancellationToken);
+        var manifest = await MineOrcApp.PistonMetaClient.GetVersionManifestAsync(cancellationToken)
+            .ConfigureAwait(false);
+        
         var versions = FilterByOptions(manifest.Versions,
             includeSnapshot,
             includeOldBeta,

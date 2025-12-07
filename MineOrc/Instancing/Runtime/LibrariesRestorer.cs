@@ -13,9 +13,9 @@ namespace MineOrc.Instancing.Runtime;
 internal sealed class LibrariesRestorer : QueueDispatchAction<LibraryInfo>
 {
     private readonly LibraryManager _libraryManager;
-    
+
     public LibrariesRestorer(IReadOnlyCollection<LibraryInfo> payloads,
-        LibraryManager libraryManager) : base(payloads, 3)
+        LibraryManager libraryManager) : base(payloads)
     {
         _libraryManager = libraryManager;
     }
@@ -56,23 +56,32 @@ internal sealed class LibrariesRestorer : QueueDispatchAction<LibraryInfo>
 
         try
         {
-            await DownloadAsync(artefactInfo, cancellationToken);
+            await DownloadAsync(artefactInfo, cancellationToken).ConfigureAwait(false);
         }
-        catch (Exception ex)
+        catch (HttpRequestException ex)
+        {
+            MyOutput.DownloadError(ex);
+            return false;
+        }
+        catch (IOException ex)
         {
             MyOutput.Error(ex, Texts.OperationDownloadFail);
             return false;
         }
-        
+
         return true;
     }
 
     private async Task DownloadAsync(LibraryArtefactInfo artefactInfo, CancellationToken cancellationToken)
     {
-        await using var source = await MineOrcApp.HttpClient.GetStreamAsync(artefactInfo.Url,
+        var source = await MineOrcApp.HttpClient.GetStreamAsync(artefactInfo.Url,
             cancellationToken).ConfigureAwait(false);
-        await using var target = _libraryManager.CreateArtefact(artefactInfo);
-        
-        await source.CopyToAsync(target, cancellationToken).ConfigureAwait(false);
+        var target = _libraryManager.CreateArtefact(artefactInfo);
+
+        await using (source.ConfigureAwait(false))
+        await using (target.ConfigureAwait(false))
+        {
+            await source.CopyToAsync(target, cancellationToken).ConfigureAwait(false);
+        }
     }
 }

@@ -4,6 +4,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
+using MineOrc.Resources;
 using Spectre.Console;
 
 namespace MineOrc;
@@ -25,5 +26,11 @@ public static class MyOutput
     {
         Error(message);
         AnsiConsole.WriteException(exception, ExceptionFormats.ShortenEverything);
+    }
+    
+    public static void DownloadError(HttpRequestException exception)
+    {
+        Error(Texts.OperationDownloadFailHttp, exception.StatusCode?.ToString("D")
+                                               ?? exception.HttpRequestError.ToString("G"));
     }
 }

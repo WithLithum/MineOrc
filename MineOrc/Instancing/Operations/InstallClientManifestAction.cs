@@ -26,9 +26,9 @@ public sealed class InstallClientManifestAction : IAsyncForegroundAction
             manifest = await MineOrcApp.PistonMetaClient.GetVersionManifestAsync(cancellationToken)
                 .ConfigureAwait(false);
         }
-        catch (Exception ex)
+        catch (HttpRequestException ex)
         {
-            MyOutput.Error(ex, Texts.InstallManifestFailCannotGetJson);
+            MyOutput.Error(ex.Message, Texts.InstallManifestFailCannotGetJson);
             return false;
         }
 
@@ -44,9 +44,16 @@ public sealed class InstallClientManifestAction : IAsyncForegroundAction
         {
             await SaveManifestAsync(excerpt, cancellationToken).ConfigureAwait(false);
         }
-        catch (Exception ex)
+        catch (HttpRequestException ex)
         {
-            MyOutput.Error(ex, Texts.InstallManifestFailCannotGetJson);
+            MyOutput.Error(Texts.InstallManifestFailCannotGetJson,
+                ex.StatusCode?.ToString("D")
+                ?? ex.Message);
+            return false;
+        }
+        catch (IOException ioe)
+        {
+            MyOutput.Error(ioe, Texts.InstallManifestFailCannotSaveJson);
             return false;
         }
 
@@ -61,11 +68,11 @@ public sealed class InstallClientManifestAction : IAsyncForegroundAction
         {
             return;
         }
-        
+
         var originStream = await MineOrcApp.HttpClient.GetStreamAsync(excerpt.Url,
-            cancellationToken);
+            cancellationToken).ConfigureAwait(false);
         var targetStream = GameApplication.Versions.CreateManifest(excerpt.Id);
-        
+
         await using (originStream.ConfigureAwait(false))
         await using (targetStream.ConfigureAwait(false))
         {

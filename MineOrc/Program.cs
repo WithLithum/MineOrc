@@ -23,21 +23,16 @@ AppDomain.CurrentDomain.UnhandledException += (_, args) =>
     MyOutput.Error(((Exception)args.ExceptionObject).Message);
 };
 
-#if DEBUG
 try
 {
-#endif
     return await command.Parse(args).InvokeAsync(
         new InvocationConfiguration
         {
             EnableDefaultExceptionHandler = false
-        });
-#if DEBUG
+        }).ConfigureAwait(false);
 }
-catch (Exception ex)
+catch (OperationCanceledException)
 {
-    Debugger.Break();
-    MyOutput.Error(ex, "unhandled exception");
-    return 1;
+    // Operation cancels does not necessarily mean something is wrong.
+    return 0;
 }
-#endif

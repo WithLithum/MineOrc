@@ -25,8 +25,8 @@ public class PistonMeta
         var manifestUrl = new Uri(_urlRoot, VersionManifestV2);
 
         return await _client.GetFromJsonAsync(manifestUrl,
-            VersionManifestJsonContext.Default.VersionManifest,
-            cancellationToken)
+                   VersionManifestJsonContext.Default.VersionManifest,
+                   cancellationToken).ConfigureAwait(false)
             ?? throw new InvalidOperationException($"Failed to get manifest from url: {manifestUrl}");
     }
 }

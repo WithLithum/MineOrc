@@ -57,7 +57,7 @@
         <value>还原客户端核心</value>
     </data>
     <data name="InstallManifestFailCannotGetJson" xml:space="preserve">
-        <value>无法获取客户端清单</value>
+        <value>无法获取客户端清单：错误代码 {0}</value>
     </data>
     <data name="InstallManifestFailNoSuchVersion" xml:space="preserve">
         <value>没有名叫’{Version}‘的版本</value>
@@ -76,5 +76,11 @@
     </data>
     <data name="VersionInstallCommandFailExists" xml:space="preserve">
         <value>该版本已存在</value>
+    </data>
+    <data name="InstallManifestFailCannotSaveJson" xml:space="preserve">
+        <value>无法保存客户端清单</value>
+    </data>
+    <data name="OperationDownloadFailHttp" xml:space="preserve">
+        <value>下载失败：错误代码 {0}</value>
     </data>
 </root>

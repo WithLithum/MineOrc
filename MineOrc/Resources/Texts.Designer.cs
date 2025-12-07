@@ -69,11 +69,20 @@ namespace MineOrc.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to cannot get client manifest.
+        ///   Looks up a localized string similar to cannot get client manifest: error {0}.
         /// </summary>
         internal static string InstallManifestFailCannotGetJson {
             get {
                 return ResourceManager.GetString("InstallManifestFailCannotGetJson", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to cannot save client manifest.
+        /// </summary>
+        internal static string InstallManifestFailCannotSaveJson {
+            get {
+                return ResourceManager.GetString("InstallManifestFailCannotSaveJson", resourceCulture);
             }
         }
         
@@ -101,6 +110,15 @@ namespace MineOrc.Resources {
         internal static string OperationDownloadFail {
             get {
                 return ResourceManager.GetString("OperationDownloadFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to failed to download: error {0}.
+        /// </summary>
+        internal static string OperationDownloadFailHttp {
+            get {
+                return ResourceManager.GetString("OperationDownloadFailHttp", resourceCulture);
             }
         }
         

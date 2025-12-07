@@ -68,7 +68,7 @@
         <value>Restore client jar</value>
     </data>
     <data name="InstallManifestFailCannotGetJson" xml:space="preserve">
-        <value>cannot get client manifest</value>
+        <value>cannot get client manifest: error {0}</value>
     </data>
     <data name="InstallManifestFailNoSuchVersion" xml:space="preserve">
         <value>no such version '{Version}'</value>
@@ -87,5 +87,11 @@
     </data>
     <data name="VersionInstallCommandFailExists" xml:space="preserve">
         <value>the specified version already exists</value>
+    </data>
+    <data name="InstallManifestFailCannotSaveJson" xml:space="preserve">
+        <value>cannot save client manifest</value>
+    </data>
+    <data name="OperationDownloadFailHttp" xml:space="preserve">
+        <value>failed to download: error {0}</value>
     </data>
 </root>

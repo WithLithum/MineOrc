@@ -11,17 +11,12 @@ public class StringOrStringListConverter : JsonConverter<IReadOnlyList<string>>
     public override IReadOnlyList<string>? Read(ref Utf8JsonReader reader, Type typeToConvert,
         JsonSerializerOptions options)
     {
-        if (reader.TokenType == JsonTokenType.String)
+        return reader.TokenType switch
         {
-            return [reader.GetString()!];
-        }
-
-        if (reader.TokenType == JsonTokenType.Null)
-        {
-            return null;
-        }
-
-        return JsonSerializer.Deserialize(ref reader, VersionManifestDefaultJsonContext.Default.StringList);
+            JsonTokenType.String => [reader.GetString()!],
+            JsonTokenType.Null => null,
+            _ => JsonSerializer.Deserialize(ref reader, VersionManifestDefaultJsonContext.Default.StringList)
+        };
     }
 
     public override void Write(Utf8JsonWriter writer, IReadOnlyList<string> value, JsonSerializerOptions options)

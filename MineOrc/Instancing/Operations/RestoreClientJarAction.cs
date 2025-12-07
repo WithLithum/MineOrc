@@ -1,13 +1,10 @@
 ﻿// SPDX-FileCopyrightText: 2025 WithLithum & contributors
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-using System.Globalization;
-using Downloader;
-using Meziantou.Framework;
 using MineOrc.Foundation.Manifest;
 using MineOrc.Foundation.Manifest.Network;
+using MineOrc.Network;
 using MineOrc.Resources;
-using Spectre.Console;
 
 namespace MineOrc.Instancing.Operations;
 
@@ -21,7 +18,7 @@ public class RestoreClientJarAction : IAsyncForegroundAction
     }
 
     public string Name => "restoreClientJar";
-    
+
     public async Task<bool> ExecuteAsync(CancellationToken cancellationToken)
     {
         if (!GameApplication.Versions.Exists(_versionId))
@@ -31,7 +28,7 @@ public class RestoreClientJarAction : IAsyncForegroundAction
         }
 
         var manifest = await GameApplication.Versions.GetManifestAsync(_versionId,
-            cancellationToken)
+                cancellationToken)
             .ConfigureAwait(false);
 
         var clientArtefact = manifest.GetClientDownload();
@@ -47,48 +44,34 @@ public class RestoreClientJarAction : IAsyncForegroundAction
             // Valid client, no need to download
             return true;
         }
-        
+
         // Download
+        return await DoDownloadAsync(clientArtefact, manifest, cancellationToken).ConfigureAwait(false);
+    }
+
+    private static async Task<bool> DoDownloadAsync(ArtefactInfo clientArtefact,
+        ClientManifest manifest,
+        CancellationToken cancellationToken)
+    {
         try
         {
-            await DoDownloadAsync(clientArtefact, manifest, cancellationToken);
+            await NetworkHelper.DownloadFileForegroundAsync(clientArtefact.Url,
+                    GameApplication.Versions.GetJarPath(manifest.Id),
+                    cancellationToken)
+                .ConfigureAwait(false);
         }
-        catch (Exception ex)
+        catch (HttpRequestException ex)
+        {
+            MyOutput.Error(Texts.OperationDownloadFailHttp, ex.StatusCode?.ToString("D")
+                                                            ?? ex.HttpRequestError.ToString("G"));
+            return false;
+        }
+        catch (IOException ex)
         {
             MyOutput.Error(ex, Texts.OperationDownloadFail);
             return false;
         }
 
         return true;
-    }
-
-    private static async Task DoDownloadAsync(ArtefactInfo clientArtefact,
-        ClientManifest manifest,
-        CancellationToken cancellationToken)
-    {
-        var progress = AnsiConsole.Progress();
-        var downloader = new DownloadBuilder()
-            .WithUrl(clientArtefact.Url)
-            .WithFileLocation(GameApplication.Versions.GetJarPath(manifest.Id))
-            .Build();
-
-        await progress.StartAsync(async c =>
-            {
-                var task = c.AddTask(Texts.RestoreClientJarAction);
-
-                downloader.DownloadProgressChanged += (_, args) =>
-                {
-                    task.Increment(args.ProgressPercentage - task.Percentage);
-                    var byteSpeed = new ByteSize((int)args.AverageBytesPerSecondSpeed);
-                    
-                    task.Description = $"{byteSpeed}/s";
-                };
-                downloader.DownloadFileCompleted += (_, _) =>
-                    task.StopTask();
-                
-                task.StartTask();
-                await downloader.StartAsync(cancellationToken).ConfigureAwait(false);
-            })
-            .ConfigureAwait(false);
     }
 }

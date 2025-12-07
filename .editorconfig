@@ -1,0 +1,58 @@
+root = true
+
+[*]
+indent_style = space
+indent_size = 4
+
+[*.{cs,vb}]
+### API rules ###
+dotnet_diagnostic.CA1002.severity = warning
+dotnet_diagnostic.CA1021.severity = warning
+dotnet_diagnostic.CA1031.severity = warning
+
+# CA1000: static member in generic type
+resharper_static_member_in_generic_type_highlighting = warning
+dotnet_diagnostic.CA1000.severity = warning
+
+# CA2007: use ConfigureAwait(false)
+dotnet_diagnostic.CA2007.severity = warning
+dotnet_code_quality.CA2007.output_kind = ConsoleApplication, DynamicallyLinkedLibrary
+resharper_configure_await_analysis_mode = library
+resharper_use_configure_await_false_for_async_disposable_highlighting = warning
+resharper_use_configure_await_false_highlighting = warning
+
+### Naming styles ###
+# camelCase with prefix underscore
+dotnet_naming_style.camel_case_underscore.capitalization = camel_case
+dotnet_naming_style.camel_case_underscore.required_prefix = _
+
+# pascal case
+dotnet_naming_style.pascal_case.capitalization = pascal_case
+
+### Naming symbols ###
+# Instance private & internal fields
+dotnet_naming_symbols.instance_non_public_fields.applicable_kinds = field
+dotnet_naming_symbols.instance_non_public_fields.applicable_accessibilities = internal, protected_internal, protected, private, private_protected
+
+# Static fields
+dotnet_naming_symbols.static_fields.applicable_kinds = field
+dotnet_naming_symbols.static_fields.applicable_accessibilities = *
+dotnet_naming_symbols.static_fields.required_modifiers = static
+
+### Naming conventions ###
+# Instance non-public -> camel_case_underscore
+dotnet_naming_rule.instance_non_public_fields.symbols = instance_non_public_fields
+dotnet_naming_rule.instance_non_public_fields.severity = warning
+dotnet_naming_rule.instance_non_public_fields.style = camel_case_underscore
+
+# Static -> pascal_case
+dotnet_naming_rule.static_fields.symbols=static_fields
+dotnet_naming_rule.static_fields.severity = warning
+dotnet_naming_rule.static_fields.style = pascal_case
+
+[*.cs]
+csharp_style_namespace_declarations = file_scoped
+dotnet_style_qualification_for_field = false
+dotnet_style_qualification_for_property = false
+dotnet_style_qualification_for_method = false
+dotnet_style_qualification_for_event = false

@@ -15,16 +15,7 @@ public static class ForegroundActions
         var actionName = action.Name;
         AnsiConsole.MarkupLineInterpolated($"[bold cyan]-> [/][white]{actionName}[/]");
 
-        try
-        {
-            return await action.ExecuteAsync(cancellationToken).ConfigureAwait(false);
-        }
-        catch (Exception ex)
-        {
-            MyOutput.Error(ex, Smart.Format(Texts.ActionExecuteError,
-                new { ActionName = actionName }));
-            return false;
-        }
+        return await action.ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 
     public static async Task<bool> ExecuteMany(IEnumerable<IAsyncForegroundAction> actions,

@@ -6,7 +6,6 @@ using MineOrc.Foundation.Manifest.Resources;
 using MineOrc.Foundation.Runtime.Resources;
 using MineOrc.Foundation.Utilities;
 using Spectre.Console;
-
 using static MineOrc.Network.NetworkGlobals;
 
 namespace MineOrc.Instancing.Assets;
@@ -39,7 +38,7 @@ internal sealed class AssetsRestorer : QueueDispatchAction<KeyValuePair<string, 
     }
 
     #region Verify & download
-    
+
     private async ValueTask<bool> VerifyAsync(string assetObj,
         CancellationToken cancellationToken = default)
     {
@@ -59,7 +58,7 @@ internal sealed class AssetsRestorer : QueueDispatchAction<KeyValuePair<string, 
                     .ConfigureAwait(false);
             }
         }
-        catch (Exception ex)
+        catch (IOException ex)
         {
             MyOutput.Error(ex, "error while verifying asset");
             return false;
@@ -72,18 +71,24 @@ internal sealed class AssetsRestorer : QueueDispatchAction<KeyValuePair<string, 
 
         using var bufferLease = MemoryPool<byte>.Shared
             .Rent(GetBufferSize(assetInfo.Size));
-        await using var remote = await _httpClient.GetStreamAsync(downloadUri, cancellationToken);
-        await using var target = _assetManager.CreateAssetObject(assetInfo.Hash);
-
-        await remote.CopyToAsync(target, cancellationToken).ConfigureAwait(false);
+        var remote = await _httpClient.GetStreamAsync(downloadUri, cancellationToken)
+            .ConfigureAwait(false);
+        var target = _assetManager.CreateAssetObject(assetInfo.Hash);
+        
+        await using (remote.ConfigureAwait(false))
+        await using (target.ConfigureAwait(false))
+        {
+            await remote.CopyToAsync(target, cancellationToken).ConfigureAwait(false);
+        }
     }
-    
+
     #endregion
-    
-    protected override async Task<bool> ExecuteActionAsync(KeyValuePair<string, AssetInfo> payload, CancellationToken cancellationToken)
+
+    protected override async Task<bool> ExecuteActionAsync(KeyValuePair<string, AssetInfo> payload,
+        CancellationToken cancellationToken)
     {
         var (key, assetInfo) = payload;
-        
+
         // Verify
         if (await VerifyAsync(assetInfo.Hash, cancellationToken).ConfigureAwait(false))
         {
@@ -93,7 +98,7 @@ internal sealed class AssetsRestorer : QueueDispatchAction<KeyValuePair<string, 
         // Download
         try
         {
-            await DownloadAsync(assetInfo, cancellationToken);
+            await DownloadAsync(assetInfo, cancellationToken).ConfigureAwait(false);
         }
         catch (HttpRequestException ex)
         {
@@ -102,12 +107,12 @@ internal sealed class AssetsRestorer : QueueDispatchAction<KeyValuePair<string, 
                 : $"error when downloading asset: {ex.Message}");
             return false;
         }
-        catch (Exception ex)
+        catch (IOException ex)
         {
             MyOutput.Error(ex, "error when downloading asset");
             return false;
         }
-        
+
         AnsiConsole.WriteLine("Downloaded '{0}'", key);
 
         return true;
