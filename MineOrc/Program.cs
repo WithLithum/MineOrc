@@ -12,15 +12,26 @@ var command = new RootCommand(Texts.RootDescription)
 {
     new Command("version", Texts.VersionBranch)
     {
-        SearchVersionCommand.CreateCommand()
+        SearchVersionCommand.CreateCommand(),
+        InstallVersionCommand.CreateCommand()
     }
+};
+
+AppDomain.CurrentDomain.UnhandledException += (_, args) =>
+{
+    MyOutput.Error((Exception)args.ExceptionObject, "unhandled exception");
+    MyOutput.Error(((Exception)args.ExceptionObject).Message);
 };
 
 #if DEBUG
 try
 {
 #endif
-    return await command.Parse(args).InvokeAsync();
+    return await command.Parse(args).InvokeAsync(
+        new InvocationConfiguration
+        {
+            EnableDefaultExceptionHandler = false
+        });
 #if DEBUG
 }
 catch (Exception ex)

@@ -76,4 +76,16 @@
     <data name="RestoreLibraryDownloaded" xml:space="preserve">
         <value>Restored library '{0}'</value>
     </data>
+    <data name="VersionInstallIdArgument" xml:space="preserve">
+        <value>The ID of the version to install</value>
+    </data>
+    <data name="VersionInstallNoRestoreOption" xml:space="preserve">
+        <value>Do not restore client jar</value>
+    </data>
+    <data name="VersionInstallCommand" xml:space="preserve">
+        <value>Install or restore a client version</value>
+    </data>
+    <data name="VersionInstallCommandFailExists" xml:space="preserve">
+        <value>the specified version already exists</value>
+    </data>
 </root>

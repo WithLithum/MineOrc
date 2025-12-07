@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 using System.Text.Json.Serialization;
+using MineOrc.Foundation.Json;
 using MineOrc.Foundation.Manifest.Libraries;
 using MineOrc.Foundation.Manifest.Network;
 using MineOrc.Foundation.Manifest.Options;
@@ -9,7 +10,15 @@ using MineOrc.Foundation.Manifest.Resources;
 
 namespace MineOrc.Foundation.Manifest;
 
-[JsonSourceGenerationOptions(PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase)]
+[JsonSourceGenerationOptions(
+        PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
+        Converters =
+        [
+            typeof(GameArgumentEntryConverter),
+            typeof(JvmArgumentEntryConverter)
+        ]
+    )
+]
 [JsonSerializable(typeof(DateTime))]
 [JsonSerializable(typeof(MatchRuleAction))]
 [JsonSerializable(typeof(GameArgumentRule))]

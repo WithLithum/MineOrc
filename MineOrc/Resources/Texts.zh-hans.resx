@@ -65,4 +65,16 @@
     <data name="RestoreLibraryDownloaded" xml:space="preserve">
         <value>已还原库文件 '{0}'</value>
     </data>
+    <data name="VersionInstallIdArgument" xml:space="preserve">
+        <value>要安装的版本的 ID</value>
+    </data>
+    <data name="VersionInstallNoRestoreOption" xml:space="preserve">
+        <value>不还原客户端核心</value>
+    </data>
+    <data name="VersionInstallCommand" xml:space="preserve">
+        <value>安装客户端版本</value>
+    </data>
+    <data name="VersionInstallCommandFailExists" xml:space="preserve">
+        <value>该版本已存在</value>
+    </data>
 </root>

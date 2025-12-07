@@ -13,8 +13,7 @@ public static class ForegroundActions
         CancellationToken cancellationToken = default)
     {
         var actionName = action.Name;
-        AnsiConsole.MarkupLineInterpolated($"[bold black on white]-> [/][grey23 on white]{actionName}[/]");
-        AnsiConsole.WriteLine();
+        AnsiConsole.MarkupLineInterpolated($"[bold cyan]-> [/][white]{actionName}[/]");
 
         try
         {

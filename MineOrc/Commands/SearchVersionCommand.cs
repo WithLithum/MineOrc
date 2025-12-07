@@ -10,7 +10,6 @@ using Spectre.Console;
 
 namespace MineOrc.Commands;
 
-[UsedImplicitly]
 internal static class SearchVersionCommand
 {
     private static readonly Argument<string> TermArgument = new("term")

@@ -1,7 +1,9 @@
 ﻿// SPDX-FileCopyrightText: 2025 WithLithum & contributors
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+using System.Globalization;
 using Downloader;
+using Meziantou.Framework;
 using MineOrc.Foundation.Manifest;
 using MineOrc.Foundation.Manifest.Network;
 using MineOrc.Resources;
@@ -73,9 +75,14 @@ public class RestoreClientJarAction : IAsyncForegroundAction
         await progress.StartAsync(async c =>
             {
                 var task = c.AddTask(Texts.RestoreClientJarAction);
-                
+
                 downloader.DownloadProgressChanged += (_, args) =>
+                {
                     task.Increment(args.ProgressPercentage - task.Percentage);
+                    var byteSpeed = new ByteSize((int)args.AverageBytesPerSecondSpeed);
+                    
+                    task.Description = $"{byteSpeed}/s";
+                };
                 downloader.DownloadFileCompleted += (_, _) =>
                     task.StopTask();
                 

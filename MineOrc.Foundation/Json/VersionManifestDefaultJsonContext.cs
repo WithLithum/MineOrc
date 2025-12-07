@@ -22,4 +22,5 @@ namespace MineOrc.Foundation.Json;
 [JsonSourceGenerationOptions(PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase)]
 [JsonSerializable(typeof(GameArgumentEntry))]
 [JsonSerializable(typeof(JvmArgumentEntry))]
+[JsonSerializable(typeof(IReadOnlyList<string>), TypeInfoPropertyName = "StringList")]
 internal sealed partial class VersionManifestDefaultJsonContext : JsonSerializerContext;

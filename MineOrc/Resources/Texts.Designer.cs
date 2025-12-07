@@ -159,6 +159,42 @@ namespace MineOrc.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Install or restore a client version.
+        /// </summary>
+        internal static string VersionInstallCommand {
+            get {
+                return ResourceManager.GetString("VersionInstallCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to the specified version already exists.
+        /// </summary>
+        internal static string VersionInstallCommandFailExists {
+            get {
+                return ResourceManager.GetString("VersionInstallCommandFailExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The ID of the version to install.
+        /// </summary>
+        internal static string VersionInstallIdArgument {
+            get {
+                return ResourceManager.GetString("VersionInstallIdArgument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do not restore client jar.
+        /// </summary>
+        internal static string VersionInstallNoRestoreOption {
+            get {
+                return ResourceManager.GetString("VersionInstallNoRestoreOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Includes pre-Classic, Classic, Infdev and Alpha versions.
         /// </summary>
         internal static string VersionSearchAlphaOption {

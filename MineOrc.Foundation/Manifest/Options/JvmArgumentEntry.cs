@@ -7,11 +7,11 @@ using MineOrc.Foundation.Json;
 
 namespace MineOrc.Foundation.Manifest.Options;
 
-[JsonConverter(typeof(JvmArgumentEntryConverter))]
 public sealed record JvmArgumentEntry
 {
     public IReadOnlyList<RuntimeRule>? Rules { get; init; }
-    
+ 
+    [JsonConverter(typeof(StringOrStringListConverter))]
     public required IReadOnlyList<string> Value { get; init; }
 
     [return: NotNullIfNotNull(nameof(value))]
