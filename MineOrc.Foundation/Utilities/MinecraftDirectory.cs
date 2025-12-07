@@ -9,6 +9,10 @@ public static class MinecraftDirectory
 
     public static readonly string UserAssets = Path.Combine(UserRoot,
         "assets");
+    public static readonly string UserLibraries = Path.Combine(UserRoot,
+        "libraries");
+    public static readonly string UserVersions = Path.Combine(UserRoot,
+        "versions");
 
     private static string GetUserRoot()
     {

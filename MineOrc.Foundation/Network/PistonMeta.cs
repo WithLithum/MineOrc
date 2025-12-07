@@ -20,7 +20,7 @@ public class PistonMeta
         _urlRoot = urlRoot ?? DefaultUrlRoot;
     }
 
-    public async Task<VersionManifest> GetVersionManifest(CancellationToken cancellationToken = default)
+    public async Task<VersionManifest> GetVersionManifestAsync(CancellationToken cancellationToken = default)
     {
         var manifestUrl = new Uri(_urlRoot, VersionManifestV2);
 
