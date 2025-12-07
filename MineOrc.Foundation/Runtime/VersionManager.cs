@@ -99,11 +99,11 @@ public class VersionManager
 
     public string GetJarPath(string name)
     {
-        return Path.Combine(_rootPath, "name", $"{name}.jar");
+        return Path.Combine(_rootPath, name, $"{name}.jar");
     }
     
     private string GetManifestPath(string name)
     {
-        return Path.Combine(_rootPath, "name", $"{name}.json");
+        return Path.Combine(_rootPath, name, $"{name}.json");
     }
 }
