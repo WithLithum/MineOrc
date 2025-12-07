@@ -60,11 +60,83 @@ namespace MineOrc.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to error while executing action &apos;{ActionName}&apos;.
+        /// </summary>
+        internal static string ActionExecuteError {
+            get {
+                return ResourceManager.GetString("ActionExecuteError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to cannot get client manifest.
+        /// </summary>
+        internal static string InstallManifestFailCannotGetJson {
+            get {
+                return ResourceManager.GetString("InstallManifestFailCannotGetJson", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no such version &apos;{Version}&apos;.
+        /// </summary>
+        internal static string InstallManifestFailNoSuchVersion {
+            get {
+                return ResourceManager.GetString("InstallManifestFailNoSuchVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Prints output in a machine-readable format.
         /// </summary>
         internal static string MachineOption {
             get {
                 return ResourceManager.GetString("MachineOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to failed to download.
+        /// </summary>
+        internal static string OperationDownloadFail {
+            get {
+                return ResourceManager.GetString("OperationDownloadFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restore client jar.
+        /// </summary>
+        internal static string RestoreClientJarAction {
+            get {
+                return ResourceManager.GetString("RestoreClientJarAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to missing client artefact in client manifest.
+        /// </summary>
+        internal static string RestoreClientJarFailNoArtefact {
+            get {
+                return ResourceManager.GetString("RestoreClientJarFailNoArtefact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to unable to restore client jar because client json is missing.
+        /// </summary>
+        internal static string RestoreClientJarFailNoManifest {
+            get {
+                return ResourceManager.GetString("RestoreClientJarFailNoManifest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restored library &apos;{0}&apos;.
+        /// </summary>
+        internal static string RestoreLibraryDownloaded {
+            get {
+                return ResourceManager.GetString("RestoreLibraryDownloaded", resourceCulture);
             }
         }
         

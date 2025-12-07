@@ -4,6 +4,8 @@
 using System.Text.Json;
 using JetBrains.Annotations;
 using MineOrc.Foundation.Manifest;
+using MineOrc.Foundation.Manifest.Network;
+using MineOrc.Foundation.Utilities;
 
 namespace MineOrc.Foundation.Runtime;
 
@@ -30,15 +32,62 @@ public class VersionManager
         return File.Create(manifestPath);
     }
     
-    public async Task<ClientManifest> GetManifestAsync(string name)
+    public async Task<ClientManifest> GetManifestAsync(string name,
+        CancellationToken cancellationToken = default)
     {
         var stream = File.OpenRead(GetManifestPath(name));
         await using (stream.ConfigureAwait(false))
         {
-            return JsonSerializer.Deserialize(stream,
-                VersionManifestJsonContext.Default.ClientManifest)
+            return await JsonSerializer.DeserializeAsync(stream,
+                VersionManifestJsonContext.Default.ClientManifest,
+                cancellationToken)
+                    .ConfigureAwait(false)
                 ?? throw new InvalidOperationException("The client manifest is literal null.");
         }
+    }
+    
+    public async ValueTask<bool> ValidateJarAsync(string name, ArtefactInfo artefact)
+    {
+        if (!Exists(name))
+        {
+            return false;
+        }
+
+#if !DEBUG
+        try
+        {
+#endif
+        return await HashHelper.VerifyFileAsync(GetJarPath(name),
+            artefact.Sha1).ConfigureAwait(false);
+#if !DEBUG
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+#endif
+    }
+
+    public async ValueTask<bool> ValidateManifestAsync(VersionExcerpt excerpt)
+    {
+        if (!Exists(excerpt.Id))
+        {
+            return false;
+        }
+
+#if !DEBUG
+        try
+        {
+#endif
+            return await HashHelper.VerifyFileAsync(GetManifestPath(excerpt.Id),
+                excerpt.Sha1).ConfigureAwait(false);
+#if !DEBUG
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+#endif
     }
     
     public bool Exists(string name)
@@ -48,6 +97,11 @@ public class VersionManager
         return File.Exists(manifestPath);
     }
 
+    public string GetJarPath(string name)
+    {
+        return Path.Combine(_rootPath, "name", $"{name}.jar");
+    }
+    
     private string GetManifestPath(string name)
     {
         return Path.Combine(_rootPath, "name", $"{name}.json");

@@ -52,4 +52,28 @@
     <data name="MachineOption" xml:space="preserve">
         <value>Prints output in a machine-readable format</value>
     </data>
+    <data name="RestoreClientJarFailNoManifest" xml:space="preserve">
+        <value>unable to restore client jar because client json is missing</value>
+    </data>
+    <data name="RestoreClientJarFailNoArtefact" xml:space="preserve">
+        <value>missing client artefact in client manifest</value>
+    </data>
+    <data name="OperationDownloadFail" xml:space="preserve">
+        <value>failed to download</value>
+    </data>
+    <data name="ActionExecuteError" xml:space="preserve">
+        <value>error while executing action '{ActionName}'</value>
+    </data>
+    <data name="RestoreClientJarAction" xml:space="preserve">
+        <value>Restore client jar</value>
+    </data>
+    <data name="InstallManifestFailCannotGetJson" xml:space="preserve">
+        <value>cannot get client manifest</value>
+    </data>
+    <data name="InstallManifestFailNoSuchVersion" xml:space="preserve">
+        <value>no such version '{Version}'</value>
+    </data>
+    <data name="RestoreLibraryDownloaded" xml:space="preserve">
+        <value>Restored library '{0}'</value>
+    </data>
 </root>

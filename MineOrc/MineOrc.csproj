@@ -14,6 +14,7 @@
   <ItemGroup>
     <PackageReference Include="Downloader" Version="4.0.3" />
     <PackageReference Include="JetBrains.Annotations" Version="2025.2.4" />
+    <PackageReference Include="SmartFormat" Version="3.6.1" />
     <PackageReference Include="Spectre.Console" Version="0.54.0" />
     <PackageReference Include="System.CommandLine" Version="2.0.0" />
   </ItemGroup>

@@ -1,6 +1,8 @@
 ﻿// SPDX-FileCopyrightText: 2025 WithLithum & contributors
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+using MineOrc.Resources;
+using SmartFormat;
 using Spectre.Console;
 
 namespace MineOrc.Instancing.Operations;
@@ -10,7 +12,9 @@ public static class ForegroundActions
     public static async Task<bool> ExecuteOne(IAsyncForegroundAction action,
         CancellationToken cancellationToken = default)
     {
-        AnsiConsole.MarkupLineInterpolated($"[bold black on white]-> [/][grey23 on white]{action.Name}[/]");
+        var actionName = action.Name;
+        AnsiConsole.MarkupLineInterpolated($"[bold black on white]-> [/][grey23 on white]{actionName}[/]");
+        AnsiConsole.WriteLine();
 
         try
         {
@@ -18,8 +22,23 @@ public static class ForegroundActions
         }
         catch (Exception ex)
         {
-            MyOutput.Error(ex, $"error while executing action {action.Name}");
+            MyOutput.Error(ex, Smart.Format(Texts.ActionExecuteError,
+                new { ActionName = actionName }));
             return false;
         }
+    }
+
+    public static async Task<bool> ExecuteMany(IEnumerable<IAsyncForegroundAction> actions,
+        CancellationToken cancellationToken = default)
+    {
+        foreach (var action in actions)
+        {
+            if (!await ExecuteOne(action, cancellationToken).ConfigureAwait(false))
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

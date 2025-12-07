@@ -5,6 +5,7 @@ using MineOrc.Foundation.Manifest.Libraries;
 using MineOrc.Foundation.Platforms;
 using MineOrc.Foundation.Runtime;
 using MineOrc.Foundation.Utilities;
+using MineOrc.Resources;
 using Spectre.Console;
 
 namespace MineOrc.Instancing.Runtime;
@@ -38,7 +39,7 @@ internal sealed class LibrariesRestorer : QueueDispatchAction<LibraryInfo>
 
         if (success)
         {
-            AnsiConsole.WriteLine("Restored library '{0}'", payload.Name);
+            AnsiConsole.WriteLine(Texts.RestoreLibraryDownloaded, payload.Name);
         }
 
         return success;
@@ -59,7 +60,7 @@ internal sealed class LibrariesRestorer : QueueDispatchAction<LibraryInfo>
         }
         catch (Exception ex)
         {
-            MyOutput.Error(ex, "error occured when downloading");
+            MyOutput.Error(ex, Texts.OperationDownloadFail);
             return false;
         }
         

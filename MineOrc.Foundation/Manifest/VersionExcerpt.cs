@@ -18,7 +18,7 @@ public sealed record VersionExcerpt
     
     public required DateTime ReleaseTime { get; init; }
     
-    public string? Sha1 { get; init; }
+    public required string Sha1 { get; init; }
     
     public int ComplianceLevel { get; init; }
 }
