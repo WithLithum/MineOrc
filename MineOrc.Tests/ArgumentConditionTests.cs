@@ -1,6 +1,7 @@
 ﻿// SPDX-FileCopyrightText: 2025 WithLithum & contributors
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+using MineOrc.Foundation.Manifest.Options;
 using MineOrc.Foundation.Runtime.Arguments;
 
 namespace MineOrc.Tests;
@@ -95,5 +96,56 @@ public class ArgumentConditionTests
 
         // Arrange
         Assert.True(result);
+    }
+    
+    [Theory]
+    [InlineData(null, null, "x64", "windows")]
+    [InlineData("x64", null, "x64", "windows")]
+    [InlineData(null, "windows", "x64", "windows")]
+    [InlineData("x64", "windows", "x64", "windows")]
+    public void MatchPlatform_PassingConditions_Pass(string? checkArch,
+        string? checkSystem,
+        string ownArch,
+        string ownSystem)
+    {
+        // Arrange
+        var condition = new RuntimePlatformRule
+        {
+            Arch = checkArch,
+            Name = checkSystem,
+        };
+        
+        // Act
+        var result = ArgumentConditions.MatchPlatform(condition,
+            systemArch: ownArch,
+            systemName: ownSystem);
+        
+        // Assert
+        Assert.True(result);
+    }
+    
+    [Theory]
+    [InlineData("x64", null, "arm64", "linux")]
+    [InlineData(null, "windows", "arm64", "linux")]
+    [InlineData("x64", "windows", "arm64", "linux")]
+    public void MatchPlatform_FailingConditions_Fail(string? checkArch,
+        string? checkSystem,
+        string ownArch,
+        string ownSystem)
+    {
+        // Arrange
+        var condition = new RuntimePlatformRule
+        {
+            Arch = checkArch,
+            Name = checkSystem,
+        };
+        
+        // Act
+        var result = ArgumentConditions.MatchPlatform(condition,
+            systemArch: ownArch,
+            systemName: ownSystem);
+        
+        // Assert
+        Assert.False(result);
     }
 }

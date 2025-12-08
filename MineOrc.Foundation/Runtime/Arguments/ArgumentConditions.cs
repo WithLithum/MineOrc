@@ -52,21 +52,25 @@ public static class ArgumentConditions
 
     #region JVM - Platform
 
-    public static bool MatchPlatform(RuntimePlatformRule osRule)
+    public static bool MatchPlatform(RuntimePlatformRule osRule,
+        string? systemName = null,
+        string? systemArch = null)
     {
-        return MatchSystem(osRule) && MatchArchitecture(osRule);
+        return MatchSystem(osRule, systemName) && MatchArchitecture(osRule, systemArch);
     }
 
-    private static bool MatchSystem(RuntimePlatformRule osRule)
+    private static bool MatchSystem(RuntimePlatformRule osRule,
+        string? systemName = null)
     {
-        return osRule.Name != null &&
-               osRule.Name == ManifestPlatformUtil.GetSystemName();
+        return osRule.Name == null ||
+               osRule.Name == (systemName ?? ManifestPlatformUtil.GetSystemName());
     }
 
-    private static bool MatchArchitecture(RuntimePlatformRule osRule)
+    private static bool MatchArchitecture(RuntimePlatformRule osRule,
+        string? systemArch = null)
     {
-        return osRule.Arch != null &&
-               osRule.Arch == ManifestPlatformUtil.GetSystemArch();
+        return osRule.Arch == null ||
+               osRule.Arch == (systemArch ?? ManifestPlatformUtil.GetSystemArch());
     }
 
     #endregion
