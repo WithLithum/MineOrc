@@ -4,7 +4,6 @@
 using JetBrains.Annotations;
 using MineOrc.Foundation.Manifest.Resources;
 using MineOrc.Foundation.Network.Results;
-using MineOrc.Foundation.Runtime.Resources;
 using MineOrc.Foundation.Utilities;
 using MineOrc.Network;
 using Spectre.Console;
@@ -15,12 +14,8 @@ internal sealed class AssetsRestorer : QueueDispatchAction<KeyValuePair<string, 
 {
     private static readonly Uri ResourceDownloadBase = new("https://resources.download.minecraft.net/");
 
-    private readonly IProgressEx<double> _progress;
-
-    public AssetsRestorer(AssetIndexDictionary index,
-        IProgressEx<double> progress) : base(index)
+    public AssetsRestorer(IReadOnlyCollection<KeyValuePair<string, AssetInfo>> index) : base(index)
     {
-        _progress = progress;
     }
 
     #region Verify & download
@@ -85,15 +80,5 @@ internal sealed class AssetsRestorer : QueueDispatchAction<KeyValuePair<string, 
 
         // Download
         return await DownloadAsync(assetInfo, key, cancellationToken).ConfigureAwait(false);
-    }
-
-    protected override void ReportProgress(double progress)
-    {
-        _progress.Report(progress);
-    }
-
-    protected override void ReportException(Exception exception)
-    {
-        MyOutput.Error(exception, "error while downloading");
     }
 }

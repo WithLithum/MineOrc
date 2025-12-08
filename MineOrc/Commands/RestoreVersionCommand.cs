@@ -56,6 +56,7 @@ public static class RestoreVersionCommand
         [
             new RestoreClientJarAction(version),
             new RestoreAssetsAction(manifest.AssetIndex),
+            new RestoreLibrariesAction(manifest.Libraries),
         ];
 
         return await ForegroundActions.ExecuteMany(actions, cancellationToken)

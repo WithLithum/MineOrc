@@ -5,8 +5,8 @@ namespace MineOrc.Foundation.Utilities;
 
 public abstract class QueueDispatchAction<T>
 {
-    private int _completedCount;
     private int _failCount;
+    private int _completeCount;
     private readonly SemaphoreSlim _semaphore;
     private readonly IReadOnlyCollection<T> _payloads;
 
@@ -14,31 +14,32 @@ public abstract class QueueDispatchAction<T>
         int semaphoreCount = 3)
     {
         _payloads = payloads;
-        _semaphore = new  SemaphoreSlim(semaphoreCount, semaphoreCount);
+        _semaphore = new SemaphoreSlim(semaphoreCount, semaphoreCount);
     }
-
-    public int CompletedCount => _completedCount;
     
-    public async Task<bool> DoAsync(CancellationToken cancellationToken = default)
+    public async Task<bool> DoAsync(IStatusReporter? progress = null,
+        CancellationToken cancellationToken = default)
     {
         _failCount = 0;
-        _completedCount = 0;
         
-        await Task.WhenAll(PushWorksAsync(cancellationToken)).ConfigureAwait(false);
+        await Task.WhenAll(PushWorksAsync(progress, cancellationToken)).ConfigureAwait(false);
         
         return _failCount == 0;
     }
 
-    private IEnumerable<Task> PushWorksAsync(CancellationToken cancellationToken = default)
+    private IEnumerable<Task> PushWorksAsync(IStatusReporter? progress,
+        CancellationToken cancellationToken)
     {
         foreach (var payload in _payloads)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            yield return DispatchWorkAsync(payload, cancellationToken);
+            yield return DispatchWorkAsync(payload, progress, cancellationToken);
         }
     }
     
-    private async Task<bool> DispatchWorkAsync(T payload, CancellationToken cancellationToken)
+    private async Task<bool> DispatchWorkAsync(T payload,
+        IStatusReporter? progress,
+        CancellationToken cancellationToken)
     {
         await _semaphore.WaitAsync(cancellationToken)
             .ConfigureAwait(false);
@@ -49,26 +50,17 @@ public abstract class QueueDispatchAction<T>
         _semaphore.Release();
                     
         // Communication success
-        Interlocked.Increment(ref _completedCount);
+        Interlocked.Increment(ref _completeCount);
         if (!succeeded)
         {
             Interlocked.Increment(ref _failCount);
         }
                     
         // Report current progress.
-        var currentProgress = (double)_completedCount / _payloads.Count * 100;
-        ReportProgress(currentProgress);
-
+        progress?.SetText($"{_completeCount}/{_payloads.Count}");
+        
         return succeeded;
     }
     
     protected abstract Task<bool> ExecuteActionAsync(T payload, CancellationToken cancellationToken);
-    
-    protected virtual void ReportException(Exception exception)
-    {
-    }
-    
-    protected virtual void ReportProgress(double progress)
-    {
-    }
 }

@@ -118,4 +118,7 @@
     <data name="AssetRestoreDownloadIndex" xml:space="preserve">
         <value>Downloading asset index</value>
     </data>
+    <data name="OperationGenericProgressText" xml:space="preserve">
+        <value>Progress</value>
+    </data>
 </root>

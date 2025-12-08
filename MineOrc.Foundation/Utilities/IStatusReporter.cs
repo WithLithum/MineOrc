@@ -5,10 +5,7 @@ using System.Numerics;
 
 namespace MineOrc.Foundation.Utilities;
 
-public interface IProgressEx<in T> : IProgress<T>
-    where T: INumber<T>
+public interface IStatusReporter
 {
-    void SetIntermediate(bool intermediate);
-    
     void SetText(string text);
 }

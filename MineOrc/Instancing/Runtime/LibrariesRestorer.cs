@@ -3,8 +3,6 @@
 
 using MineOrc.Foundation.Manifest.Libraries;
 using MineOrc.Foundation.Network.Results;
-using MineOrc.Foundation.Platforms;
-using MineOrc.Foundation.Runtime;
 using MineOrc.Foundation.Utilities;
 using MineOrc.Network;
 using MineOrc.Resources;
@@ -12,47 +10,26 @@ using Spectre.Console;
 
 namespace MineOrc.Instancing.Runtime;
 
-internal sealed class LibrariesRestorer : QueueDispatchAction<LibraryInfo>
+internal sealed class LibrariesRestorer : QueueDispatchAction<LibraryArtefactInfo>
 {
-    private readonly LibraryManager _libraryManager;
-
-    public LibrariesRestorer(IReadOnlyCollection<LibraryInfo> payloads,
-        LibraryManager libraryManager) : base(payloads)
+    public LibrariesRestorer(IReadOnlyCollection<LibraryArtefactInfo> payloads) : base(payloads)
     {
-        _libraryManager = libraryManager;
     }
 
-    protected override async Task<bool> ExecuteActionAsync(LibraryInfo payload, CancellationToken cancellationToken)
+    protected override async Task<bool> ExecuteActionAsync(LibraryArtefactInfo payload,
+        CancellationToken cancellationToken)
     {
-        var primary = payload.Downloads.Artifact;
-        LibraryArtefactInfo? native = null;
-
-        if (payload is { Natives: not null, Downloads.Classifiers: not null })
-        {
-            var nativeKey = payload.Natives[ManifestPlatformUtil.GetSystemName()];
-            native = payload.Downloads.Classifiers[nativeKey];
-        }
-
-        var success = await DoFileAsync(primary, cancellationToken).ConfigureAwait(false);
-        if (native != null)
-        {
-            success = await DoFileAsync(native, cancellationToken).ConfigureAwait(false);
-        }
-
-        if (success)
-        {
-            AnsiConsole.WriteLine(Texts.RestoreLibraryDownloaded, payload.Name);
-        }
+        var success = await DoFileAsync(payload, cancellationToken).ConfigureAwait(false);
 
         return success;
     }
 
-    private async Task<bool> DoFileAsync(LibraryArtefactInfo artefactInfo,
+    private static async Task<bool> DoFileAsync(LibraryArtefactInfo artefactInfo,
         CancellationToken cancellationToken)
     {
         try
         {
-            if (await _libraryManager.VerifyArtefactAsync(artefactInfo,
+            if (await GameApplication.Libraries.VerifyArtefactAsync(artefactInfo,
                     cancellationToken).ConfigureAwait(false))
             {
                 return true;
@@ -63,7 +40,9 @@ internal sealed class LibrariesRestorer : QueueDispatchAction<LibraryInfo>
             MyOutput.Warn(io, Texts.OperationHashFail);
         }
 
-        var target = _libraryManager.GetArtefactPath(artefactInfo);
+        var target = GameApplication.Libraries.GetArtefactPath(artefactInfo);
+        FileHelper.CreateParentDirectory(target, true);
+        
         var result = await NetworkHelper.DownloadFileSilentAsync(artefactInfo.Url,
             target,
             cancellationToken
@@ -72,6 +51,10 @@ internal sealed class LibrariesRestorer : QueueDispatchAction<LibraryInfo>
         if (!result.IsOk)
         {
             MyOutput.Error(result.ToString());
+        }
+        else
+        {
+            AnsiConsole.WriteLine(Texts.RestoreLibraryDownloaded, artefactInfo.Path);
         }
 
         return result.IsOk;

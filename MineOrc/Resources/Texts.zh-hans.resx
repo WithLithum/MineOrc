@@ -107,4 +107,7 @@
     <data name="AssetRestoreDownloadIndex" xml:space="preserve">
         <value>正在下载资源索引</value>
     </data>
+    <data name="OperationGenericProgressText" xml:space="preserve">
+        <value>进度</value>
+    </data>
 </root>

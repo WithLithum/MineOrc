@@ -150,6 +150,15 @@ namespace MineOrc.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Progress.
+        /// </summary>
+        internal static string OperationGenericProgressText {
+            get {
+                return ResourceManager.GetString("OperationGenericProgressText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to failed to verify hash.
         /// </summary>
         internal static string OperationHashFail {

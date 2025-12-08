@@ -5,24 +5,59 @@ using System.Text.Json;
 using MineOrc.Foundation.Manifest.Network;
 using MineOrc.Foundation.Manifest.Resources;
 using MineOrc.Foundation.Network.Results;
+using MineOrc.Foundation.Utilities;
 using MineOrc.Instancing.Assets;
 using MineOrc.Network;
 using MineOrc.Resources;
-using MineOrc.UI;
 using Spectre.Console;
 
 namespace MineOrc.Instancing.Operations;
 
-public sealed class RestoreAssetsAction : IAsyncForegroundAction
+public sealed class RestoreAssetsAction : QueueDispatchActionWrapper<KeyValuePair<string, AssetInfo>>
 {
     private readonly AssetIndexArtefactInfo _indexArtefact;
 
-    public RestoreAssetsAction(AssetIndexArtefactInfo artefact)
+    public RestoreAssetsAction(AssetIndexArtefactInfo artefact) : base("restoreAssets")
     {
         _indexArtefact = artefact;
     }
 
-    public string Name => "restoreAssets";
+    protected override async ValueTask<IReadOnlyCollection<KeyValuePair<string, AssetInfo>>?>
+        GetPayloadsAsync(CancellationToken cancellationToken)
+    {
+        if (!GameApplication.Assets.HasAssetIndex(_indexArtefact.Id)
+            && !await RestoreIndexAsync(cancellationToken).ConfigureAwait(false))
+        {
+            return null;
+        }
+        
+        AssetManifest index;
+        try
+        {
+            var readIndex = await GameApplication.Assets.GetAssetIndexAsync(_indexArtefact.Id,
+                cancellationToken).ConfigureAwait(false);
+            
+            if (readIndex == null)
+            {
+                MyOutput.Error(Texts.AssetRestoreMissingIndex, _indexArtefact.Id);
+                return null;
+            }
+
+            index = readIndex;
+        }
+        catch (Exception ex) when (ex is JsonException or IOException)
+        {
+            MyOutput.Error(ex, Texts.AssetRestoreIndexReadFailed);
+            return null;
+        }
+
+        return index.Objects;
+    }
+
+    protected override QueueDispatchAction<KeyValuePair<string, AssetInfo>> CreateAction(IReadOnlyCollection<KeyValuePair<string, AssetInfo>> payload)
+    {
+        return new AssetsRestorer(payload);
+    }
 
     private async Task<bool> RestoreIndexAsync(CancellationToken cancellationToken)
     {
@@ -39,49 +74,5 @@ public sealed class RestoreAssetsAction : IAsyncForegroundAction
         }
 
         return result.IsOk;
-    }
-    
-    public async Task<bool> ExecuteAsync(CancellationToken cancellationToken)
-    {
-        if (!GameApplication.Assets.HasAssetIndex(_indexArtefact.Id)
-            && !await RestoreIndexAsync(cancellationToken).ConfigureAwait(false))
-        {
-            return false;
-        }
-        
-        AssetManifest index;
-        try
-        {
-            var readIndex = await GameApplication.Assets.GetAssetIndexAsync(_indexArtefact.Id,
-                cancellationToken).ConfigureAwait(false);
-            
-            if (readIndex == null)
-            {
-                MyOutput.Error(Texts.AssetRestoreMissingIndex, _indexArtefact.Id);
-                return false;
-            }
-
-            index = readIndex;
-        }
-        catch (Exception ex) when (ex is JsonException or IOException)
-        {
-            MyOutput.Error(ex, Texts.AssetRestoreIndexReadFailed);
-            return false;
-        }
-        
-        // Restore action
-        var progress = AnsiConsole.Progress();
-        var success = true;
-        await progress.StartAsync(async c =>
-        {
-            var task = c.AddTask("???");
-            var prog = new ProgressAction(task);
-
-            var restorer = new AssetsRestorer(index.Objects,
-                prog);
-            success = await restorer.DoAsync(cancellationToken).ConfigureAwait(false);
-        }).ConfigureAwait(false);
-
-        return success;
     }
 }
