@@ -7,15 +7,14 @@ using Spectre.Console;
 
 namespace MineOrc.Instancing.Operations;
 
-public sealed class QueueDispatchActionWrapper<T> : IAsyncForegroundAction
+public abstract class QueueDispatchActionWrapper<T> : IAsyncForegroundAction
 {
-    private readonly Func<IProgressEx<double>, QueueDispatchAction<T>> _actionFactory;
-    
-    public QueueDispatchActionWrapper(string name, Func<IProgressEx<double>, QueueDispatchAction<T>> actionFactory)
+    protected QueueDispatchActionWrapper(string name)
     {
         Name = name;
-        _actionFactory = actionFactory;
     }
+
+    protected abstract ValueTask<QueueDispatchAction<T>> CreateActionAsync(IProgress<double> progress);
 
     public string Name { get; }
 
@@ -28,7 +27,7 @@ public sealed class QueueDispatchActionWrapper<T> : IAsyncForegroundAction
             var task = c.AddTask(Name);
             var prog = new ProgressAction(task);
 
-            var action = _actionFactory(prog);
+            var action = await CreateActionAsync(prog).ConfigureAwait(false);
             success = await action.DoAsync(cancellationToken).ConfigureAwait(false);
         }).ConfigureAwait(false);
 

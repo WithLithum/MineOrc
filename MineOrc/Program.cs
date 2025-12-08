@@ -13,7 +13,8 @@ var command = new RootCommand(Texts.RootDescription)
     new Command("version", Texts.VersionBranch)
     {
         SearchVersionCommand.CreateCommand(),
-        InstallVersionCommand.CreateCommand()
+        InstallVersionCommand.CreateCommand(),
+        RestoreVersionCommand.CreateCommand(),
     }
 };
 

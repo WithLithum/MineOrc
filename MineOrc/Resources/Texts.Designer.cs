@@ -69,6 +69,33 @@ namespace MineOrc.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Downloading asset index.
+        /// </summary>
+        internal static string AssetRestoreDownloadIndex {
+            get {
+                return ResourceManager.GetString("AssetRestoreDownloadIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to failed to read index &apos;{0}&apos;.
+        /// </summary>
+        internal static string AssetRestoreIndexReadFailed {
+            get {
+                return ResourceManager.GetString("AssetRestoreIndexReadFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to missing or invalid asset index &apos;{0}&apos;.
+        /// </summary>
+        internal static string AssetRestoreMissingIndex {
+            get {
+                return ResourceManager.GetString("AssetRestoreMissingIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to cannot get client manifest: error {0}.
         /// </summary>
         internal static string InstallManifestFailCannotGetJson {
@@ -128,6 +155,15 @@ namespace MineOrc.Resources {
         internal static string OperationHashFail {
             get {
                 return ResourceManager.GetString("OperationHashFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to failed to read client manifest.
+        /// </summary>
+        internal static string OperationReadClientManifestFailed {
+            get {
+                return ResourceManager.GetString("OperationReadClientManifestFailed", resourceCulture);
             }
         }
         
@@ -218,6 +254,33 @@ namespace MineOrc.Resources {
         internal static string VersionInstallNoRestoreOption {
             get {
                 return ResourceManager.GetString("VersionInstallNoRestoreOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restore the assets and libraries of a version.
+        /// </summary>
+        internal static string VersionRestoreCommand {
+            get {
+                return ResourceManager.GetString("VersionRestoreCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to version &apos;{0}&apos; does not exist, install it first.
+        /// </summary>
+        internal static string VersionRestoreFailNoVersion {
+            get {
+                return ResourceManager.GetString("VersionRestoreFailNoVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The version to restore.
+        /// </summary>
+        internal static string VersionRestoreVersionArgument {
+            get {
+                return ResourceManager.GetString("VersionRestoreVersionArgument", resourceCulture);
             }
         }
         

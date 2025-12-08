@@ -14,7 +14,7 @@ public static class CommandHelper
     {
         return new Option<bool>(shortName, longName)
         {
-            Description = description
+            Description = description,
         };
     }
 }

@@ -12,12 +12,12 @@ internal static class InstallVersionCommand
 {
     private static readonly Argument<string> VersionIdArgument = new("id")
     {
-        Description = Texts.VersionInstallIdArgument
+        Description = Texts.VersionInstallIdArgument,
     };
 
     private static readonly Option<bool> NoRestoreOption = new("--no-restore")
     {
-        Description = Texts.VersionInstallNoRestoreOption
+        Description = Texts.VersionInstallNoRestoreOption,
     };
 
     public static Command CreateCommand()
@@ -26,7 +26,7 @@ internal static class InstallVersionCommand
             Texts.VersionInstallCommand)
         {
             VersionIdArgument,
-            NoRestoreOption
+            NoRestoreOption,
         };
         
         command.SetAction(ExecuteAsync);

@@ -86,4 +86,25 @@
     <data name="OperationHashFail" xml:space="preserve">
         <value>校验哈希码失败</value>
     </data>
+    <data name="AssetRestoreMissingIndex" xml:space="preserve">
+        <value>资源索引‘{0}‘不存在或无效</value>
+    </data>
+    <data name="AssetRestoreIndexReadFailed" xml:space="preserve">
+        <value>读取资源索引‘{0}‘失败</value>
+    </data>
+    <data name="VersionRestoreCommand" xml:space="preserve">
+        <value>还原客户端版本资源</value>
+    </data>
+    <data name="VersionRestoreVersionArgument" xml:space="preserve">
+        <value>要还原的版本</value>
+    </data>
+    <data name="VersionRestoreFailNoVersion" xml:space="preserve">
+        <value>版本‘{0}’不存在，请先安装</value>
+    </data>
+    <data name="OperationReadClientManifestFailed" xml:space="preserve">
+        <value>读取客户端清单失败</value>
+    </data>
+    <data name="AssetRestoreDownloadIndex" xml:space="preserve">
+        <value>正在下载资源索引</value>
+    </data>
 </root>

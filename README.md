@@ -1,4 +1,4 @@
-# MineOrc
+# ![Minecraft Orchestrator](assets/logo.png) MineOrc
 
 MineOrc (*Mine*craft *Orc*hestrator) is a Minecraft instance manager and
 launcher that works from the command line.

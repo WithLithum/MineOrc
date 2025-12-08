@@ -41,4 +41,6 @@ namespace MineOrc.Foundation.Manifest;
 [JsonSerializable(typeof(RuntimeVersionInfo))]
 [JsonSerializable(typeof(ClientManifest))]
 [JsonSerializable(typeof(AssetInfo))]
+[JsonSerializable(typeof(AssetIndexDictionary), TypeInfoPropertyName = "AssetIndexDictionary")]
+[JsonSerializable(typeof(AssetManifest))]
 public sealed partial class VersionManifestJsonContext : JsonSerializerContext;

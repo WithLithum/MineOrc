@@ -16,16 +16,11 @@ internal sealed class AssetsRestorer : QueueDispatchAction<KeyValuePair<string, 
     private static readonly Uri ResourceDownloadBase = new("https://resources.download.minecraft.net/");
 
     private readonly IProgressEx<double> _progress;
-    private readonly AssetManager _assetManager;
-    private readonly HttpClient _httpClient;
 
-    public AssetsRestorer(AssetManager assetManager,
-        AssetIndexDictionary index,
-        IProgressEx<double> progress, HttpClient httpClient) : base(index)
+    public AssetsRestorer(AssetIndexDictionary index,
+        IProgressEx<double> progress) : base(index)
     {
-        _assetManager = assetManager;
         _progress = progress;
-        _httpClient = httpClient;
     }
 
     #region Verify & download
@@ -33,14 +28,14 @@ internal sealed class AssetsRestorer : QueueDispatchAction<KeyValuePair<string, 
     private async ValueTask<bool> VerifyAsync(AssetInfo asset,
         CancellationToken cancellationToken = default)
     {
-        if (!_assetManager.HasAssetObject(asset))
+        if (!GameApplication.Assets.HasAssetObject(asset))
         {
             return false;
         }
 
         try
         {
-            return await HashHelper.VerifyFileAsync(_assetManager.GetAssetObjectFile(asset),
+            return await HashHelper.VerifyFileAsync(GameApplication.Assets.GetAssetObjectFile(asset),
                     asset.Hash,
                     cancellationToken)
                 .ConfigureAwait(false);
@@ -58,9 +53,10 @@ internal sealed class AssetsRestorer : QueueDispatchAction<KeyValuePair<string, 
         CancellationToken cancellationToken)
     {
         var downloadUri = new Uri(ResourceDownloadBase, $"{assetInfo.Hash[..2]}/{assetInfo.Hash}");
-        var targetPath = _assetManager.GetAssetObjectFile(assetInfo);
+        var targetPath = GameApplication.Assets.GetAssetObjectFile(assetInfo);
+        GameApplication.Assets.CreatePrefix(assetInfo);
 
-        var result = await NetworkHelper.DownloadFileForegroundAsync(downloadUri,
+        var result = await NetworkHelper.DownloadFileSilentAsync(downloadUri,
             targetPath,
             cancellationToken).ConfigureAwait(false);
         if (!result.IsOk)

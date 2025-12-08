@@ -23,6 +23,8 @@ public static class ForegroundActions
     {
         foreach (var action in actions)
         {
+            cancellationToken.ThrowIfCancellationRequested();
+            
             if (!await ExecuteOne(action, cancellationToken).ConfigureAwait(false))
             {
                 return false;

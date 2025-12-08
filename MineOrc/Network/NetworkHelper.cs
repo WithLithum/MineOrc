@@ -12,6 +12,33 @@ namespace MineOrc.Network;
 public static class NetworkHelper
 {
     [MustUseReturnValue("Network request may fail")]
+    public static async Task<NetworkResult> DownloadFileSilentAsync(Uri fromUri,
+        string toFile,
+        CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            var source = await MineOrcApp.HttpClient.GetStreamAsync(fromUri,
+                cancellationToken).ConfigureAwait(false);
+            var target = File.Create(toFile);
+            
+            await using (source.ConfigureAwait(false))
+            await using (target.ConfigureAwait(false))
+            {
+                await source.CopyToAsync(target, cancellationToken).ConfigureAwait(false);
+            }
+        }
+        catch (Exception e) when (e is HttpRequestException
+                                      or HttpIOException
+                                      or IOException)
+        {
+            return NetworkResult.FromException(e);
+        }
+
+        return NetworkResult.Ok;
+    }
+
+    [MustUseReturnValue("Network request may fail")]
     public static async Task<NetworkResult> DownloadFileForegroundAsync(Uri fromUri,
         string toFile,
         CancellationToken cancellationToken = default)
@@ -59,6 +86,7 @@ public static class NetworkHelper
             task.StopTask();
 
         task.StartTask();
+
         await downloader.StartAsync(cancellationToken).ConfigureAwait(false);
     }
 }

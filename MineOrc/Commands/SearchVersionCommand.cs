@@ -3,7 +3,6 @@
 
 using System.CommandLine;
 using System.Text.RegularExpressions;
-using JetBrains.Annotations;
 using MineOrc.Foundation.Manifest;
 using MineOrc.Resources;
 using Spectre.Console;
@@ -110,9 +109,9 @@ internal static class SearchVersionCommand
         {
             expression = new Regex(regex);
         }
-        catch (Exception ex)
+        catch (ArgumentException ex)
         {
-            MyOutput.Error($"failed to parse regex: {ex}");
+            MyOutput.Error($"failed to parse regex: {ex.Message}");
             return null;
         }
 

@@ -97,4 +97,25 @@
     <data name="OperationHashFail" xml:space="preserve">
         <value>failed to verify hash</value>
     </data>
+    <data name="AssetRestoreMissingIndex" xml:space="preserve">
+        <value>missing or invalid asset index '{0}'</value>
+    </data>
+    <data name="AssetRestoreIndexReadFailed" xml:space="preserve">
+        <value>failed to read index '{0}'</value>
+    </data>
+    <data name="VersionRestoreCommand" xml:space="preserve">
+        <value>Restore the assets and libraries of a version</value>
+    </data>
+    <data name="VersionRestoreVersionArgument" xml:space="preserve">
+        <value>The version to restore</value>
+    </data>
+    <data name="VersionRestoreFailNoVersion" xml:space="preserve">
+        <value>version '{0}' does not exist, install it first</value>
+    </data>
+    <data name="OperationReadClientManifestFailed" xml:space="preserve">
+        <value>failed to read client manifest</value>
+    </data>
+    <data name="AssetRestoreDownloadIndex" xml:space="preserve">
+        <value>Downloading asset index</value>
+    </data>
 </root>

@@ -64,7 +64,7 @@ internal sealed class LibrariesRestorer : QueueDispatchAction<LibraryInfo>
         }
 
         var target = _libraryManager.GetArtefactPath(artefactInfo);
-        var result = await NetworkHelper.DownloadFileForegroundAsync(artefactInfo.Url,
+        var result = await NetworkHelper.DownloadFileSilentAsync(artefactInfo.Url,
             target,
             cancellationToken
         ).ConfigureAwait(false);
@@ -72,9 +72,8 @@ internal sealed class LibrariesRestorer : QueueDispatchAction<LibraryInfo>
         if (!result.IsOk)
         {
             MyOutput.Error(result.ToString());
-            return false;
         }
 
-        return true;
+        return result.IsOk;
     }
 }
