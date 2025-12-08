@@ -9,6 +9,15 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <AssemblyName>mineorc</AssemblyName>
+    <ApplicationIcon>..\assets\logo.ico</ApplicationIcon>
+    <PackageId>MineOrc</PackageId>
+    <Version>0.1.0</Version>
+    <Title>Minecraft Orchestrator</Title>
+    <Authors>WithLithum &amp; contributors</Authors>
+    <Description>Minecraft Orchestrator</Description>
+    <Copyright>Copyright (C) 2025 WithLithum &amp; contributors</Copyright>
+    <Company>MineOrc</Company>
+    <Product>Minecraft Orchestrator</Product>
   </PropertyGroup>
 
   <ItemGroup>
@@ -37,6 +46,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Texts.resx</DependentUpon>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\assets\logo.ico">
+      <Link>logo.ico</Link>
+    </None>
   </ItemGroup>
 
 </Project>
