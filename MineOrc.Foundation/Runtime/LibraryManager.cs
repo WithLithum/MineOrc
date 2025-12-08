@@ -18,34 +18,17 @@ public class LibraryManager
         _rootPath = rootPath;
     }
 
-    [MustDisposeResource]
-    public Stream CreateArtefact(LibraryArtefactInfo artefact)
-    {
-        var artefactPath = GetArtefactPath(artefact.Path);
-        var artefactDir = Path.GetDirectoryName(artefactPath);
-        if (artefactDir == null)
-        {
-            throw new InvalidOperationException("The artefact parent directory denotes artefact root, which should not be possible.");
-        }
-        
-        Directory.CreateDirectory(artefactDir);
-        
-        return File.Create(artefactPath);
-    }
-    
     public async ValueTask<bool> VerifyArtefactAsync(LibraryArtefactInfo artefact,
         CancellationToken cancellationToken = default)
     {
         var path = GetArtefactPath(artefact.Path);
-        try
-        {
-            return await HashHelper.VerifyFileAsync(path, artefact.Sha1, cancellationToken);
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine(ex);
-            return false;
-        }
+        return await HashHelper.VerifyFileAsync(path, artefact.Sha1, cancellationToken)
+            .ConfigureAwait(false);
+    }
+
+    public string GetArtefactPath(LibraryArtefactInfo artefact)
+    {
+        return GetArtefactPath(artefact.Path);
     }
 
     private string GetArtefactPath(string relativePath)

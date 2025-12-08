@@ -94,4 +94,7 @@
     <data name="OperationDownloadFailHttp" xml:space="preserve">
         <value>failed to download: error {0}</value>
     </data>
+    <data name="OperationHashFail" xml:space="preserve">
+        <value>failed to verify hash</value>
+    </data>
 </root>

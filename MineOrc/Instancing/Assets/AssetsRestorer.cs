@@ -1,12 +1,13 @@
 ﻿// SPDX-FileCopyrightText: 2025 WithLithum & contributors
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-using System.Buffers;
+using JetBrains.Annotations;
 using MineOrc.Foundation.Manifest.Resources;
+using MineOrc.Foundation.Network.Results;
 using MineOrc.Foundation.Runtime.Resources;
 using MineOrc.Foundation.Utilities;
+using MineOrc.Network;
 using Spectre.Console;
-using static MineOrc.Network.NetworkGlobals;
 
 namespace MineOrc.Instancing.Assets;
 
@@ -27,36 +28,22 @@ internal sealed class AssetsRestorer : QueueDispatchAction<KeyValuePair<string, 
         _httpClient = httpClient;
     }
 
-    private static int GetBufferSize(int size)
-    {
-        return size switch
-        {
-            >= LargeBufferThreshold => LargeBufferSize,
-            >= MediumBufferThreshold => MediumBufferSize,
-            _ => SmallBufferSize
-        };
-    }
-
     #region Verify & download
 
-    private async ValueTask<bool> VerifyAsync(string assetObj,
+    private async ValueTask<bool> VerifyAsync(AssetInfo asset,
         CancellationToken cancellationToken = default)
     {
-        if (!_assetManager.HasAssetObject(assetObj))
+        if (!_assetManager.HasAssetObject(asset))
         {
             return false;
         }
 
-        var file = _assetManager.GetAssetObjectFile(assetObj);
-
         try
         {
-            var stream = File.OpenRead(file);
-            await using (stream.ConfigureAwait(false))
-            {
-                return await HashHelper.VerifyStreamAsync(stream, assetObj, cancellationToken)
-                    .ConfigureAwait(false);
-            }
+            return await HashHelper.VerifyFileAsync(_assetManager.GetAssetObjectFile(asset),
+                    asset.Hash,
+                    cancellationToken)
+                .ConfigureAwait(false);
         }
         catch (IOException ex)
         {
@@ -65,21 +52,26 @@ internal sealed class AssetsRestorer : QueueDispatchAction<KeyValuePair<string, 
         }
     }
 
-    private async Task DownloadAsync(AssetInfo assetInfo, CancellationToken cancellationToken)
+    [MustUseReturnValue]
+    private async Task<bool> DownloadAsync(AssetInfo assetInfo,
+        string key,
+        CancellationToken cancellationToken)
     {
         var downloadUri = new Uri(ResourceDownloadBase, $"{assetInfo.Hash[..2]}/{assetInfo.Hash}");
+        var targetPath = _assetManager.GetAssetObjectFile(assetInfo);
 
-        using var bufferLease = MemoryPool<byte>.Shared
-            .Rent(GetBufferSize(assetInfo.Size));
-        var remote = await _httpClient.GetStreamAsync(downloadUri, cancellationToken)
-            .ConfigureAwait(false);
-        var target = _assetManager.CreateAssetObject(assetInfo.Hash);
-        
-        await using (remote.ConfigureAwait(false))
-        await using (target.ConfigureAwait(false))
+        var result = await NetworkHelper.DownloadFileForegroundAsync(downloadUri,
+            targetPath,
+            cancellationToken).ConfigureAwait(false);
+        if (!result.IsOk)
         {
-            await remote.CopyToAsync(target, cancellationToken).ConfigureAwait(false);
+            MyOutput.Error(result.ToString());
+            return false;
         }
+        
+        AnsiConsole.WriteLine($"Downloaded {key}");
+        
+        return true;
     }
 
     #endregion
@@ -90,32 +82,13 @@ internal sealed class AssetsRestorer : QueueDispatchAction<KeyValuePair<string, 
         var (key, assetInfo) = payload;
 
         // Verify
-        if (await VerifyAsync(assetInfo.Hash, cancellationToken).ConfigureAwait(false))
+        if (await VerifyAsync(assetInfo, cancellationToken).ConfigureAwait(false))
         {
             return true;
         }
 
         // Download
-        try
-        {
-            await DownloadAsync(assetInfo, cancellationToken).ConfigureAwait(false);
-        }
-        catch (HttpRequestException ex)
-        {
-            MyOutput.Error(ex.StatusCode != null
-                ? $"http error {ex.StatusCode:D} when downloading asset"
-                : $"error when downloading asset: {ex.Message}");
-            return false;
-        }
-        catch (IOException ex)
-        {
-            MyOutput.Error(ex, "error when downloading asset");
-            return false;
-        }
-
-        AnsiConsole.WriteLine("Downloaded '{0}'", key);
-
-        return true;
+        return await DownloadAsync(assetInfo, key, cancellationToken).ConfigureAwait(false);
     }
 
     protected override void ReportProgress(double progress)

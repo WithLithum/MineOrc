@@ -83,4 +83,7 @@
     <data name="OperationDownloadFailHttp" xml:space="preserve">
         <value>下载失败：错误代码 {0}</value>
     </data>
+    <data name="OperationHashFail" xml:space="preserve">
+        <value>校验哈希码失败</value>
+    </data>
 </root>

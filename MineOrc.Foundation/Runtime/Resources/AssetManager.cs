@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 using JetBrains.Annotations;
+using MineOrc.Foundation.Manifest.Resources;
 
 namespace MineOrc.Foundation.Runtime.Resources;
 
@@ -25,25 +26,22 @@ public class AssetManager
         return File.Exists(GetAssetIndexFile(index));
     }
 
-    public bool HasAssetObject(string id)
+    public bool HasAssetObject(AssetInfo asset)
+    {
+        return HasAssetObject(asset.Hash);
+    }
+    
+    private bool HasAssetObject(string id)
     {
         return File.Exists(GetAssetObjectFile(id));
     }
-    
-    [MustDisposeResource]
-    public Stream CreateAssetObject(string id)
+
+    public string GetAssetObjectFile(AssetInfo asset)
     {
-        var prefix = id[..2];
-        var prefixPath = Path.Combine(_objectsDirectory,
-            prefix);
-        Directory.CreateDirectory(prefixPath);
-
-        Path.GetFullPath(id, prefixPath);
-
-        return File.Create(prefixPath);
+        return GetAssetObjectFile(asset.Hash);
     }
-
-    public string GetAssetObjectFile(string id)
+    
+    private string GetAssetObjectFile(string id)
     {
         var prefix = id[..2];
         var fullPath = Path.Combine(_objectsDirectory,

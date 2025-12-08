@@ -2,9 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 using MineOrc.Foundation.Manifest.Libraries;
+using MineOrc.Foundation.Network.Results;
 using MineOrc.Foundation.Platforms;
 using MineOrc.Foundation.Runtime;
 using MineOrc.Foundation.Utilities;
+using MineOrc.Network;
 using MineOrc.Resources;
 using Spectre.Console;
 
@@ -48,40 +50,31 @@ internal sealed class LibrariesRestorer : QueueDispatchAction<LibraryInfo>
     private async Task<bool> DoFileAsync(LibraryArtefactInfo artefactInfo,
         CancellationToken cancellationToken)
     {
-        if (await _libraryManager.VerifyArtefactAsync(artefactInfo,
-                cancellationToken).ConfigureAwait(false))
-        {
-            return true;
-        }
-
         try
         {
-            await DownloadAsync(artefactInfo, cancellationToken).ConfigureAwait(false);
+            if (await _libraryManager.VerifyArtefactAsync(artefactInfo,
+                    cancellationToken).ConfigureAwait(false))
+            {
+                return true;
+            }
         }
-        catch (HttpRequestException ex)
+        catch (IOException io)
         {
-            MyOutput.DownloadError(ex);
-            return false;
+            MyOutput.Warn(io, Texts.OperationHashFail);
         }
-        catch (IOException ex)
+
+        var target = _libraryManager.GetArtefactPath(artefactInfo);
+        var result = await NetworkHelper.DownloadFileForegroundAsync(artefactInfo.Url,
+            target,
+            cancellationToken
+        ).ConfigureAwait(false);
+        
+        if (!result.IsOk)
         {
-            MyOutput.Error(ex, Texts.OperationDownloadFail);
+            MyOutput.Error(result.ToString());
             return false;
         }
 
         return true;
-    }
-
-    private async Task DownloadAsync(LibraryArtefactInfo artefactInfo, CancellationToken cancellationToken)
-    {
-        var source = await MineOrcApp.HttpClient.GetStreamAsync(artefactInfo.Url,
-            cancellationToken).ConfigureAwait(false);
-        var target = _libraryManager.CreateArtefact(artefactInfo);
-
-        await using (source.ConfigureAwait(false))
-        await using (target.ConfigureAwait(false))
-        {
-            await source.CopyToAsync(target, cancellationToken).ConfigureAwait(false);
-        }
     }
 }

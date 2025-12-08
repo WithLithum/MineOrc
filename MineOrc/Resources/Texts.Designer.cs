@@ -123,6 +123,15 @@ namespace MineOrc.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to failed to verify hash.
+        /// </summary>
+        internal static string OperationHashFail {
+            get {
+                return ResourceManager.GetString("OperationHashFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Restore client jar.
         /// </summary>
         internal static string RestoreClientJarAction {

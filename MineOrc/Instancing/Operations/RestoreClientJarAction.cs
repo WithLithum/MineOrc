@@ -3,6 +3,7 @@
 
 using MineOrc.Foundation.Manifest;
 using MineOrc.Foundation.Manifest.Network;
+using MineOrc.Foundation.Network.Results;
 using MineOrc.Network;
 using MineOrc.Resources;
 
@@ -53,22 +54,14 @@ public class RestoreClientJarAction : IAsyncForegroundAction
         ClientManifest manifest,
         CancellationToken cancellationToken)
     {
-        try
+        var result = await NetworkHelper.DownloadFileForegroundAsync(clientArtefact.Url,
+                GameApplication.Versions.GetJarPath(manifest.Id),
+                cancellationToken)
+            .ConfigureAwait(false);
+
+        if (!result.IsOk)
         {
-            await NetworkHelper.DownloadFileForegroundAsync(clientArtefact.Url,
-                    GameApplication.Versions.GetJarPath(manifest.Id),
-                    cancellationToken)
-                .ConfigureAwait(false);
-        }
-        catch (HttpRequestException ex)
-        {
-            MyOutput.Error(Texts.OperationDownloadFailHttp, ex.StatusCode?.ToString("D")
-                                                            ?? ex.HttpRequestError.ToString("G"));
-            return false;
-        }
-        catch (IOException ex)
-        {
-            MyOutput.Error(ex, Texts.OperationDownloadFail);
+            MyOutput.Error(result.ToString());
             return false;
         }
 
