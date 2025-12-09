@@ -69,6 +69,15 @@ namespace MineOrc.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to file does not exist.
+        /// </summary>
+        internal static string ArgumentFileNotExist {
+            get {
+                return ResourceManager.GetString("ArgumentFileNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Downloading asset index.
         /// </summary>
         internal static string AssetRestoreDownloadIndex {
@@ -96,6 +105,15 @@ namespace MineOrc.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to error reading Java runtime list.
+        /// </summary>
+        internal static string ConfigReadJavaError {
+            get {
+                return ResourceManager.GetString("ConfigReadJavaError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to cannot get client manifest: error {0}.
         /// </summary>
         internal static string InstallManifestFailCannotGetJson {
@@ -119,6 +137,150 @@ namespace MineOrc.Resources {
         internal static string InstallManifestFailNoSuchVersion {
             get {
                 return ResourceManager.GetString("InstallManifestFailNoSuchVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List and manage Java runtimes.
+        /// </summary>
+        internal static string JavaBranch {
+            get {
+                return ResourceManager.GetString("JavaBranch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get or set the default Java runtime.
+        /// </summary>
+        internal static string JavaDefaultCommand {
+            get {
+                return ResourceManager.GetString("JavaDefaultCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No default Java runtime is set.
+        /// </summary>
+        internal static string JavaDefaultFailNoDefault {
+            get {
+                return ResourceManager.GetString("JavaDefaultFailNoDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The name of the Java runtime to set as default.
+        /// </summary>
+        internal static string JavaDefaultValueArgument {
+            get {
+                return ResourceManager.GetString("JavaDefaultValueArgument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no such Java runtime &apos;{0}&apos;.
+        /// </summary>
+        internal static string JavaFailNoSuchRuntime {
+            get {
+                return ResourceManager.GetString("JavaFailNoSuchRuntime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to failed to save runtime config.
+        /// </summary>
+        internal static string JavaFailSave {
+            get {
+                return ResourceManager.GetString("JavaFailSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List registered Java runtimes.
+        /// </summary>
+        internal static string JavaListCommand {
+            get {
+                return ResourceManager.GetString("JavaListCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Register a Java runtime.
+        /// </summary>
+        internal static string JavaRegisterCommand {
+            get {
+                return ResourceManager.GetString("JavaRegisterCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to runtime with name &apos;{0}&apos; already exists.
+        /// </summary>
+        internal static string JavaRegisterFailExistingName {
+            get {
+                return ResourceManager.GetString("JavaRegisterFailExistingName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The name of the Java runtime.
+        /// </summary>
+        internal static string JavaRegisterNameArgument {
+            get {
+                return ResourceManager.GetString("JavaRegisterNameArgument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The path to the Java executable.
+        /// </summary>
+        internal static string JavaRegisterPathArgument {
+            get {
+                return ResourceManager.GetString("JavaRegisterPathArgument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The version of the Java register.
+        /// </summary>
+        internal static string JavaRegisterVersionArgument {
+            get {
+                return ResourceManager.GetString("JavaRegisterVersionArgument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version.
+        /// </summary>
+        internal static string JavaRegisterVersionColumn {
+            get {
+                return ResourceManager.GetString("JavaRegisterVersionColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto added.
+        /// </summary>
+        internal static string JavaRegistryAutoAddedColumn {
+            get {
+                return ResourceManager.GetString("JavaRegistryAutoAddedColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        internal static string JavaRegistryNameColumn {
+            get {
+                return ResourceManager.GetString("JavaRegistryNameColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Path.
+        /// </summary>
+        internal static string JavaRegistryPathColumn {
+            get {
+                return ResourceManager.GetString("JavaRegistryPathColumn", resourceCulture);
             }
         }
         

@@ -110,4 +110,58 @@
     <data name="OperationGenericProgressText" xml:space="preserve">
         <value>进度</value>
     </data>
+    <data name="ConfigReadJavaError" xml:space="preserve">
+        <value>读取 Java 运行时列表时出错</value>
+    </data>
+    <data name="JavaRegisterCommand" xml:space="preserve">
+        <value>注册 Java 运行时</value>
+    </data>
+    <data name="JavaRegisterVersionArgument" xml:space="preserve">
+        <value>要注册的 Java 版本</value>
+    </data>
+    <data name="JavaRegisterNameArgument" xml:space="preserve">
+        <value>要注册的 Java 运行时名称</value>
+    </data>
+    <data name="JavaRegisterPathArgument" xml:space="preserve">
+        <value>Java 运行时可执行文件路径</value>
+    </data>
+    <data name="ArgumentFileNotExist" xml:space="preserve">
+        <value>文件不存在</value>
+    </data>
+    <data name="JavaRegisterFailExistingName" xml:space="preserve">
+        <value>名为‘{0}’的运行时已存在</value>
+    </data>
+    <data name="JavaFailSave" xml:space="preserve">
+        <value>保存运行时配置失败</value>
+    </data>
+    <data name="JavaListCommand" xml:space="preserve">
+        <value>列出已注册的 Java 运行时</value>
+    </data>
+    <data name="JavaRegistryNameColumn" xml:space="preserve">
+        <value>名称</value>
+    </data>
+    <data name="JavaRegisterVersionColumn" xml:space="preserve">
+        <value>版本</value>
+    </data>
+    <data name="JavaRegistryPathColumn" xml:space="preserve">
+        <value>路径</value>
+    </data>
+    <data name="JavaRegistryAutoAddedColumn" xml:space="preserve">
+        <value>自动添加</value>
+    </data>
+    <data name="JavaBranch" xml:space="preserve">
+        <value>查看和管理 Java 运行时</value>
+    </data>
+    <data name="JavaDefaultCommand" xml:space="preserve">
+        <value>查看或更改默认 Java 运行时</value>
+    </data>
+    <data name="JavaDefaultValueArgument" xml:space="preserve">
+        <value>要设置为默认的 Java 运行时的名称</value>
+    </data>
+    <data name="JavaDefaultFailNoDefault" xml:space="preserve">
+        <value>没有设置默认的 Java 运行时</value>
+    </data>
+    <data name="JavaFailNoSuchRuntime" xml:space="preserve">
+        <value>名为’{0}‘的运行时不存在</value>
+    </data>
 </root>

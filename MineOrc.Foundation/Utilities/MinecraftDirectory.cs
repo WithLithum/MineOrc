@@ -13,7 +13,7 @@ public static class MinecraftDirectory
         "libraries");
     public static readonly string UserVersions = Path.Combine(UserRoot,
         "versions");
-
+    
     private static string GetUserRoot()
     {
         if (OperatingSystem.IsWindows())

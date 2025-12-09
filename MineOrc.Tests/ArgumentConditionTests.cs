@@ -88,7 +88,7 @@ public class ArgumentConditionTests
         var sourceFeatures = new Dictionary<string, bool>
         {
             { "foo", true },
-            { "foobar", false }
+            { "foobar", false },
         };
 
         // Act

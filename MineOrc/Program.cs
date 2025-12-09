@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 using System.CommandLine;
-using System.Diagnostics;
 using MineOrc;
 using MineOrc.Commands;
 using MineOrc.Resources;
@@ -15,7 +14,13 @@ var command = new RootCommand(Texts.RootDescription)
         SearchVersionCommand.CreateCommand(),
         InstallVersionCommand.CreateCommand(),
         RestoreVersionCommand.CreateCommand(),
-    }
+    },
+    new Command("java", Texts.JavaBranch)
+    {
+        ListJavaCommand.CreateCommand(),
+        RegisterJavaCommand.CreateCommand(),
+        DefaultJavaCommand.CreateCommand(),
+    },
 };
 
 AppDomain.CurrentDomain.UnhandledException += (_, args) =>
@@ -26,10 +31,12 @@ AppDomain.CurrentDomain.UnhandledException += (_, args) =>
 
 try
 {
+    await MineOrcApp.InitializeAsync().ConfigureAwait(false);
+    
     return await command.Parse(args).InvokeAsync(
         new InvocationConfiguration
         {
-            EnableDefaultExceptionHandler = false
+            EnableDefaultExceptionHandler = false,
         }).ConfigureAwait(false);
 }
 catch (OperationCanceledException)
