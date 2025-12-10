@@ -21,8 +21,6 @@ public sealed record AuthenticationResult
     
     public string? UserType { get; init; }
     
-    public bool HasGame { get; init; }
-    
     /// <summary>
     /// Gets the value to pass to Minecraft for the user UUID argument instead of the profile
     /// UUID.

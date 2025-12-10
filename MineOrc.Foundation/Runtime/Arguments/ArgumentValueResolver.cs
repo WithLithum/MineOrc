@@ -7,11 +7,11 @@ namespace MineOrc.Foundation.Runtime.Arguments;
 
 public readonly ref struct ArgumentValueResolver
 {
-    private readonly IDictionary<string, string> _values;
+    private readonly IReadOnlyDictionary<string, string> _values;
     private readonly StringBuilder _variableBuilder = new();
     private readonly StringBuilder _parseBuilder = new();
 
-    public ArgumentValueResolver(IDictionary<string, string> values)
+    public ArgumentValueResolver(IReadOnlyDictionary<string, string> values)
     {
         _values = values;
     }

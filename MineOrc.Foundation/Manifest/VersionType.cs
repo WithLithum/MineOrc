@@ -12,6 +12,7 @@ namespace MineOrc.Foundation.Manifest;
 [JsonConverter(typeof(VersionTypeConverter))]
 public enum VersionType
 {
+    Invalid,
     /// <summary>
     /// Indicates a release version.
     /// </summary>
@@ -48,5 +49,5 @@ public enum VersionType
     /// This version type covers from the pre-Classic releases all the way up to the final release
     /// in the Alpha development phase.
     /// </remarks>
-    OldAlpha
+    OldAlpha,
 }

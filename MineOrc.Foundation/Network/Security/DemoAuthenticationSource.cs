@@ -16,7 +16,6 @@ public sealed class DemoAuthenticationSource : IAuthenticationSource
             OverrideId = "uuid",
             Xuid = string.Empty,
             UserType = "msa",
-            HasGame = false,
         });
     }
 }
