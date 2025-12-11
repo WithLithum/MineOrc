@@ -1,7 +1,17 @@
 # ![Minecraft Orchestrator](assets/logo.png) MineOrc
 
+![CalVer](https://img.shields.io/badge/calver-YYYY.MINOR.MICRO-22bfda?style=flat-square)
+
 MineOrc (*Mine*craft *Orc*hestrator) is a Minecraft instance manager and
 launcher that works from the command line.
+
+## Features
+
+- [x] Game launch
+- [x] Profile/Instance management
+- [x] Java registration & management
+- [ ] Microsoft Authentication (MSA)
+- [ ] Mod loaders support
 
 ## Running
 
