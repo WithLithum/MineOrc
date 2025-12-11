@@ -110,7 +110,7 @@
     <data name="OperationGenericProgressText" xml:space="preserve">
         <value>进度</value>
     </data>
-    <data name="ConfigReadJavaError" xml:space="preserve">
+    <data name="InitializationLoadRuntimesError" xml:space="preserve">
         <value>读取 Java 运行时列表时出错</value>
     </data>
     <data name="JavaRegisterCommand" xml:space="preserve">
@@ -163,5 +163,17 @@
     </data>
     <data name="JavaFailNoSuchRuntime" xml:space="preserve">
         <value>名为’{0}‘的运行时不存在</value>
+    </data>
+    <data name="ProfileReadError" xml:space="preserve">
+        <value>读取实例‘{0}’时失败</value>
+    </data>
+    <data name="ProfileReadFailNull" xml:space="preserve">
+        <value>实例‘{0}‘的配置文件只有 null</value>
+    </data>
+    <data name="ProfileReadFailRuleViolation" xml:space="preserve">
+        <value>实例名称‘{0}’违反规则‘{1}’</value>
+    </data>
+    <data name="InitializationDirectoryError" xml:space="preserve">
+        <value>创建程序目录时出错</value>
     </data>
 </root>

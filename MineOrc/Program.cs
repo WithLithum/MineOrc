@@ -29,10 +29,13 @@ AppDomain.CurrentDomain.UnhandledException += (_, args) =>
     MyOutput.Error(((Exception)args.ExceptionObject).Message);
 };
 
+if (!await MineOrcApp.InitializeAsync().ConfigureAwait(false))
+{
+    return ExitCodes.InitializationFailed;
+}
+
 try
 {
-    await MineOrcApp.InitializeAsync().ConfigureAwait(false);
-    
     return await command.Parse(args).InvokeAsync(
         new InvocationConfiguration
         {

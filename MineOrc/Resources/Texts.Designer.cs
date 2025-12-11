@@ -105,11 +105,20 @@ namespace MineOrc.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to error when creating required directories.
+        /// </summary>
+        internal static string InitializationDirectoryError {
+            get {
+                return ResourceManager.GetString("InitializationDirectoryError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to error reading Java runtime list.
         /// </summary>
-        internal static string ConfigReadJavaError {
+        internal static string InitializationLoadRuntimesError {
             get {
-                return ResourceManager.GetString("ConfigReadJavaError", resourceCulture);
+                return ResourceManager.GetString("InitializationLoadRuntimesError", resourceCulture);
             }
         }
         
@@ -335,6 +344,33 @@ namespace MineOrc.Resources {
         internal static string OperationReadClientManifestFailed {
             get {
                 return ResourceManager.GetString("OperationReadClientManifestFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to error when reading read profile &apos;{0}&apos;.
+        /// </summary>
+        internal static string ProfileReadError {
+            get {
+                return ResourceManager.GetString("ProfileReadError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to profile &apos;{0}&apos; data contains only null.
+        /// </summary>
+        internal static string ProfileReadFailNull {
+            get {
+                return ResourceManager.GetString("ProfileReadFailNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to profile name &apos;{0}&apos; violates the profile name rule: {1}.
+        /// </summary>
+        internal static string ProfileReadFailRuleViolation {
+            get {
+                return ResourceManager.GetString("ProfileReadFailRuleViolation", resourceCulture);
             }
         }
         

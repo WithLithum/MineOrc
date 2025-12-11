@@ -121,7 +121,7 @@
     <data name="OperationGenericProgressText" xml:space="preserve">
         <value>Progress</value>
     </data>
-    <data name="ConfigReadJavaError" xml:space="preserve">
+    <data name="InitializationLoadRuntimesError" xml:space="preserve">
         <value>error reading Java runtime list</value>
     </data>
     <data name="JavaRegisterCommand" xml:space="preserve">
@@ -174,5 +174,17 @@
     </data>
     <data name="JavaFailNoSuchRuntime" xml:space="preserve">
         <value>no such Java runtime '{0}'</value>
+    </data>
+    <data name="ProfileReadError" xml:space="preserve">
+        <value>error when reading read profile '{0}'</value>
+    </data>
+    <data name="ProfileReadFailNull" xml:space="preserve">
+        <value>profile '{0}' data contains only null</value>
+    </data>
+    <data name="ProfileReadFailRuleViolation" xml:space="preserve">
+        <value>profile name '{0}' violates the profile name rule: {1}</value>
+    </data>
+    <data name="InitializationDirectoryError" xml:space="preserve">
+        <value>error when creating required directories</value>
     </data>
 </root>

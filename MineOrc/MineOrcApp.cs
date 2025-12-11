@@ -39,6 +39,7 @@ public static class MineOrcApp
     public static readonly JavaRegistryManager JavaRegistry = new(JavaConfigPath);
 
     public static async Task InitializeAsync()
+    [MustUseReturnValue("Initialization may fail")]
     {
         try
         {
@@ -46,7 +47,9 @@ public static class MineOrcApp
         }
         catch (Exception ex) when (ex is IOException or JsonException)
         {
-            MyOutput.Warn(ex, Texts.ConfigReadJavaError);
+            MyOutput.Warn(ex, Texts.InitializationLoadRuntimesError);
         }
+
+        return true;
     }
 }
