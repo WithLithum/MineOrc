@@ -105,6 +105,69 @@ namespace MineOrc.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Creates a new profile.
+        /// </summary>
+        internal static string CommandNew {
+            get {
+                return ResourceManager.GetString("CommandNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The name of the new profile.
+        /// </summary>
+        internal static string CommandNewArgumentName {
+            get {
+                return ResourceManager.GetString("CommandNewArgumentName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The version of the new profile.
+        /// </summary>
+        internal static string CommandNewArgumentVersion {
+            get {
+                return ResourceManager.GetString("CommandNewArgumentVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to profile &apos;{0}&apos; already exists.
+        /// </summary>
+        internal static string CommandNewFailAlreadyExists {
+            get {
+                return ResourceManager.GetString("CommandNewFailAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to profile name &apos;{0}&apos; does not conform to pattern &apos;{1}&apos;.
+        /// </summary>
+        internal static string CommandNewFailNameInvalid {
+            get {
+                return ResourceManager.GetString("CommandNewFailNameInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to version &apos;{0}&apos; does not exist and version install is disabled.
+        /// </summary>
+        internal static string CommandNewFailNoInstallVersion {
+            get {
+                return ResourceManager.GetString("CommandNewFailNoInstallVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do not install the specified version if not already installed.
+        /// </summary>
+        internal static string CommandNewOptionNoInstallVersion {
+            get {
+                return ResourceManager.GetString("CommandNewOptionNoInstallVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to error when creating required directories.
         /// </summary>
         internal static string InitializationDirectoryError {
@@ -321,6 +384,15 @@ namespace MineOrc.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to error occurred.
+        /// </summary>
+        internal static string OperationGenericExceptionError {
+            get {
+                return ResourceManager.GetString("OperationGenericExceptionError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Progress.
         /// </summary>
         internal static string OperationGenericProgressText {
@@ -348,6 +420,15 @@ namespace MineOrc.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to profile name &apos;{0}&apos; violates the profile name rule: {1}.
+        /// </summary>
+        internal static string ProfileFailRuleViolation {
+            get {
+                return ResourceManager.GetString("ProfileFailRuleViolation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to error when reading read profile &apos;{0}&apos;.
         /// </summary>
         internal static string ProfileReadError {
@@ -362,15 +443,6 @@ namespace MineOrc.Resources {
         internal static string ProfileReadFailNull {
             get {
                 return ResourceManager.GetString("ProfileReadFailNull", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to profile name &apos;{0}&apos; violates the profile name rule: {1}.
-        /// </summary>
-        internal static string ProfileReadFailRuleViolation {
-            get {
-                return ResourceManager.GetString("ProfileReadFailRuleViolation", resourceCulture);
             }
         }
         

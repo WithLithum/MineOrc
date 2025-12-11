@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 using System.Text.Json.Serialization;
+using MineOrc.Foundation.Instancing;
 using MineOrc.Foundation.Runtime.Java;
 
 namespace MineOrc.Foundation.Json;
@@ -12,6 +13,5 @@ namespace MineOrc.Foundation.Json;
 [JsonSerializable(typeof(IReadOnlyList<JavaInfo>))]
 [JsonSerializable(typeof(IReadOnlyDictionary<string, JavaInfo>))]
 [JsonSerializable(typeof(JavaData))]
-internal sealed partial class MineOrcFilesJsonContext : JsonSerializerContext
-{
-}
+[JsonSerializable(typeof(ProfileInfo))]
+public sealed partial class MineOrcFilesJsonContext : JsonSerializerContext;

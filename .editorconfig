@@ -3,6 +3,7 @@ root = true
 [*]
 indent_style = space
 indent_size = 4
+max_line_length = 100
 
 [*.{cs,vb}]
 ### API rules ###
@@ -75,6 +76,7 @@ resharper_csharp_trailing_comma_in_multiline_lists = true
 resharper_csharp_align_multiline_extends_list = true
 resharper_csharp_align_multiline_property_pattern = true
 resharper_csharp_keep_existing_linebreaks = true
-
-resharper_csharp_wrap_object_and_collection_initializer_style = chop_always
-resharper_csharp_wrap_arguments_style = chop_always
+resharper_csharp_keep_existing_arrangement = true
+resharper_csharp_keep_user_wrapping = true
+resharper_csharp_wrap_object_and_collection_initializer_style = chop_if_long
+resharper_csharp_wrap_arguments_style = chop_if_long

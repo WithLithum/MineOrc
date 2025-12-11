@@ -20,6 +20,22 @@ public static class MyOutput
         AnsiConsole.MarkupLineInterpolated($"[grey]{exception}[/]");
     }
     
+    [StringFormatMethod("format")]
+    public static void Warn([StringSyntax("CompositeFormat")] string format,
+        params object[] args)
+    {
+        AnsiConsole.MarkupLineInterpolated($"[bold white]{MineOrcApp.BaseName}:[/] [bold yellow]warn:[/] [gold1]{string.Format(format, args)}[/]");
+    }
+    
+    [StringFormatMethod("format")]
+    public static void Warn(Exception exception,
+        [StringSyntax("CompositeFormat")] string format,
+        params object[] args)
+    {
+        Warn(format, args);
+        AnsiConsole.MarkupLineInterpolated($"[grey]{exception}[/]");
+    }
+    
     public static void Error(string message)
     {
         AnsiConsole.MarkupLineInterpolated($"[bold white]{MineOrcApp.BaseName}:[/] [red]{message}[/]");
@@ -35,5 +51,14 @@ public static class MyOutput
     {
         Error(message);
         AnsiConsole.WriteException(exception, ExceptionFormats.ShortenEverything);
+    }
+    
+    [StringFormatMethod("format")]
+    public static void Error(Exception exception,
+        [StringSyntax("CompositeFormat")] string format,
+        params object[] args)
+    {
+        Error(format, args);
+        AnsiConsole.MarkupLineInterpolated($"[grey]{exception}[/]");
     }
 }

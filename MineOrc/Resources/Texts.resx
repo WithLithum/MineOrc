@@ -181,10 +181,34 @@
     <data name="ProfileReadFailNull" xml:space="preserve">
         <value>profile '{0}' data contains only null</value>
     </data>
-    <data name="ProfileReadFailRuleViolation" xml:space="preserve">
+    <data name="ProfileFailRuleViolation" xml:space="preserve">
         <value>profile name '{0}' violates the profile name rule: {1}</value>
     </data>
     <data name="InitializationDirectoryError" xml:space="preserve">
         <value>error when creating required directories</value>
+    </data>
+    <data name="CommandNewFailAlreadyExists" xml:space="preserve">
+        <value>profile '{0}' already exists</value>
+    </data>
+    <data name="OperationGenericExceptionError" xml:space="preserve">
+        <value>error occurred</value>
+    </data>
+    <data name="CommandNew" xml:space="preserve">
+        <value>Creates a new profile</value>
+    </data>
+    <data name="CommandNewArgumentName" xml:space="preserve">
+        <value>The name of the new profile</value>
+    </data>
+    <data name="CommandNewArgumentVersion" xml:space="preserve">
+        <value>The version of the new profile</value>
+    </data>
+    <data name="CommandNewOptionNoInstallVersion" xml:space="preserve">
+        <value>Do not install the specified version if not already installed</value>
+    </data>
+    <data name="CommandNewFailNameInvalid" xml:space="preserve">
+        <value>profile name '{0}' does not conform to pattern '{1}'</value>
+    </data>
+    <data name="CommandNewFailNoInstallVersion" xml:space="preserve">
+        <value>version '{0}' does not exist and version install is disabled</value>
     </data>
 </root>

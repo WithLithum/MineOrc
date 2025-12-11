@@ -170,10 +170,34 @@
     <data name="ProfileReadFailNull" xml:space="preserve">
         <value>实例‘{0}‘的配置文件只有 null</value>
     </data>
-    <data name="ProfileReadFailRuleViolation" xml:space="preserve">
+    <data name="ProfileFailRuleViolation" xml:space="preserve">
         <value>实例名称‘{0}’违反规则‘{1}’</value>
     </data>
     <data name="InitializationDirectoryError" xml:space="preserve">
         <value>创建程序目录时出错</value>
+    </data>
+    <data name="CommandNewFailAlreadyExists" xml:space="preserve">
+        <value>实例‘{0}’已存在</value>
+    </data>
+    <data name="OperationGenericExceptionError" xml:space="preserve">
+        <value>发生错误</value>
+    </data>
+    <data name="CommandNew" xml:space="preserve">
+        <value>创建新的实例</value>
+    </data>
+    <data name="CommandNewArgumentName" xml:space="preserve">
+        <value>新实例的名称</value>
+    </data>
+    <data name="CommandNewArgumentVersion" xml:space="preserve">
+        <value>新实例的版本</value>
+    </data>
+    <data name="CommandNewOptionNoInstallVersion" xml:space="preserve">
+        <value>如果指定的版本未安装则不安装该版本</value>
+    </data>
+    <data name="CommandNewFailNameInvalid" xml:space="preserve">
+        <value>实例名称‘{0}’不符合规则’{1}‘</value>
+    </data>
+    <data name="CommandNewFailNoInstallVersion" xml:space="preserve">
+        <value>版本‘{0}’不存在，且不允许安装新版本</value>
     </data>
 </root>

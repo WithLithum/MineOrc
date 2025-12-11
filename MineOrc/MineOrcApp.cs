@@ -4,10 +4,15 @@
 using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text.Json;
+using JetBrains.Annotations;
+using MineOrc.Foundation.Instancing;
 using MineOrc.Foundation.Network;
 using MineOrc.Foundation.Runtime.Java;
 using MineOrc.Foundation.Utilities;
+using MineOrc.Instancing;
+using MineOrc.Network.Security;
 using MineOrc.Resources;
+using Spectre.Console;
 
 namespace MineOrc;
 
@@ -22,6 +27,9 @@ public static class MineOrcApp
 
     private static readonly string JavaConfigPath = Path.Combine(MinecraftDirectory.UserRoot,
         "mineorc_java_runtimes.json");
+
+    private static readonly string ProfilesPath = Path.Combine(MinecraftDirectory.UserRoot,
+        "mineorc_profiles");
     
     public static readonly HttpClient HttpClient = new()
     {
@@ -38,9 +46,23 @@ public static class MineOrcApp
 
     public static readonly JavaRegistryManager JavaRegistry = new(JavaConfigPath);
 
-    public static async Task InitializeAsync()
+    public static readonly AccountManager AccountManager = new();
+
+    public static readonly ProfileManager ProfileManager = new(ProfilesPath);
+
     [MustUseReturnValue("Initialization may fail")]
+    public static async Task<bool> InitializeAsync()
     {
+        try
+        {
+            Directory.CreateDirectory(ProfilesPath);
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        {
+            MyOutput.Error(ex, Texts.InitializationDirectoryError);
+            return false;
+        }
+
         try
         {
             await JavaRegistry.LoadAsync().ConfigureAwait(false);

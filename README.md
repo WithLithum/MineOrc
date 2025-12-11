@@ -25,9 +25,14 @@ To develop, you probably need a decent .NET IDE. Your free options are:
 To contribute, fork, modify and open a pull request. To report a bug or request
 a feature, please use Issues.
 
-## Licence
+## Legal
 
 This project is licensed under the GPL-3.0-or-later licence.
+
+**Disclaimer**: An AI assistant was used when developing this computer
+program. For now, every AI output that made into the code are in-line typing
+assistance. All AI output are human reviewed and resembles what the developer
+would have coded manually by hand.
 
 <!-- SPDX-FileCopyrightText: 2025 WithLithum & contributors -->
 <!-- SPDX-License-Identifier: GPL-3.0-or-later -->
