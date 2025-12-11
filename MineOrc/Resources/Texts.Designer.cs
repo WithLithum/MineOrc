@@ -105,6 +105,132 @@ namespace MineOrc.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to login failed.
+        /// </summary>
+        internal static string CommandGenericLoginFailed {
+            get {
+                return ResourceManager.GetString("CommandGenericLoginFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no such profile: &quot;{0}&quot;.
+        /// </summary>
+        internal static string CommandGenericNoProfile {
+            get {
+                return ResourceManager.GetString("CommandGenericNoProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Launches a profile.
+        /// </summary>
+        internal static string CommandLaunch {
+            get {
+                return ResourceManager.GetString("CommandLaunch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The profile to launch.
+        /// </summary>
+        internal static string CommandLaunchArgumentName {
+            get {
+                return ResourceManager.GetString("CommandLaunchArgumentName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to default account is unset or invalid.
+        /// </summary>
+        internal static string CommandLaunchFailNoDefaultAccount {
+            get {
+                return ResourceManager.GetString("CommandLaunchFailNoDefaultAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to can&apos;t find a default Java to use; try specify or register one.
+        /// </summary>
+        internal static string CommandLaunchFailNoJava {
+            get {
+                return ResourceManager.GetString("CommandLaunchFailNoJava", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to profile &quot;{0}&quot; has a non-existent version; try restore it first.
+        /// </summary>
+        internal static string CommandLaunchFailNoVersion {
+            get {
+                return ResourceManager.GetString("CommandLaunchFailNoVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to cannot create process.
+        /// </summary>
+        internal static string CommandLaunchFailProcessStart {
+            get {
+                return ResourceManager.GetString("CommandLaunchFailProcessStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Launch in Demo Mode.
+        /// </summary>
+        internal static string CommandLaunchOptionDemo {
+            get {
+                return ResourceManager.GetString("CommandLaunchOptionDemo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Java executable to use.
+        /// </summary>
+        internal static string CommandLaunchOptionJavaFile {
+            get {
+                return ResourceManager.GetString("CommandLaunchOptionJavaFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The registered name of Java to use.
+        /// </summary>
+        internal static string CommandLaunchOptionJavaName {
+            get {
+                return ResourceManager.GetString("CommandLaunchOptionJavaName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The maximum amount of memory Minecraft can use.
+        /// </summary>
+        internal static string CommandLaunchOptionMaxMemory {
+            get {
+                return ResourceManager.GetString("CommandLaunchOptionMaxMemory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The minimum amount of memory Minecraft is assigned.
+        /// </summary>
+        internal static string CommandLaunchOptionMinMemory {
+            get {
+                return ResourceManager.GetString("CommandLaunchOptionMinMemory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do not restore the profile.
+        /// </summary>
+        internal static string CommandLaunchOptionNoRestore {
+            get {
+                return ResourceManager.GetString("CommandLaunchOptionNoRestore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Creates a new profile.
         /// </summary>
         internal static string CommandNew {
@@ -389,6 +515,15 @@ namespace MineOrc.Resources {
         internal static string OperationGenericExceptionError {
             get {
                 return ResourceManager.GetString("OperationGenericExceptionError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to cannot create directory &apos;{0}&apos;.
+        /// </summary>
+        internal static string OperationGenericMakeDirFail {
+            get {
+                return ResourceManager.GetString("OperationGenericMakeDirFail", resourceCulture);
             }
         }
         

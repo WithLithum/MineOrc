@@ -200,4 +200,49 @@
     <data name="CommandNewFailNoInstallVersion" xml:space="preserve">
         <value>版本‘{0}’不存在，且不允许安装新版本</value>
     </data>
+    <data name="CommandLaunch" xml:space="preserve">
+        <value>启动指定实例</value>
+    </data>
+    <data name="CommandLaunchArgumentName" xml:space="preserve">
+        <value>要启动的实例</value>
+    </data>
+    <data name="CommandLaunchOptionJavaFile" xml:space="preserve">
+        <value>要使用的 Java 运行时可执行文件</value>
+    </data>
+    <data name="CommandLaunchOptionJavaName" xml:space="preserve">
+        <value>要使用的 Java 的注册名称</value>
+    </data>
+    <data name="CommandLaunchOptionMaxMemory" xml:space="preserve">
+        <value>Minecraft 可以使用的最大内存量</value>
+    </data>
+    <data name="CommandLaunchOptionMinMemory" xml:space="preserve">
+        <value>要为 Minecraft 分配的最小内存量</value>
+    </data>
+    <data name="CommandLaunchOptionDemo" xml:space="preserve">
+        <value>以演示模式启动游戏</value>
+    </data>
+    <data name="CommandGenericNoProfile" xml:space="preserve">
+        <value>无此实例："{0}"</value>
+    </data>
+    <data name="CommandLaunchFailNoVersion" xml:space="preserve">
+        <value>实例“{0}”指定了不存在的版本，请先尝试还原该实例</value>
+    </data>
+    <data name="CommandLaunchOptionNoRestore" xml:space="preserve">
+        <value>不要还原指定的实例</value>
+    </data>
+    <data name="CommandLaunchFailNoDefaultAccount" xml:space="preserve">
+        <value>默认账户未设置或无效</value>
+    </data>
+    <data name="CommandGenericLoginFailed" xml:space="preserve">
+        <value>登录失败</value>
+    </data>
+    <data name="CommandLaunchFailNoJava" xml:space="preserve">
+        <value>无法找到默认 Java，请先注册或指定一个 Java</value>
+    </data>
+    <data name="OperationGenericMakeDirFail" xml:space="preserve">
+        <value>无法创建文件夹‘{0}’</value>
+    </data>
+    <data name="CommandLaunchFailProcessStart" xml:space="preserve">
+        <value>无法创建进程</value>
+    </data>
 </root>

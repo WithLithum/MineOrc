@@ -13,9 +13,10 @@ public class AccountManager
     public string? DefaultAccount { get; set; }
 
     public bool TryGetAccount(string accountName,
-        [NotNullWhen(true)] IAccountModel? result)
+        [NotNullWhen(true)] out IAccountModel? result)
     {
         // TODO implement
+        result = null;
         return false;
     }
 }

@@ -41,7 +41,8 @@ public sealed partial class ProfileManager
 
     public bool HasProfile(string profileName)
     {
-        return File.Exists(GetProfileDirectory(profileName));
+        return File.Exists(Path.Combine(GetProfileDirectory(profileName),
+            ProfileJsonName));
     }
 
     public async Task CreateProfileAsync(string profileName,
@@ -72,7 +73,7 @@ public sealed partial class ProfileManager
         }
     }
 
-    public async Task<ProfileInfo> ReadProfileOrDefaultAsync(string profileName)
+    public async Task<ProfileInfo> ReadProfileAsync(string profileName)
     {
         ThrowIfInvalidProfileName(profileName);
 

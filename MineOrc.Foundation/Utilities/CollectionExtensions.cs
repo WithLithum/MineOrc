@@ -5,6 +5,16 @@ namespace MineOrc.Foundation.Utilities;
 
 public static class CollectionExtensions
 {
+    public static void AddIf<T>(this ICollection<T> collection,
+        bool condition,
+        T value)
+    {
+        if (condition)
+        {
+            collection.Add(value);
+        }
+    }
+    
     public static void AddIfNotNull<TKey, TValue>(this IDictionary<TKey, TValue> dictionary,
         TKey key,
         TValue? value)

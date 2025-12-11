@@ -1,8 +1,11 @@
 ﻿// SPDX-FileCopyrightText: 2025 WithLithum & contributors
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Text;
 using MineOrc.Foundation.Manifest;
+using MineOrc.Foundation.Manifest.Options;
 using MineOrc.Foundation.Runtime.Launch;
 using MineOrc.Foundation.Utilities;
 
@@ -24,25 +27,101 @@ public static class ArgumentAssembler
             {
                 builder.Append(Path.PathSeparator);
             }
-            
+
             builder.Append(path);
         }
 
         return builder.ToString();
     }
-    
-    public static ArgumentValueResolver CreateJvmResolver(LaunchJvmSettings settings)
+
+    public static ProcessStartInfo CreateStartInfo(string javaExecutable,
+        VersionArguments arguments,
+        IEnumerable<string> classPath,
+        LaunchJvmSettings jvmSettings,
+        LaunchGameSettings gameSettings)
+    {
+        var startInfo = new ProcessStartInfo(javaExecutable);
+
+        // JVM
+        if (jvmSettings.MinMemory.HasValue)
+        {
+            startInfo.ArgumentList.Add($"-Xms{jvmSettings.MinMemory:D}M");
+        }
+        
+        if (jvmSettings.MaxMemory.HasValue)
+        {
+            startInfo.ArgumentList.Add($"-Xmx{jvmSettings.MaxMemory:D}M");
+        }
+        AppendJvmArguments(jvmSettings, classPath, arguments.Jvm, startInfo.ArgumentList);
+        
+        // Main class
+        startInfo.ArgumentList.Add(jvmSettings.MainClass);
+        
+        // Game
+        AppendGameArguments(gameSettings, arguments.Game, startInfo.ArgumentList);
+
+        return startInfo;
+    }
+
+    private static void AppendJvmArguments(LaunchJvmSettings settings,
+        IEnumerable<string> classPath,
+        IEnumerable<JvmArgumentEntry> entries,
+        Collection<string> addTo)
+    {
+        var resolver = CreateJvmResolver(settings, classPath);
+
+        foreach (var entry in entries
+                     .Where(x => x.Rules == null || ArgumentConditions.CheckApplies(x.Rules))
+                     .SelectMany(x => x.Value))
+        {
+            addTo.Add(resolver.Resolve(entry));
+        }
+    }
+
+    public static ArgumentValueResolver CreateJvmResolver(LaunchJvmSettings settings,
+        IEnumerable<string> classpath)
     {
         var dict = new Dictionary<string, string>
         {
             { "natives_directory", settings.NativesDirectory },
             { "launcher_name", settings.LauncherBrand },
             { "launcher_version", settings.LauncherVersion },
+            { "classpath", AssembleClasspath(classpath) },
         };
 
         return new ArgumentValueResolver(dict);
     }
-    
+
+    private static void AppendGameArguments(LaunchGameSettings settings,
+        IEnumerable<GameArgumentEntry> entries,
+        Collection<string> addTo)
+    {
+        var resolver = CreateGameResolver(settings);
+        var features = GetGameFeatures(settings);
+        foreach (var entry in entries
+                     .Where(x =>
+                         x.Rules == null || ArgumentConditions.CheckApplies(x.Rules, features))
+                     .SelectMany(x => x.Value))
+        {
+            addTo.Add(resolver.Resolve(entry));
+        }
+    }
+
+    private static IReadOnlyCollection<string> GetGameFeatures(LaunchGameSettings settings)
+    {
+        var list = new List<string>();
+        list.AddIf(settings.IsDemoMode, GameArgumentFeature.IsDemoUser);
+        list.AddIf(settings.CustomResolution.HasValue, GameArgumentFeature.HasCustomResolution);
+        list.AddIf(settings.QuickPlayPath != null, GameArgumentFeature.HasQuickPlaysSupport);
+        list.AddIf(settings.QuickPlaySingleplayer != null,
+            GameArgumentFeature.IsQuickPlaySingleplayer);
+        list.AddIf(settings.QuickPlayMultiplayer != null,
+            GameArgumentFeature.IsQuickPlayMultiplayer);
+        list.AddIf(settings.QuickPlayRealms != null, GameArgumentFeature.IsQuickPlayRealms);
+
+        return list;
+    }
+
     public static ArgumentValueResolver CreateGameResolver(LaunchGameSettings settings)
     {
         var auth = settings.AuthenticationResult;
@@ -73,7 +152,7 @@ public static class ArgumentAssembler
             dict.Add("resolution_width", size.Width.ToString("D"));
             dict.Add("resolution_height", size.Height.ToString("D"));
         }
-        
+
         dict.AddIfNotNull("quickPlayPath", settings.QuickPlayPath);
         dict.AddIfNotNull("quickPlaySingleplayer", settings.QuickPlaySingleplayer);
         dict.AddIfNotNull("quickPlayMultiplayer", settings.QuickPlayMultiplayer);

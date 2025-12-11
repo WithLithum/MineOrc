@@ -11,8 +11,6 @@ public sealed record LaunchJvmSettings
     
     public required string NativesDirectory { get; init; }
     
-    public required IEnumerable<string> Classpath { get; init; }
-    
     public required string LauncherBrand { get; init; }
     
     public required string LauncherVersion { get; init; }

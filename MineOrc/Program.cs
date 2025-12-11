@@ -22,6 +22,7 @@ var command = new RootCommand(Texts.RootDescription)
         DefaultJavaCommand.CreateCommand(),
     },
     NewCommand.CreateCommand(),
+    LaunchCommand.CreateCommand(),
 };
 
 AppDomain.CurrentDomain.UnhandledException += (_, args) =>

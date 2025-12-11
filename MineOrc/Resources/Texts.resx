@@ -211,4 +211,49 @@
     <data name="CommandNewFailNoInstallVersion" xml:space="preserve">
         <value>version '{0}' does not exist and version install is disabled</value>
     </data>
+    <data name="CommandLaunch" xml:space="preserve">
+        <value>Launches a profile</value>
+    </data>
+    <data name="CommandLaunchArgumentName" xml:space="preserve">
+        <value>The profile to launch</value>
+    </data>
+    <data name="CommandLaunchOptionJavaFile" xml:space="preserve">
+        <value>The Java executable to use</value>
+    </data>
+    <data name="CommandLaunchOptionJavaName" xml:space="preserve">
+        <value>The registered name of Java to use</value>
+    </data>
+    <data name="CommandLaunchOptionMaxMemory" xml:space="preserve">
+        <value>The maximum amount of memory Minecraft can use</value>
+    </data>
+    <data name="CommandLaunchOptionMinMemory" xml:space="preserve">
+        <value>The minimum amount of memory Minecraft is assigned</value>
+    </data>
+    <data name="CommandLaunchOptionDemo" xml:space="preserve">
+        <value>Launch in Demo Mode</value>
+    </data>
+    <data name="CommandGenericNoProfile" xml:space="preserve">
+        <value>no such profile: "{0}"</value>
+    </data>
+    <data name="CommandLaunchFailNoVersion" xml:space="preserve">
+        <value>profile "{0}" has a non-existent version; try restore it first</value>
+    </data>
+    <data name="CommandLaunchOptionNoRestore" xml:space="preserve">
+        <value>Do not restore the profile</value>
+    </data>
+    <data name="CommandLaunchFailNoDefaultAccount" xml:space="preserve">
+        <value>default account is unset or invalid</value>
+    </data>
+    <data name="CommandGenericLoginFailed" xml:space="preserve">
+        <value>login failed</value>
+    </data>
+    <data name="CommandLaunchFailNoJava" xml:space="preserve">
+        <value>can't find a default Java to use; try specify or register one</value>
+    </data>
+    <data name="OperationGenericMakeDirFail" xml:space="preserve">
+        <value>cannot create directory '{0}'</value>
+    </data>
+    <data name="CommandLaunchFailProcessStart" xml:space="preserve">
+        <value>cannot create process</value>
+    </data>
 </root>
