@@ -54,6 +54,7 @@ public sealed class JavaRegistryManager
             return;
         }
 
+        DefaultKey = data.Default;
         _infos = new Dictionary<string, JavaInfo>(data.Runtimes);
     }
 
