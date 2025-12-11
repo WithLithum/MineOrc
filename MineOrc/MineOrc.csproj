@@ -13,11 +13,7 @@
     <PackageId>MineOrc</PackageId>
     <Version>0.1.0</Version>
     <Title>Minecraft Orchestrator</Title>
-    <Authors>WithLithum &amp; contributors</Authors>
     <Description>Minecraft Orchestrator</Description>
-    <Copyright>Copyright (C) 2025 WithLithum &amp; contributors</Copyright>
-    <Company>MineOrc</Company>
-    <Product>Minecraft Orchestrator</Product>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,0 +1,15 @@
+﻿<Project>
+    <PropertyGroup>
+        <Copyright>Copyright (C) 2025 WithLithum &amp; contributors</Copyright>
+        <Authors>WithLithum,MineOrc contributors</Authors>
+        <Company>WithLithum &amp; contributors</Company>
+        <Product>Minecraft Orchestrator</Product>
+        
+        <!-- Versioning -->
+        <VersionPrefix>2026.1.0</VersionPrefix>
+        <VersionSuffix>alpha.1</VersionSuffix>
+
+        <!-- NuGet -->
+        <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    </PropertyGroup>
+</Project>
