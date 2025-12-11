@@ -61,7 +61,7 @@ public static class ArgumentAssembler
             { "clientId", settings.ClientId },
             { "user_type", auth.UserType },
             { "assets_index_name", settings.AssetsVersion },
-            { "assets_dir", settings.AssetsRoot },
+            { "assets_root", settings.AssetsRoot },
             { "game_directory", settings.GameDirectory },
             { "version_name", settings.VersionName },
             { "version_type", VersionTypes.ToString(settings.VersionType) },
