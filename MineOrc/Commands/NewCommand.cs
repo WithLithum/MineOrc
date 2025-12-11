@@ -7,6 +7,7 @@ using System.Text.Json;
 using MineOrc.Foundation.Instancing;
 using MineOrc.Instancing;
 using MineOrc.Instancing.Operations;
+using MineOrc.Management.Profiles;
 using MineOrc.Resources;
 
 namespace MineOrc.Commands;

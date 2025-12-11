@@ -6,8 +6,9 @@ using JetBrains.Annotations;
 using MineOrc.Foundation.Manifest;
 using MineOrc.Foundation.Manifest.Network;
 using MineOrc.Foundation.Utilities;
+using MineOrc.Management.Resources;
 
-namespace MineOrc.Foundation.Runtime;
+namespace MineOrc.Management.Versions;
 
 public class VersionManager
 {
@@ -42,7 +43,7 @@ public class VersionManager
                 VersionManifestJsonContext.Default.ClientManifest,
                 cancellationToken)
                     .ConfigureAwait(false)
-                ?? throw new InvalidOperationException("The client manifest is literal null.");
+                ?? throw new InvalidOperationException(ExceptionMessages.ClientManifestNull);
         }
     }
     
@@ -52,20 +53,9 @@ public class VersionManager
         {
             return false;
         }
-
-#if !DEBUG
-        try
-        {
-#endif
+        
         return await HashHelper.VerifyFileAsync(GetJarPath(name),
             artefact.Sha1).ConfigureAwait(false);
-#if !DEBUG
-        }
-        catch (Exception)
-        {
-            return false;
-        }
-#endif
     }
 
     public async ValueTask<bool> ValidateManifestAsync(VersionExcerpt excerpt)

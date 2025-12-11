@@ -10,6 +10,8 @@ using MineOrc.Foundation.Network;
 using MineOrc.Foundation.Runtime.Java;
 using MineOrc.Foundation.Utilities;
 using MineOrc.Instancing;
+using MineOrc.Management.Profiles;
+using MineOrc.Management.Runtime.Java;
 using MineOrc.Network.Security;
 using MineOrc.Resources;
 using Spectre.Console;

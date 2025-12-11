@@ -1,12 +1,11 @@
 ﻿// SPDX-FileCopyrightText: 2025 WithLithum & contributors
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-using JetBrains.Annotations;
 using MineOrc.Foundation.Manifest;
 using MineOrc.Foundation.Manifest.Resources;
 using MineOrc.Foundation.Utilities;
 
-namespace MineOrc.Foundation.Runtime.Resources;
+namespace MineOrc.Management.Runtime.Assets;
 
 public class AssetManager
 {

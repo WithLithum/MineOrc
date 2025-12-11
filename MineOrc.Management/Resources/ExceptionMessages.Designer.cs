@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MineOrc.Foundation.Resources {
+namespace MineOrc.Management.Resources {
     using System;
     
     
@@ -21,14 +21,14 @@ namespace MineOrc.Foundation.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class ExceptionTexts {
+    internal class ExceptionMessages {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ExceptionTexts() {
+        internal ExceptionMessages() {
         }
         
         /// <summary>
@@ -38,7 +38,7 @@ namespace MineOrc.Foundation.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MineOrc.Foundation.Resources.ExceptionTexts", typeof(ExceptionTexts).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MineOrc.Management.Resources.ExceptionMessages", typeof(ExceptionMessages).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -60,7 +60,25 @@ namespace MineOrc.Foundation.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Profile with name &apos;{0}&apos; already exists..
+        ///   Looks up a localized string similar to Version manifest file contains only a null value..
+        /// </summary>
+        internal static string ClientManifestNull {
+            get {
+                return ResourceManager.GetString("ClientManifestNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profile configuration file contains only a null value..
+        /// </summary>
+        internal static string ProfileConfigNull {
+            get {
+                return ResourceManager.GetString("ProfileConfigNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A profile with name &quot;{0}&quot; already exists..
         /// </summary>
         internal static string ProfileExists {
             get {
@@ -69,20 +87,20 @@ namespace MineOrc.Foundation.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Profile name violates the profile name rule..
+        ///   Looks up a localized string similar to Invalid profile name &quot;{0}&quot;..
         /// </summary>
-        internal static string ProfileNameRuleViolation {
+        internal static string ProfileNameInvalid {
             get {
-                return ResourceManager.GetString("ProfileNameRuleViolation", resourceCulture);
+                return ResourceManager.GetString("ProfileNameInvalid", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Profile data for &apos;{0}&apos; is null..
+        ///   Looks up a localized string similar to Profile &quot;{0}&quot; does not exist..
         /// </summary>
-        internal static string ProfileNull {
+        internal static string ProfileNotExists {
             get {
-                return ResourceManager.GetString("ProfileNull", resourceCulture);
+                return ResourceManager.GetString("ProfileNotExists", resourceCulture);
             }
         }
     }

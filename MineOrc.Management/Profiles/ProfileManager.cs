@@ -3,11 +3,12 @@
 
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using MineOrc.Foundation.Instancing;
 using MineOrc.Foundation.Json;
-using MineOrc.Foundation.Resources;
 using MineOrc.Instancing;
+using MineOrc.Management.Resources;
 
-namespace MineOrc.Foundation.Instancing;
+namespace MineOrc.Management.Profiles;
 
 public sealed partial class ProfileManager
 {
@@ -25,7 +26,7 @@ public sealed partial class ProfileManager
     {
         if (!ProfileNameRegex.IsMatch(profileName))
         {
-            throw new ArgumentException(ExceptionTexts.ProfileNameRuleViolation,
+            throw new ArgumentException(ExceptionMessages.ProfileNameInvalid,
                 nameof(profileName));
         }
     }
@@ -55,7 +56,7 @@ public sealed partial class ProfileManager
         // Make sure it does not exist
         if (HasProfile(profileName))
         {
-            throw new ProfileException(string.Format(ExceptionTexts.ProfileExists,
+            throw new ProfileException(string.Format(ExceptionMessages.ProfileExists,
                 profileName));
         }
 
@@ -87,7 +88,7 @@ public sealed partial class ProfileManager
 
         if (profile == null)
         {
-            throw new ProfileException(string.Format(ExceptionTexts.ProfileNull,
+            throw new ProfileException(string.Format(ExceptionMessages.ProfileConfigNull,
                 profileName));
         }
 

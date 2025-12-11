@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 using MineOrc.Foundation.Instancing;
+using MineOrc.Management.Profiles;
 
 namespace MineOrc.Tests;
 

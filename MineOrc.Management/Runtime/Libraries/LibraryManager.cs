@@ -1,13 +1,10 @@
-﻿// SPDX-FileCopyrightText: 2025 WithLithum & contributors
+// SPDX-FileCopyrightText: 2025 WithLithum & contributors
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-using System.Diagnostics;
-using JetBrains.Annotations;
 using MineOrc.Foundation.Manifest.Libraries;
-using MineOrc.Foundation.Manifest.Network;
 using MineOrc.Foundation.Utilities;
 
-namespace MineOrc.Foundation.Runtime;
+namespace MineOrc.Management.Runtime.Libraries;
 
 public class LibraryManager
 {

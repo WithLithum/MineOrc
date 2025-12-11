@@ -23,6 +23,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\MineOrc.Foundation\MineOrc.Foundation.csproj" />
+      <ProjectReference Include="..\MineOrc.Management\MineOrc.Management.csproj" />
     </ItemGroup>
 
 </Project>

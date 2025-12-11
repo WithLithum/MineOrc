@@ -12,12 +12,18 @@
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
     <data name="ProfileExists" xml:space="preserve">
-        <value>名为‘{0}’的实例已存在。</value>
+        <value>已有名为“{0}“的实例。</value>
     </data>
-    <data name="ProfileNameRuleViolation" xml:space="preserve">
-        <value>实例名称不符合规则。</value>
+    <data name="ProfileNameInvalid" xml:space="preserve">
+        <value>实例名称“{0}”无效。</value>
     </data>
-    <data name="ProfileNull" xml:space="preserve">
-        <value>实例‘{0}’的配置文件为 null。</value>
+    <data name="ProfileNotExists" xml:space="preserve">
+        <value>没有名为"{0}"的实例。</value>
+    </data>
+    <data name="ProfileConfigNull" xml:space="preserve">
+        <value>实例配置文件内容仅为 null。</value>
+    </data>
+    <data name="ClientManifestNull" xml:space="preserve">
+        <value>客户端清单文件内容仅为 null。</value>
     </data>
 </root>

@@ -3,8 +3,9 @@
 
 using System.Text.Json;
 using MineOrc.Foundation.Json;
+using MineOrc.Foundation.Runtime.Java;
 
-namespace MineOrc.Foundation.Runtime.Java;
+namespace MineOrc.Management.Runtime.Java;
 
 public sealed class JavaRegistryManager
 {
