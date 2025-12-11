@@ -58,7 +58,7 @@ public static class ArgumentAssembler
             { "auth_uuid", auth.OverrideId ?? auth.Profile.Id.ToString("N") },
             { "auth_access_token", auth.AccessToken },
             { "auth_xuid", auth.Xuid },
-            { "clientId", settings.ClientId },
+            { "clientid", settings.ClientId },
             { "user_type", auth.UserType },
             { "assets_index_name", settings.AssetsVersion },
             { "assets_root", settings.AssetsRoot },
