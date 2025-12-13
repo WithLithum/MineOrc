@@ -35,6 +35,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Texts.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Remove="Resources\Secrets.json" />
+    <EmbeddedResource Include="Resources\Secrets.json" />
   </ItemGroup>
 
   <ItemGroup>

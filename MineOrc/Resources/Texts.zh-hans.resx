@@ -248,4 +248,10 @@
     <data name="ExceptionStateNull" xml:space="preserve">
         <value>因‘{0}’为空，对象状态无效。</value>
     </data>
+    <data name="InitializationSecretsError" xml:space="preserve">
+        <value>读取 API 密钥时出错</value>
+    </data>
+    <data name="InitializationSecretsNull" xml:space="preserve">
+        <value>API 密钥配置文件为空或不存在</value>
+    </data>
 </root>

@@ -259,4 +259,10 @@
     <data name="ExceptionStateNull" xml:space="preserve">
         <value>Object state is invalid because '{0}' is null.</value>
     </data>
+    <data name="InitializationSecretsError" xml:space="preserve">
+        <value>error while loading to load API keys</value>
+    </data>
+    <data name="InitializationSecretsNull" xml:space="preserve">
+        <value>API key configuration is null or does not exist</value>
+    </data>
 </root>

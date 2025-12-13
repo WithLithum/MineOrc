@@ -5,16 +5,12 @@ using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text.Json;
 using JetBrains.Annotations;
-using MineOrc.Foundation.Instancing;
 using MineOrc.Foundation.Network;
-using MineOrc.Foundation.Runtime.Java;
 using MineOrc.Foundation.Utilities;
-using MineOrc.Instancing;
 using MineOrc.Management.Profiles;
 using MineOrc.Management.Runtime.Java;
 using MineOrc.Network.Security;
 using MineOrc.Resources;
-using Spectre.Console;
 
 namespace MineOrc;
 
@@ -32,6 +28,12 @@ public static class MineOrcApp
 
     private static readonly string ProfilesPath = Path.Combine(MinecraftDirectory.UserRoot,
         "mineorc_profiles");
+
+    internal static SecretModel Secrets
+    {
+        get => field ?? throw new InvalidOperationException("Initialization was not yet run.");
+        private set;
+    }
     
     public static readonly HttpClient HttpClient = new()
     {
@@ -39,9 +41,9 @@ public static class MineOrcApp
         {
             UserAgent =
             {
-                new ProductInfoHeaderValue(BaseName, Version)
-            }
-        }
+                new ProductInfoHeaderValue(BaseName, Version),
+            },
+        },
     };
 
     public static readonly PistonMeta PistonMetaClient = new(HttpClient);
@@ -52,9 +54,53 @@ public static class MineOrcApp
 
     public static readonly ProfileManager ProfileManager = new(ProfilesPath);
 
+    #region Initialization routine
+    
+    [MustUseReturnValue("Load may fail")]
+    private static async Task<bool> LoadSecretsAsync()
+    {
+        // Load secrets
+        var secretStream = typeof(MineOrcApp).Assembly
+            .GetManifestResourceStream($"{nameof(MineOrc)}.Resources.Secrets.json");
+        if (secretStream == null)
+        {
+            MyOutput.Error(Texts.InitializationSecretsNull);
+            return false;
+        }
+        
+        SecretModel? temp;
+        try
+        {
+            await using (secretStream!.ConfigureAwait(false))
+            {
+                temp = await JsonSerializer.DeserializeAsync(secretStream!,
+                    ResourceJsonContext.Default.SecretModel).ConfigureAwait(false);
+            }
+        }
+        catch (Exception ex) when (ex is JsonException or IOException)
+        {
+            MyOutput.Error(ex, Texts.InitializationSecretsError);
+            return false;
+        }
+
+        if (temp == null)
+        {
+            MyOutput.Error(Texts.InitializationSecretsNull);
+            return false;
+        }
+
+        return true;
+    }
+    
     [MustUseReturnValue("Initialization may fail")]
     public static async Task<bool> InitializeAsync()
     {
+        // Load secrets
+        if (!await LoadSecretsAsync().ConfigureAwait(false))
+        {
+            return false;
+        }
+        
         try
         {
             Directory.CreateDirectory(ProfilesPath);
@@ -76,4 +122,6 @@ public static class MineOrcApp
 
         return true;
     }
+    
+    #endregion
 }

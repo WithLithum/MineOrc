@@ -321,6 +321,24 @@ namespace MineOrc.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to error while loading to load API keys.
+        /// </summary>
+        internal static string InitializationSecretsError {
+            get {
+                return ResourceManager.GetString("InitializationSecretsError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to API key configuration is null or does not exist.
+        /// </summary>
+        internal static string InitializationSecretsNull {
+            get {
+                return ResourceManager.GetString("InitializationSecretsNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to cannot get client manifest: error {0}.
         /// </summary>
         internal static string InstallManifestFailCannotGetJson {
