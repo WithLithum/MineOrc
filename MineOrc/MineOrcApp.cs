@@ -11,6 +11,7 @@ using MineOrc.Management.Profiles;
 using MineOrc.Management.Runtime.Java;
 using MineOrc.Network.Security;
 using MineOrc.Resources;
+using MineOrc.Security.Msa;
 
 namespace MineOrc;
 
@@ -28,6 +29,12 @@ public static class MineOrcApp
 
     private static readonly string ProfilesPath = Path.Combine(MinecraftDirectory.UserRoot,
         "mineorc_profiles");
+
+    internal static SecureAuthority SecureAuthority
+    {
+        get => field ?? throw new InvalidOperationException();
+        private set;
+    }
 
     internal static SecretModel Secrets
     {
@@ -68,12 +75,6 @@ public static class MineOrcApp
             return false;
         }
         
-        // Warn about secrets being empty
-        if (Secrets.EntraAppId == "missingno" || Secrets.TenantId == "missingno")
-        {
-            MyOutput.Warn(Texts.InitializationWarnTenantMissing);
-        }
-        
         SecretModel? temp;
         try
         {
@@ -95,6 +96,19 @@ public static class MineOrcApp
             return false;
         }
 
+        Secrets = temp;
+
+        // Warn about secrets being empty
+        if (Secrets.EntraAppId == "missingno" || Secrets.TenantId == "missingno")
+        {
+            MyOutput.Warn(Texts.InitializationWarnTenantMissing);
+        }
+
+        SecureAuthority = new SecureAuthority(Secrets.EntraAppId,
+            Secrets.TenantId,
+            "MineOrc",
+            Version);
+        
         return true;
     }
     

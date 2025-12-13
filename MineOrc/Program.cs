@@ -23,6 +23,7 @@ var command = new RootCommand(Texts.RootDescription)
     },
     NewCommand.CreateCommand(),
     LaunchCommand.CreateCommand(),
+    LoginCommand.CreateCommand(),
 };
 
 AppDomain.CurrentDomain.UnhandledException += (_, args) =>
