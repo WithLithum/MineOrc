@@ -6,11 +6,13 @@
     <File Path=".editorconfig" />
     <File Path="COPYING.txt" />
     <File Path="Directory.Build.props" />
+    <File Path="NOTICES.txt" />
     <File Path="README.md" />
   </Folder>
   <Project Path="build/Build.csproj" />
   <Project Path="MineOrc.Foundation/MineOrc.Foundation.csproj" />
   <Project Path="MineOrc.Management/MineOrc.Management.csproj" />
+  <Project Path="MineOrc.Security/MineOrc.Security.csproj" />
   <Project Path="MineOrc.Tests/MineOrc.Tests.csproj" />
   <Project Path="MineOrc/MineOrc.csproj" />
 </Solution>
