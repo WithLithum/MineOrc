@@ -11,11 +11,13 @@ namespace MineOrc.Foundation.Runtime;
 public static class LibraryEvaluator
 {
     public static async Task<IReadOnlyCollection<LibraryArtefactInfo>> EvaluateAsync(
-        IReadOnlyCollection<LibraryInfo> libraries)
+        IReadOnlyCollection<LibraryInfo> libraries,
+        CancellationToken cancellationToken = default)
     {
         var bag = new ConcurrentBag<LibraryArtefactInfo>();
         
         await Parallel.ForEachAsync(libraries,
+                cancellationToken,
                 async (x, _) => await EvaluateInternal(x, bag)
                     .ConfigureAwait(false))
             .ConfigureAwait(false);
