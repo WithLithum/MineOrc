@@ -13,21 +13,18 @@
 
     <ItemGroup>
       <EmbeddedResource Update="Resources\ExceptionMessages.resx">
-        <Generator>ResXFileCodeGenerator</Generator>
-        <LastGenOutput>ExceptionMessages.Designer.cs</LastGenOutput>
       </EmbeddedResource>
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Update="Resources\ExceptionMessages.Designer.cs">
-        <DesignTime>True</DesignTime>
-        <AutoGen>True</AutoGen>
-        <DependentUpon>ExceptionMessages.resx</DependentUpon>
-      </Compile>
+      <Folder Include="Runtime\Libraries\" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Runtime\Libraries\" />
+      <PackageReference Include="Microsoft.CodeAnalysis.ResxSourceGenerator" Version="5.0.0-1.25277.114">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
     </ItemGroup>
 
 </Project>

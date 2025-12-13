@@ -20,6 +20,10 @@
     <PackageReference Include="Downloader" Version="4.0.3" />
     <PackageReference Include="JetBrains.Annotations" Version="2025.2.4" />
     <PackageReference Include="Meziantou.Framework.ByteSize" Version="2.1.8" />
+    <PackageReference Include="Microsoft.CodeAnalysis.ResxSourceGenerator" Version="5.0.0-1.25277.114">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="SmartFormat" Version="3.6.1" />
     <PackageReference Include="Spectre.Console" Version="0.54.0" />
     <PackageReference Include="System.CommandLine" Version="2.0.0" />
@@ -32,19 +36,9 @@
 
   <ItemGroup>
     <EmbeddedResource Update="Resources\Texts.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Texts.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Remove="Resources\Secrets.json" />
     <EmbeddedResource Include="Resources\Secrets.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Resources\Texts.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Texts.resx</DependentUpon>
-    </Compile>
   </ItemGroup>
 
   <ItemGroup>
