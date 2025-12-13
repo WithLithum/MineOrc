@@ -68,6 +68,12 @@ public static class MineOrcApp
             return false;
         }
         
+        // Warn about secrets being empty
+        if (Secrets.EntraAppId == "missingno" || Secrets.TenantId == "missingno")
+        {
+            MyOutput.Warn(Texts.InitializationWarnTenantMissing);
+        }
+        
         SecretModel? temp;
         try
         {

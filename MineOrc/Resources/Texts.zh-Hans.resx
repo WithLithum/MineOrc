@@ -257,4 +257,7 @@
     <data name="CommandLaunchArgumentDevAuth" xml:space="preserve">
         <value>以开发人员用户名使用离线验证</value>
     </data>
+    <data name="InitializationWarnTenantMissing" xml:space="preserve">
+        <value>因客户端 ID 或 Tenant 缺失，将无法进行正版登录</value>
+    </data>
 </root>

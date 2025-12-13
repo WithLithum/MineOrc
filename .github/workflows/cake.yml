@@ -13,4 +13,5 @@ jobs:
             - name: Cake build
               env:
                   MINEORC_BUILD_ENTRA_APP_ID: ${{ secrets.MINEORC_BUILD_ENTRA_APP_ID }}
+                  MINEORC_BUILD_ENTRA_TENANT_ID: ${{ secrets.MINEORC_BUILD_ENTRA_TENANT_ID }}
               run: "${{ github.workspace }}/build.sh"

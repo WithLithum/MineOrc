@@ -17,6 +17,7 @@ public sealed class FillSecretsTask : FrostingTask<BuildContext>
         var node = new JsonObject
         {
             ["EntraAppId"] = context.EntraAppId ?? "missingno",
+            ["EntraTenantId"] = context.EntraTenantId ?? "missingno",
         };
 
         var secretsPath = FilePath.FromString("../MineOrc/Resources/Secrets.json");

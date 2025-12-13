@@ -10,7 +10,9 @@ namespace Build;
 [UsedImplicitly]
 public class BuildContext : FrostingContext
 {
-    public string? EntraAppId { get; private set; }
+    public string? EntraAppId { get; }
+    
+    public string? EntraTenantId { get; }
     
     public bool NoRestore { get; private set; }
     
@@ -20,6 +22,8 @@ public class BuildContext : FrostingContext
         : base(context)
     {
         EntraAppId = context.Environment.GetEnvironmentVariable("MINEORC_BUILD_ENTRA_APP_ID");
+        EntraTenantId = context.Environment.GetEnvironmentVariable("MINEORC_BUILD_ENTRA_TENANT_ID");
+        
         NoRestore = context.Arguments.HasArgument("noRestore");
         BuildConfiguration = context.Arguments.GetArgument("configuration")
             ?? "Release";

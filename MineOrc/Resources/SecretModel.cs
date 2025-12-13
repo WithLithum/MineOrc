@@ -3,4 +3,5 @@
 
 namespace MineOrc.Resources;
 
-internal sealed record SecretModel(string EntraAppId);
+internal sealed record SecretModel(string EntraAppId,
+    string TenantId);

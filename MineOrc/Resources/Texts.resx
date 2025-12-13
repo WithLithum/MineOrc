@@ -268,4 +268,7 @@
     <data name="CommandLaunchArgumentDevAuth" xml:space="preserve">
         <value>Enable offline authentication with a dev-only username</value>
     </data>
+    <data name="InitializationWarnTenantMissing" xml:space="preserve">
+        <value>missing client ID or tenant, will not be able to login or authenticate</value>
+    </data>
 </root>
