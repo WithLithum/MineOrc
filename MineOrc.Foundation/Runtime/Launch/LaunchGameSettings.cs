@@ -11,7 +11,7 @@ public sealed record LaunchGameSettings
 {
     public required string ClientId { get; init; }
     
-    public required AuthenticationResult AuthenticationResult { get; init; }
+    public required MinecraftAuthResult MinecraftAuthResult { get; init; }
     
     public required string AssetsVersion { get; init; }
     

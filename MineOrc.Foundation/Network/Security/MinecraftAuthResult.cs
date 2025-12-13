@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace MineOrc.Foundation.Network.Security;
 
-public sealed record AuthenticationResult
+public sealed record MinecraftAuthResult
 {
     [MemberNotNullWhen(true, nameof(AccessToken),
         nameof(Profile),

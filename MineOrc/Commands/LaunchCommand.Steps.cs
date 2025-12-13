@@ -117,7 +117,7 @@ internal partial class LaunchCommand
         {
             AssetsRoot = GameApplication.Assets.RootDirectory,
             AssetsVersion = _version!.Assets,
-            AuthenticationResult = _auth!,
+            MinecraftAuthResult = _auth!,
             ClientId = "TODO", // TODO make us a real client ID
             GameDirectory = _profileDirectory!,
             VersionName = _version.Id,

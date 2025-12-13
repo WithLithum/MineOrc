@@ -30,6 +30,13 @@ public static class MineOrcApp
     private static readonly string ProfilesPath = Path.Combine(MinecraftDirectory.UserRoot,
         "mineorc_profiles");
 
+    public static readonly ApplicationMeta Meta = new()
+    {
+        Name = nameof(MineOrc),
+        Version = Version,
+        Package = "x.withlithum.mineorc",
+    };
+
     internal static SecureAuthority SecureAuthority
     {
         get => field ?? throw new InvalidOperationException();
@@ -104,10 +111,8 @@ public static class MineOrcApp
             MyOutput.Warn(Texts.InitializationWarnTenantMissing);
         }
 
-        SecureAuthority = new SecureAuthority(Secrets.EntraAppId,
-            Secrets.TenantId,
-            "MineOrc",
-            Version);
+        SecureAuthority = new SecureAuthority(Secrets.EntraAppId, Meta);
+        await SecureAuthority.InitializeAsync().ConfigureAwait(false);
         
         return true;
     }

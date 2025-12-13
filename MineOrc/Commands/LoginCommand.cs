@@ -18,14 +18,21 @@ public static class LoginCommand
 
     private static async Task ExecuteAsync(ParseResult parse, CancellationToken cancellationToken)
     {
-        await MineOrcApp.SecureAuthority.SignInWithDeviceCodeAsync(async code =>
+        var msaResult = await MineOrcApp.SecureAuthority.SignInWithDeviceCodeAsync(code =>
             {
-                AnsiConsole.WriteLine("Please login with the device code {0} at the following URL:", code.DeviceCode);
-                AnsiConsole.WriteLine(code.VerificationUrl);
+                AnsiConsole.MarkupLine("[bold underline yellow]Device Code Login Flow[/]");
                 AnsiConsole.WriteLine();
-                AnsiConsole.WriteLine(code.Message);
+                AnsiConsole.MarkupLine("[white]Please open the following URL in your browser:[/]");
+                AnsiConsole.MarkupLineInterpolated($"[aqua underline]{code.VerificationUrl}[/]");
+                AnsiConsole.MarkupLine("[white]And enter the following code:[/]");
+                AnsiConsole.MarkupLineInterpolated($"[lime]{code.UserCode}[/]");
+                AnsiConsole.WriteLine();
+                
+                return Task.CompletedTask;
             },
             cancellationToken)
             .ConfigureAwait(false);
+        
+        // TODO xbox login
     }
 }

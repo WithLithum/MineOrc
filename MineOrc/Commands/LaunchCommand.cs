@@ -23,7 +23,7 @@ internal partial class LaunchCommand
 
     private ProfileInfo? _profile;
     private ClientManifest? _version;
-    private AuthenticationResult? _auth;
+    private MinecraftAuthResult? _auth;
     private string? _javaCommand;
 
     private IEnumerable<string>? _classPath;
@@ -129,7 +129,7 @@ internal partial class LaunchCommand
         return info.ExecutablePath;
     }
 
-    private async Task<AuthenticationResult?> AuthenticateAsync(CancellationToken cancellationToken)
+    private async Task<MinecraftAuthResult?> AuthenticateAsync(CancellationToken cancellationToken)
     {
         IAuthenticationSource authSource;
         if (Demo)

@@ -9,5 +9,5 @@ public interface IAuthenticationSource
     /// Attempts to log in without requiring user input.
     /// </summary>
     /// <returns>The authentication result.</returns>
-    Task<AuthenticationResult> TryLoginSilentlyAsync(CancellationToken cancellationToken);
+    Task<MinecraftAuthResult> TryLoginSilentlyAsync(CancellationToken cancellationToken);
 }

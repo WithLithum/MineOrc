@@ -5,9 +5,9 @@ namespace MineOrc.Foundation.Network.Security;
 
 public sealed class DemoAuthenticationSource : IAuthenticationSource
 {
-    public Task<AuthenticationResult> TryLoginSilentlyAsync(CancellationToken cancellationToken)
+    public Task<MinecraftAuthResult> TryLoginSilentlyAsync(CancellationToken cancellationToken)
     {
-        return Task.FromResult(new AuthenticationResult
+        return Task.FromResult(new MinecraftAuthResult
         {
             Succeeded = true,
             Profile = new ProfileExcerpt("Player",

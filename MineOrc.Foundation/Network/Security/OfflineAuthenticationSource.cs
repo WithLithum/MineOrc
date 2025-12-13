@@ -12,9 +12,9 @@ public sealed class OfflineAuthenticationSource : IAuthenticationSource
         _userName = userName;
     }
 
-    public Task<AuthenticationResult> TryLoginSilentlyAsync(CancellationToken cancellationToken)
+    public Task<MinecraftAuthResult> TryLoginSilentlyAsync(CancellationToken cancellationToken)
     {
-        return Task.FromResult(new AuthenticationResult
+        return Task.FromResult(new MinecraftAuthResult
         {
             AccessToken = "access_token",
             UserType = "msa",

@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 using Microsoft.Identity.Client;
+using Microsoft.Identity.Client.Extensions.Msal;
+using MineOrc.Foundation.Utilities;
 
 namespace MineOrc.Security.Msa;
 
@@ -10,22 +12,58 @@ namespace MineOrc.Security.Msa;
 /// </summary>
 public class SecureAuthority
 {
-    private readonly string _clientId;
-    private readonly string _tenantId;
+    private static readonly string[] MsaScopes =
+    [
+        "XboxLive.signin",
+        "XboxLive.offline_access",
+    ];
+
     private readonly IPublicClientApplication _client;
+    private readonly StorageCreationProperties _storageProperties;
+    private MsalCacheHelper? _cacheHelper;
 
-    public SecureAuthority(string clientId, string tenantId,
-        string clientName,
-        string clientVersion)
+    public SecureAuthority(string clientId,
+        ApplicationMeta meta)
     {
-        _clientId = clientId;
-        _tenantId = tenantId;
-
-        _client = PublicClientApplicationBuilder.Create(_clientId)
-            .WithAuthority($"https://login.microsoftonline.com/consumers/")
-            .WithClientName(clientName)
-            .WithClientVersion(clientVersion)
+        _client = PublicClientApplicationBuilder.Create(clientId)
+            .WithAuthority("https://login.microsoftonline.com/consumers/")
+            .WithClientName(meta.Name)
+            .WithClientVersion(meta.Version)
             .Build();
+
+        _storageProperties = new StorageCreationPropertiesBuilder(meta.Name, $"{meta.Name}_MSAL")
+            .WithLinuxKeyring(meta.Package,
+                "MSAL",
+                "Credentials for premium authentication",
+                new KeyValuePair<string, string>("app_name", meta.Name),
+                new KeyValuePair<string, string>("data_version", "v1"))
+            .WithMacKeyChain(meta.Package,
+                "MSAL")
+            .Build();
+    }
+
+    public async Task InitializeAsync()
+    {
+        _cacheHelper = await MsalCacheHelper.CreateAsync(_storageProperties).ConfigureAwait(false);
+        _cacheHelper.RegisterCache(_client.UserTokenCache);
+    }
+
+    private async Task<AuthenticationResult?> LoginSilentlyOrDefaultAsync(
+        CancellationToken cancellationToken)
+    {
+        var accounts = await _client.GetAccountsAsync()
+            .ConfigureAwait(false);
+
+        try
+        {
+            return await _client.AcquireTokenSilent(MsaScopes, accounts.FirstOrDefault())
+                .ExecuteAsync(cancellationToken)
+                .ConfigureAwait(false);
+        }
+        catch (MsalUiRequiredException)
+        {
+            return null;
+        }
     }
 
     /// <summary>
@@ -37,11 +75,13 @@ public class SecureAuthority
     /// <exception cref="MsalServiceException">There was a service error with the tenant.</exception>
     /// <exception cref="MsalClientException">The login operation has expired.</exception>
     /// <exception cref="OperationCanceledException">The operation was cancelled.</exception>
-    public async Task<AuthenticationResult> SignInWithDeviceCodeAsync(Func<DeviceCodeResult,Task> showDeviceCode,
+    public async Task<AuthenticationResult> SignInWithDeviceCodeAsync(
+        Func<DeviceCodeResult, Task> showDeviceCode,
         CancellationToken cancellationToken = default)
     {
-        return await _client.AcquireTokenWithDeviceCode(["XboxLive.signin"],
-            showDeviceCode)
-            .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+        return await LoginSilentlyOrDefaultAsync(cancellationToken).ConfigureAwait(false)
+               ?? await _client.AcquireTokenWithDeviceCode(MsaScopes,
+                       showDeviceCode)
+                   .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

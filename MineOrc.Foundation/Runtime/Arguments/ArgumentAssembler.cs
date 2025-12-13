@@ -124,7 +124,7 @@ public static class ArgumentAssembler
 
     public static ArgumentValueResolver CreateGameResolver(LaunchGameSettings settings)
     {
-        var auth = settings.AuthenticationResult;
+        var auth = settings.MinecraftAuthResult;
         if (!auth.Succeeded)
         {
             throw new ArgumentException("The authentication result does not indicate success.",
