@@ -98,8 +98,7 @@ internal partial class LaunchCommand
 
         return true;
     }
-
-    [MemberNotNull(nameof(_classPath))]
+    
     private async Task ExecuteClassPathStepAsync(CancellationToken cancellationToken)
     {
         var evaluated =

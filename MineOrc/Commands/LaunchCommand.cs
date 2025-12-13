@@ -89,7 +89,7 @@ internal partial class LaunchCommand
         // Start!
         var startInfo = ArgumentAssembler.CreateStartInfo(_javaCommand,
             _version!.Arguments,
-            _classPath,
+            _classPath!,
             _jvmSettings,
             _gameSettings
         );
