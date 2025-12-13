@@ -265,4 +265,7 @@
     <data name="InitializationSecretsNull" xml:space="preserve">
         <value>API key configuration is null or does not exist</value>
     </data>
+    <data name="CommandLaunchArgumentDevAuth" xml:space="preserve">
+        <value>Enable offline authentication with a dev-only username</value>
+    </data>
 </root>

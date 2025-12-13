@@ -40,6 +40,15 @@ public static class CommandHelper
         }
     }
 
+    public static Option<bool> Switch([LocalizationRequired(false)] string name,
+        [LocalizationRequired] string description)
+    {
+        return new Option<bool>(name)
+        {
+            Description = description,
+        };
+    }
+
     public static Option<bool> Switch([LocalizationRequired(false)] string shortName,
         [LocalizationRequired(false)] string longName,
         [LocalizationRequired] string description)

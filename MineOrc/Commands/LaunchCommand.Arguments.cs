@@ -15,7 +15,12 @@ internal partial class LaunchCommand
     private static readonly Option<bool> OptionNoRestore = CommandHelper.Switch("-N",
         "--no-restore",
         Texts.CommandLaunchOptionNoRestore);
-
+    
+    #if DEBUG
+    private static readonly Option<bool> DevAuth = CommandHelper.Switch("--dev-auth",
+        Texts.CommandLaunchArgumentDevAuth);
+    #endif
+    
     private static readonly Option<bool> OptionDemo = CommandHelper.Switch("-D",
         "--demo",
         Texts.CommandLaunchOptionDemo);
@@ -45,6 +50,9 @@ internal partial class LaunchCommand
 
     #region Argument value properties
     internal required string ProfileName { get; init; }
+    #if DEBUG
+    private bool UseDevAuth { get; init; }
+    #endif
     private bool Demo { get; init; }
     private bool NoRestore { get; init; }
     private int MinMemory { get; init; }

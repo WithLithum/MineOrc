@@ -49,7 +49,7 @@ internal partial class LaunchCommand
     [MemberNotNullWhen(true, nameof(_auth))]
     private async Task<bool> ExecuteAuthenticationStepAsync(CancellationToken cancellationToken)
     {
-        var auth = await AuthenticateAsync(Demo, cancellationToken).ConfigureAwait(false);
+        var auth = await AuthenticateAsync(cancellationToken).ConfigureAwait(false);
         if (auth == null)
         {
             return false;

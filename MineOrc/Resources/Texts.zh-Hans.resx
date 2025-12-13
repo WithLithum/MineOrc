@@ -254,4 +254,7 @@
     <data name="InitializationSecretsNull" xml:space="preserve">
         <value>API 密钥配置文件为空或不存在</value>
     </data>
+    <data name="CommandLaunchArgumentDevAuth" xml:space="preserve">
+        <value>以开发人员用户名使用离线验证</value>
+    </data>
 </root>

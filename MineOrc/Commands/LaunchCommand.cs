@@ -42,6 +42,9 @@ internal partial class LaunchCommand
             OptionMaxMemory,
             OptionJavaName,
             OptionJavaExecutable,
+            #if DEBUG
+            DevAuth,
+            #endif
         };
 
         command.SetAction(async (parse, cancel) =>
@@ -55,6 +58,9 @@ internal partial class LaunchCommand
                 MaxMemory = parse.GetValue(OptionMaxMemory),
                 UserJavaName = parse.GetValue(OptionJavaName),
                 UserJavaExecutable = parse.GetValue(OptionJavaExecutable),
+                #if DEBUG
+                UseDevAuth = parse.GetValue(DevAuth),                
+                #endif
             };
 
             return await obj.ExecuteAsync(cancel).ConfigureAwait(false);
@@ -111,29 +117,32 @@ internal partial class LaunchCommand
         return info.ExecutablePath;
     }
 
-    private static async Task<AuthenticationResult?> AuthenticateAsync(bool demo,
-        CancellationToken cancellationToken)
+    private async Task<AuthenticationResult?> AuthenticateAsync(CancellationToken cancellationToken)
     {
-        AuthenticationResult? auth;
-        if (demo)
+        IAuthenticationSource authSource;
+        if (Demo)
         {
-            auth = await new DemoAuthenticationSource().TryLoginSilentlyAsync(cancellationToken)
-                .ConfigureAwait(false);
+            authSource = new DemoAuthenticationSource();
+        }
+        else if (UseDevAuth)
+        {
+            authSource = new OfflineAuthenticationSource("MineOrcDev");
         }
         else
         {
-            auth = await AuthenticateOnlineInternalAsync(cancellationToken).ConfigureAwait(false);
-            if (auth is not { Succeeded: true })
+            var tempSource = GetDefaultAuthenticationInternal();
+            if (tempSource == null)
             {
-                return auth;
+                return null;
             }
+
+            authSource = tempSource;
         }
 
-        return auth;
+        return await authSource.TryLoginSilentlyAsync(cancellationToken).ConfigureAwait(false);
     }
 
-    private static async Task<AuthenticationResult?> AuthenticateOnlineInternalAsync(
-        CancellationToken cancellationToken)
+    private static IAuthenticationSource? GetDefaultAuthenticationInternal()
     {
         var defaultName = MineOrcApp.AccountManager.DefaultAccount;
         if (string.IsNullOrWhiteSpace(defaultName)
@@ -143,16 +152,7 @@ internal partial class LaunchCommand
             return null;
         }
 
-        var result = await account.GetAuthenticationSource()
-            .TryLoginSilentlyAsync(cancellationToken)
-            .ConfigureAwait(false);
-        if (!result.Succeeded)
-        {
-            MyOutput.Error(Texts.CommandGenericLoginFailed);
-            return null;
-        }
-
-        return result;
+        return account.GetAuthenticationSource();
     }
 
     private static async Task<bool> RestoreInternalAsync(ClientManifest version,
