@@ -5,7 +5,7 @@ namespace MineOrc.Foundation.Network.Security;
 
 public sealed class DemoAuthenticationSource : IAuthenticationSource
 {
-    public Task<AuthenticationResult> TryLoginSilentlyAsync()
+    public Task<AuthenticationResult> TryLoginSilentlyAsync(CancellationToken cancellationToken)
     {
         return Task.FromResult(new AuthenticationResult
         {
