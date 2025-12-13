@@ -72,6 +72,7 @@ internal partial class LaunchCommand
 
     private async Task<int> ExecuteAsync(CancellationToken cancellationToken)
     {
+        #if DEBUG
         // Warning for dev users
         if (UseDevAuth)
         {
@@ -82,6 +83,7 @@ internal partial class LaunchCommand
             AnsiConsole.MarkupLine("[white]Authentication for unlawful purposes.[/]");
             AnsiConsole.WriteLine();
         }
+        #endif
         
         // Profile & version & restore & login
         if (!await ExecuteProfileStepAsync().ConfigureAwait(false)
@@ -136,10 +138,12 @@ internal partial class LaunchCommand
         {
             authSource = new DemoAuthenticationSource();
         }
+        #if DEBUG
         else if (UseDevAuth)
         {
             authSource = new OfflineAuthenticationSource("MineOrcDev");
         }
+        #endif
         else
         {
             var tempSource = GetDefaultAuthenticationInternal();
