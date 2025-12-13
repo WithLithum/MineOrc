@@ -245,4 +245,7 @@
     <data name="CommandLaunchFailProcessStart" xml:space="preserve">
         <value>无法创建进程</value>
     </data>
+    <data name="ExceptionStateNull" xml:space="preserve">
+        <value>因‘{0}’为空，对象状态无效。</value>
+    </data>
 </root>

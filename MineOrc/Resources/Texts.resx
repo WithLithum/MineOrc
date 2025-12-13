@@ -256,4 +256,7 @@
     <data name="CommandLaunchFailProcessStart" xml:space="preserve">
         <value>cannot create process</value>
     </data>
+    <data name="ExceptionStateNull" xml:space="preserve">
+        <value>Object state is invalid because '{0}' is null.</value>
+    </data>
 </root>

@@ -294,6 +294,15 @@ namespace MineOrc.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Object state is invalid because &apos;{0}&apos; is null..
+        /// </summary>
+        internal static string ExceptionStateNull {
+            get {
+                return ResourceManager.GetString("ExceptionStateNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to error when creating required directories.
         /// </summary>
         internal static string InitializationDirectoryError {

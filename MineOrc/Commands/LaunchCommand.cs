@@ -2,53 +2,34 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 using System.CommandLine;
-using System.Diagnostics;
+using MineOrc.Foundation.Instancing;
 using MineOrc.Foundation.Manifest;
 using MineOrc.Foundation.Network.Security;
-using MineOrc.Foundation.Runtime;
 using MineOrc.Foundation.Runtime.Arguments;
 using MineOrc.Foundation.Runtime.Launch;
-using MineOrc.Instancing;
 using MineOrc.Instancing.Operations;
 using MineOrc.Resources;
 
 namespace MineOrc.Commands;
 
-internal static class LaunchCommand
+internal partial class LaunchCommand
 {
     private const int DefaultMaxMemory = 2048;
-    
-    private static readonly Argument<string> ArgumentName = CommandHelper.StringArgument("name",
-        Texts.CommandLaunchArgumentName);
 
-    private static readonly Option<bool> OptionNoRestore = CommandHelper.Switch("-N",
-        "--no-restore",
-        Texts.CommandLaunchOptionNoRestore);
+    // Command state
+    private string? _nativesDirectory;
+    private string? _profileDirectory;
 
-    private static readonly Option<bool> OptionDemo = CommandHelper.Switch("-D",
-        "--demo",
-        Texts.CommandLaunchOptionDemo);
+    private ProfileInfo? _profile;
+    private ClientManifest? _version;
+    private AuthenticationResult? _auth;
+    private string? _javaCommand;
 
-    private static readonly Option<int> OptionMinMemory = new("--min-memory")
-    {
-        Description = Texts.CommandLaunchOptionMinMemory,
-    };
+    private IEnumerable<string>? _classPath;
+    private LaunchGameSettings? _gameSettings;
+    private LaunchJvmSettings? _jvmSettings;
 
-    private static readonly Option<int> OptionMaxMemory = new("--max-memory")
-    {
-        Description = Texts.CommandLaunchOptionMaxMemory,
-    };
-
-    private static readonly Option<string?> OptionJavaName = new("-j", "--java")
-    {
-        Description = Texts.CommandLaunchOptionJavaName,
-    };
-
-    private static readonly Option<string?> OptionJavaExecutable = new("-J",
-        "--java-file")
-    {
-        Description = Texts.CommandLaunchOptionJavaFile,
-    };
+    // Arguments
 
     public static Command CreateCommand()
     {
@@ -63,144 +44,57 @@ internal static class LaunchCommand
             OptionJavaExecutable,
         };
 
-        command.SetAction(ExecuteAsync);
+        command.SetAction(async (parse, cancel) =>
+        {
+            var obj = new LaunchCommand
+            {
+                ProfileName = parse.GetRequiredValue(ArgumentName),
+                Demo = parse.GetValue(OptionDemo),
+                NoRestore = parse.GetValue(OptionNoRestore),
+                MinMemory = parse.GetValue(OptionMinMemory),
+                MaxMemory = parse.GetValue(OptionMaxMemory),
+                UserJavaName = parse.GetValue(OptionJavaName),
+                UserJavaExecutable = parse.GetValue(OptionJavaExecutable),
+            };
+
+            return await obj.ExecuteAsync(cancel).ConfigureAwait(false);
+        });
 
         return command;
     }
 
-    private static async Task<int> ExecuteAsync(ParseResult parse,
-        CancellationToken cancellationToken)
+    private async Task<int> ExecuteAsync(CancellationToken cancellationToken)
     {
-        var profileName = parse.GetRequiredValue(ArgumentName);
-        var noRestore = parse.GetValue(OptionNoRestore);
-        var demo = parse.GetValue(OptionDemo);
-        var javaName = parse.GetValue(OptionJavaName);
-        var javaExecutable = parse.GetValue(OptionJavaExecutable);
-        var minMemory = parse.GetValue(OptionMinMemory);
-        var maxMemory = parse.GetValue(OptionMaxMemory);
-
-        if (!MineOrcApp.ProfileManager.HasProfile(profileName))
-        {
-            MyOutput.Error(Texts.CommandGenericNoProfile, profileName);
-            return ExitCodes.Failure;
-        }
-
-        var profile = await MineOrcApp.ProfileManager.ReadProfileAsync(profileName)
-            .ConfigureAwait(false);
-        var profileDirectory = MineOrcApp.ProfileManager.GetProfileDirectory(profileName);
-
-        // Find the version
-        if (!GameApplication.Versions.Exists(profile.ClientVersion))
-        {
-            MyOutput.Error(Texts.CommandLaunchFailNoVersion, profileName);
-            return ExitCodes.Failure;
-        }
-
-        var version = await GameApplication.Versions
-            .GetManifestAsync(profile.ClientVersion, cancellationToken)
-            .ConfigureAwait(false);
-
-        // Restore the version
-        if (!await ExecuteStepRestoreAsync(version, noRestore, cancellationToken)
-                .ConfigureAwait(false))
-        {
-            return ExitCodes.Failure;
-        }
-
-        // Login
-        var auth = await AuthenticateAsync(demo).ConfigureAwait(false);
-        if (auth == null)
-        {
-            return ExitCodes.Failure;
-        }
-
-        // Determine the default Java to use 
-        javaExecutable ??= GetJava(javaName);
-        if (javaExecutable == null)
+        // Profile & version & restore & login
+        if (!await ExecuteProfileStepAsync().ConfigureAwait(false)
+            || !await ExecuteVersionStepAsync(cancellationToken).ConfigureAwait(false)
+            || !await ExecuteRestoreStepAsync(cancellationToken).ConfigureAwait(false)
+            || !await ExecuteAuthenticationStepAsync(cancellationToken).ConfigureAwait(false)
+            || !ExecuteJavaStep())
         {
             return ExitCodes.Failure;
         }
 
         // Libraries
-        var evaluated =
-            await LibraryEvaluator.EvaluateAsync(version.Libraries).ConfigureAwait(false);
-        var classPath = evaluated.Select(x => GameApplication.Libraries.GetArtefactPath(x))
-            .Append(GameApplication.Versions.GetJarPath(version.Id));
+        await ExecuteClassPathStepAsync(cancellationToken).ConfigureAwait(false);
 
-        // Natives
-        // TODO extraction
-        var nativesDirectory = Path.Combine(Path.GetTempPath(),
-            Path.GetRandomFileName());
-        try
+        // Natives & settings
+        if (!ExecuteNativeStep())
         {
-            Directory.CreateDirectory(nativesDirectory);
-        }
-        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
-        {
-            MyOutput.Error(Texts.OperationGenericMakeDirFail);
             return ExitCodes.Failure;
         }
 
-        // Create the arguments
-        var gameSettings = new LaunchGameSettings
-        {
-            AssetsRoot = GameApplication.Assets.RootDirectory,
-            AssetsVersion = version.Assets,
-            AuthenticationResult = auth,
-            ClientId = "TODO", // TODO make us a real client ID
-            GameDirectory = profileDirectory,
-            VersionName = version.Id,
-            VersionType = version.Type,
-            IsDemoMode = demo,
-        };
-        var jvmSettings = new LaunchJvmSettings
-        {
-            LauncherBrand = nameof(MineOrc),
-            LauncherVersion = MineOrcApp.Version,
-            MainClass = version.MainClass,
-            NativesDirectory = nativesDirectory,
-            MaxMemory = maxMemory != 0 ? maxMemory : DefaultMaxMemory,
-            MinMemory = minMemory != 0 ? minMemory : null,
-        };
+        ExecuteSettingsStep();
 
         // Start!
-        var startInfo = ArgumentAssembler.CreateStartInfo(javaExecutable,
-            version.Arguments,
-            classPath,
-            jvmSettings,
-            gameSettings
+        var startInfo = ArgumentAssembler.CreateStartInfo(_javaCommand,
+            _version!.Arguments,
+            _classPath,
+            _jvmSettings,
+            _gameSettings
         );
 
-        return await RunProcessStepAsync(startInfo, cancellationToken).ConfigureAwait(false);
-    }
-
-    private static async Task<bool> ExecuteStepRestoreAsync(ClientManifest version, bool noRestore,
-        CancellationToken cancellationToken)
-    {
-        if (!noRestore)
-        {
-            if (!await RestoreInternalAsync(version, cancellationToken)
-                    .ConfigureAwait(false))
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
-    
-    private static async Task<int> RunProcessStepAsync(ProcessStartInfo startInfo,
-        CancellationToken cancellationToken)
-    {
-        var process = Process.Start(startInfo);
-        if (process == null)
-        {
-            MyOutput.Error(Texts.CommandLaunchFailProcessStart);
-            return ExitCodes.Failure;
-        }
-
-        await process.WaitForExitAsync(cancellationToken).ConfigureAwait(false);
-        return process.ExitCode;
+        return await ExecuteLaunchStepAsync(startInfo, cancellationToken).ConfigureAwait(false);
     }
 
     private static string? GetJava(string? javaName)
@@ -217,17 +111,18 @@ internal static class LaunchCommand
         return info.ExecutablePath;
     }
 
-    private static async Task<AuthenticationResult?> AuthenticateAsync(bool demo)
+    private static async Task<AuthenticationResult?> AuthenticateAsync(bool demo,
+        CancellationToken cancellationToken)
     {
         AuthenticationResult? auth;
         if (demo)
         {
-            auth = await new DemoAuthenticationSource().TryLoginSilentlyAsync()
+            auth = await new DemoAuthenticationSource().TryLoginSilentlyAsync(cancellationToken)
                 .ConfigureAwait(false);
         }
         else
         {
-            auth = await AuthenticateOnlineInternalAsync().ConfigureAwait(false);
+            auth = await AuthenticateOnlineInternalAsync(cancellationToken).ConfigureAwait(false);
             if (auth is not { Succeeded: true })
             {
                 return auth;
@@ -237,7 +132,8 @@ internal static class LaunchCommand
         return auth;
     }
 
-    private static async Task<AuthenticationResult?> AuthenticateOnlineInternalAsync()
+    private static async Task<AuthenticationResult?> AuthenticateOnlineInternalAsync(
+        CancellationToken cancellationToken)
     {
         var defaultName = MineOrcApp.AccountManager.DefaultAccount;
         if (string.IsNullOrWhiteSpace(defaultName)
@@ -247,7 +143,9 @@ internal static class LaunchCommand
             return null;
         }
 
-        var result = await account.TryLoginSilentlyAsync().ConfigureAwait(false);
+        var result = await account.GetAuthenticationSource()
+            .TryLoginSilentlyAsync(cancellationToken)
+            .ConfigureAwait(false);
         if (!result.Succeeded)
         {
             MyOutput.Error(Texts.CommandGenericLoginFailed);
