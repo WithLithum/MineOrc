@@ -7,5 +7,5 @@ namespace MineOrc.Network.Security;
 
 public interface IAccountModel
 {
-    Task<AuthenticationResult> TryLoginSilentlyAsync();
+    IAuthenticationSource GetAuthenticationSource();
 }
