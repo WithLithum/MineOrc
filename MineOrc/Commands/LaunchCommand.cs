@@ -9,6 +9,7 @@ using MineOrc.Foundation.Runtime.Arguments;
 using MineOrc.Foundation.Runtime.Launch;
 using MineOrc.Instancing.Operations;
 using MineOrc.Resources;
+using Spectre.Console;
 
 namespace MineOrc.Commands;
 
@@ -71,6 +72,17 @@ internal partial class LaunchCommand
 
     private async Task<int> ExecuteAsync(CancellationToken cancellationToken)
     {
+        // Warning for dev users
+        if (UseDevAuth)
+        {
+            AnsiConsole.MarkupLine("[bold underline white on red]DEV AUTHENTICATION ENABLED[/]");
+            AnsiConsole.MarkupLine("[white]You have enabled[/] [bold white]Dev Authentication[/][white].[/]");
+            AnsiConsole.MarkupLine("[white]This can only be used for testing purposes in development. The[/]");
+            AnsiConsole.MarkupLine("[white]authors of MineOrc are NOT responsible for any use of the Dev[/]");
+            AnsiConsole.MarkupLine("[white]Authentication for unlawful purposes.[/]");
+            AnsiConsole.WriteLine();
+        }
+        
         // Profile & version & restore & login
         if (!await ExecuteProfileStepAsync().ConfigureAwait(false)
             || !await ExecuteVersionStepAsync(cancellationToken).ConfigureAwait(false)

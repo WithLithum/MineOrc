@@ -1,11 +1,10 @@
-# ![Minecraft Orchestrator](assets/logo.png) MineOrc
+# ![MineOrc logo](assets/logo.png) MineOrc
 
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/WithLithum/MineOrc/cake.yml?style=flat-square&logo=github)
 ![CalVer](https://img.shields.io/badge/calver-YYYY.MINOR.MICRO-22bfda?style=flat-square)
 ![License](https://img.shields.io/badge/license-GPL--3.0--or--later-red?style=flat-square)
 
-MineOrc (*Mine*craft *Orc*hestrator) is a Minecraft instance manager and
-launcher that works from the command line.
+MineOrc is an instance manager and launcher for Minecraft: Java Edition.
 
 ## Features
 
@@ -55,10 +54,8 @@ a feature, please use Issues.
 This project is licensed under the GPL-3.0-or-later licence. See the legal
 code [here](COPYING.txt).
 
-**Disclaimer**: An AI assistant was used when developing this computer
-program. For now, every AI output that made into the code are in-line typing
-assistance. All AI output are human reviewed and resembles what the developer
-would have coded manually by hand.
+MineOrc is not an official Minecraft product, and is not associated with nor
+approved by Mojang or Microsoft.
 
 <!-- SPDX-FileCopyrightText: 2025 WithLithum & contributors -->
 <!-- SPDX-License-Identifier: GPL-3.0-or-later -->
