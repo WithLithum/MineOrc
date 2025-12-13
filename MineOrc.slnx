@@ -8,6 +8,7 @@
     <File Path="Directory.Build.props" />
     <File Path="README.md" />
   </Folder>
+  <Project Path="build/Build.csproj" />
   <Project Path="MineOrc.Foundation/MineOrc.Foundation.csproj" />
   <Project Path="MineOrc.Management/MineOrc.Management.csproj" />
   <Project Path="MineOrc.Tests/MineOrc.Tests.csproj" />

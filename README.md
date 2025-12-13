@@ -23,6 +23,19 @@ To get a list of commands, run `mineorc --help`.
 
 To build, you will need .NET 10. You can download it [here](https://dot.net).
 
+Note that in order to build you will need to specify a secrets file. It should
+be located under:
+
+> [!IMPORTANT]
+> In order for the app to build and run correctly, you will need to specify a
+> secrets file. It should be located under `MineOrc/Resources/Secrets.json`,
+> and it must be conforming to
+> [this class file](./MineOrc/Resources/SecretModel.cs).
+>
+> If you don't have the API keys, just leave the value blank.
+
+### Developing
+
 To develop, you probably need a decent .NET IDE. Your free options are:
 
 - [Visual Studio](https://visualstudio.com) Community (non-commerical or

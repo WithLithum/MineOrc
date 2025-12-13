@@ -3,4 +3,4 @@
 
 namespace MineOrc.Resources;
 
-internal sealed record SecretModel(Guid EntraAppId);
+internal sealed record SecretModel(string EntraAppId);
