@@ -26,13 +26,14 @@ public class VersionManager
         var parent = Path.GetDirectoryName(manifestPath);
         if (parent == null)
         {
-            throw new InvalidOperationException("Manifest path indicates device root which is impossible.");
+            throw new InvalidOperationException(
+                "Manifest path indicates device root which is impossible.");
         }
-        
+
         Directory.CreateDirectory(parent);
         return File.Create(manifestPath);
     }
-    
+
     public async Task<ClientManifest> GetManifestAsync(string name,
         CancellationToken cancellationToken = default)
     {
@@ -40,20 +41,20 @@ public class VersionManager
         await using (stream.ConfigureAwait(false))
         {
             return await JsonSerializer.DeserializeAsync(stream,
-                VersionManifestJsonContext.Default.ClientManifest,
-                cancellationToken)
-                    .ConfigureAwait(false)
-                ?? throw new InvalidOperationException(ExceptionMessages.ClientManifestNull);
+                           VersionManifestJsonContext.Default.ClientManifest,
+                           cancellationToken)
+                       .ConfigureAwait(false)
+                   ?? throw new InvalidOperationException(ExceptionMessages.ClientManifestNull);
         }
     }
-    
+
     public async ValueTask<bool> ValidateJarAsync(string name, ArtefactInfo artefact)
     {
         if (!Exists(name))
         {
             return false;
         }
-        
+
         return await HashHelper.VerifyFileAsync(GetJarPath(name),
             artefact.Sha1).ConfigureAwait(false);
     }
@@ -65,25 +66,14 @@ public class VersionManager
             return false;
         }
 
-#if !DEBUG
-        try
-        {
-#endif
-            return await HashHelper.VerifyFileAsync(GetManifestPath(excerpt.Id),
-                excerpt.Sha1).ConfigureAwait(false);
-#if !DEBUG
-        }
-        catch (Exception)
-        {
-            return false;
-        }
-#endif
+        return await HashHelper.VerifyFileAsync(GetManifestPath(excerpt.Id),
+            excerpt.Sha1).ConfigureAwait(false);
     }
-    
+
     public bool Exists(string name)
     {
         var manifestPath = GetManifestPath(name);
-        
+
         return File.Exists(manifestPath);
     }
 
@@ -91,7 +81,7 @@ public class VersionManager
     {
         return Path.Combine(_rootPath, name, $"{name}.jar");
     }
-    
+
     private string GetManifestPath(string name)
     {
         return Path.Combine(_rootPath, name, $"{name}.json");
