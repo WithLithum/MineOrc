@@ -263,4 +263,13 @@
     <data name="OperationFailHttpError" xml:space="preserve">
         <value>HTTP 状态码 {0}（{1}）</value>
     </data>
+    <data name="CommandFabricSearch" xml:space="preserve">
+        <value>搜索 Fabric Loader 版本</value>
+    </data>
+    <data name="CommandFabricSearchArgumentGameVersion" xml:space="preserve">
+        <value>用于搜索加载器的适配游戏版本</value>
+    </data>
+    <data name="BranchFabric" xml:space="preserve">
+        <value>搜索或安装 Fabric Loader</value>
+    </data>
 </root>

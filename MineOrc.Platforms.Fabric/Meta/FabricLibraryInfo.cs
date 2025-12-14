@@ -9,9 +9,16 @@ public sealed record FabricLibraryInfo
 {
     public required MavenCoordinate Name { get; init; }
     
-    public required Uri Url { get; init; }
+    /// <summary>
+    /// Gets the URL to the root of the maven repository containing the artefact.
+    /// </summary>
+    /// <value>
+    /// The maven repository. If <see langword="null"/>, this artefact is contained in the
+    /// <c>libraries.minecraft.net</c> repository.
+    /// </value>
+    public Uri? Url { get; init; }
     
-    public required string Sha1 { get; init; }
+    public string? Sha1 { get; init; }
     
-    public required int Size { get; init; }
+    public int Size { get; init; }
 }

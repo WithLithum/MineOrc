@@ -32,6 +32,7 @@
   <ItemGroup>
     <ProjectReference Include="..\MineOrc.Foundation\MineOrc.Foundation.csproj" />
     <ProjectReference Include="..\MineOrc.Management\MineOrc.Management.csproj" />
+    <ProjectReference Include="..\MineOrc.Platforms.Fabric\MineOrc.Platforms.Fabric.csproj" />
     <ProjectReference Include="..\MineOrc.Security\MineOrc.Security.csproj" />
   </ItemGroup>
 

@@ -8,4 +8,6 @@ public sealed record FabricLoaderMeta
     public required FabricVersionRef Loader { get; init; }
     
     public required FabricVersionRef Intermediary { get; init; }
+    
+    public required FabricLauncherMeta LauncherMeta { get; init; }
 }

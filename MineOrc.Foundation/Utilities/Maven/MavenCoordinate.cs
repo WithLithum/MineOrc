@@ -29,6 +29,12 @@ public sealed record MavenCoordinate : ISpanParsable<MavenCoordinate>
 
     public required string Version { get; init; }
 
+    public Uri CreateUriLink(Uri root)
+    {
+        var dotGroup = Group.Replace('.', '/');
+        return new Uri(root, $"{dotGroup}/{Artefact}/{Version}/{Artefact}-{Version}.jar");
+    }
+    
     public static MavenCoordinate Parse(string s)
         => Parse(s, null);
 

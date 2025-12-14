@@ -274,4 +274,13 @@
     <data name="OperationFailHttpError" xml:space="preserve">
         <value>HTTP error status code {0} ('{1}')</value>
     </data>
+    <data name="CommandFabricSearch" xml:space="preserve">
+        <value>Finds a Fabric Loader version</value>
+    </data>
+    <data name="CommandFabricSearchArgumentGameVersion" xml:space="preserve">
+        <value>The game version to look for loader versions</value>
+    </data>
+    <data name="BranchFabric" xml:space="preserve">
+        <value>Search for or install Fabric Loader</value>
+    </data>
 </root>

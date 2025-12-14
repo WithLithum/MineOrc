@@ -14,4 +14,5 @@ namespace MineOrc.Platforms.Fabric.Meta;
 [JsonSerializable(typeof(FabricLoaderMeta))]
 [JsonSerializable(typeof(FabricMainClassInfo))]
 [JsonSerializable(typeof(FabricLauncherMeta))]
+[JsonSerializable(typeof(IReadOnlyList<FabricLoaderMeta>))]
 internal sealed partial class FabricJsonContext : JsonSerializerContext;
