@@ -260,4 +260,7 @@
     <data name="InitializationWarnTenantMissing" xml:space="preserve">
         <value>因客户端 ID 或 Tenant 缺失，将无法进行正版登录</value>
     </data>
+    <data name="OperationFailHttpError" xml:space="preserve">
+        <value>HTTP 状态码 {0}（{1}）</value>
+    </data>
 </root>

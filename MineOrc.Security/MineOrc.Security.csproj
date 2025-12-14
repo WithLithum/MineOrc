@@ -8,13 +8,21 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="KeySharp" Version="1.0.5" />
+      <PackageReference Include="Microsoft.CodeAnalysis.ResxSourceGenerator" Version="5.0.0-1.25277.114">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
       <PackageReference Include="Microsoft.Identity.Client" Version="4.79.2" />
       <PackageReference Include="Microsoft.Identity.Client.Extensions.Msal" Version="4.79.2" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\MineOrc.Foundation\MineOrc.Foundation.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="Resources\Messages.resx" EmitFormatMethods="true">
+      </EmbeddedResource>
     </ItemGroup>
 
 </Project>

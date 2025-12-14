@@ -271,4 +271,7 @@
     <data name="InitializationWarnTenantMissing" xml:space="preserve">
         <value>missing client ID or tenant, will not be able to login or authenticate</value>
     </data>
+    <data name="OperationFailHttpError" xml:space="preserve">
+        <value>HTTP error status code {0} ('{1}')</value>
+    </data>
 </root>

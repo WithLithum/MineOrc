@@ -10,7 +10,7 @@ namespace MineOrc.Security.Msa;
 /// <summary>
 /// Acts as a central piece of management in MSA premium authentication.
 /// </summary>
-public class SecureAuthority
+public class MsaLoginService
 {
     private static readonly string[] MsaScopes =
     [
@@ -22,7 +22,7 @@ public class SecureAuthority
     private readonly StorageCreationProperties _storageProperties;
     private MsalCacheHelper? _cacheHelper;
 
-    public SecureAuthority(string clientId,
+    public MsaLoginService(string clientId,
         ApplicationMeta meta)
     {
         _client = PublicClientApplicationBuilder.Create(clientId)
@@ -31,14 +31,14 @@ public class SecureAuthority
             .WithClientVersion(meta.Version)
             .Build();
 
-        _storageProperties = new StorageCreationPropertiesBuilder(meta.Name, $"{meta.Name}_MSAL")
+        _storageProperties = new StorageCreationPropertiesBuilder(meta.Name, $"{meta.Name}_Xbox")
             .WithLinuxKeyring(meta.Package,
                 "MSAL",
                 "Credentials for premium authentication",
                 new KeyValuePair<string, string>("app_name", meta.Name),
                 new KeyValuePair<string, string>("data_version", "v1"))
             .WithMacKeyChain(meta.Package,
-                "MSAL")
+                "Xbox_MSA")
             .Build();
     }
 

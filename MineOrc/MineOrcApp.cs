@@ -37,7 +37,7 @@ public static class MineOrcApp
         Package = "x.withlithum.mineorc",
     };
 
-    internal static SecureAuthority SecureAuthority
+    internal static MsaLoginService MsaLogin
     {
         get => field ?? throw new InvalidOperationException();
         private set;
@@ -111,8 +111,8 @@ public static class MineOrcApp
             MyOutput.Warn(Texts.InitializationWarnTenantMissing);
         }
 
-        SecureAuthority = new SecureAuthority(Secrets.EntraAppId, Meta);
-        await SecureAuthority.InitializeAsync().ConfigureAwait(false);
+        MsaLogin = new MsaLoginService(Secrets.EntraAppId, Meta);
+        await MsaLogin.InitializeAsync().ConfigureAwait(false);
         
         return true;
     }

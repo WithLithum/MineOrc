@@ -50,7 +50,7 @@ public static class MyOutput
     public static void Error(Exception exception, string message)
     {
         Error(message);
-        AnsiConsole.WriteException(exception, ExceptionFormats.ShortenEverything);
+        AnsiConsole.MarkupLineInterpolated($"[grey]{exception}[/]");
     }
     
     [StringFormatMethod("format")]
