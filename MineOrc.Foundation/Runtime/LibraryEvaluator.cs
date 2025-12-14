@@ -11,7 +11,7 @@ namespace MineOrc.Foundation.Runtime;
 public static class LibraryEvaluator
 {
     public static async Task<IReadOnlyCollection<LibraryArtefactInfo>> EvaluateAsync(
-        IReadOnlyCollection<LibraryInfo> libraries,
+        IEnumerable<LibraryInfo> libraries,
         CancellationToken cancellationToken = default)
     {
         var bag = new ConcurrentBag<LibraryArtefactInfo>();

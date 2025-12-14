@@ -3,6 +3,7 @@
 
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using MineOrc.Foundation.Instancing;
 using MineOrc.Foundation.Runtime;
 using MineOrc.Foundation.Runtime.Launch;
 using MineOrc.Instancing;
@@ -98,15 +99,17 @@ internal partial class LaunchCommand
 
         return true;
     }
-    
+
     private async Task ExecuteClassPathStepAsync(CancellationToken cancellationToken)
     {
         var evaluated =
-            await LibraryEvaluator.EvaluateAsync(_version!.Libraries, cancellationToken)
+            await LibraryEvaluator.EvaluateAsync(ProfileOrchestrator.GetLibraries(_version!,
+                        _profile!),
+                    cancellationToken)
                 .ConfigureAwait(false);
-        
+
         _classPath = evaluated.Select(x => GameApplication.Libraries.GetArtefactPath(x))
-            .Append(GameApplication.Versions.GetJarPath(_version.Id));
+            .Append(GameApplication.Versions.GetJarPath(_version!.Id));
     }
 
     [MemberNotNull(nameof(_jvmSettings),
@@ -129,13 +132,13 @@ internal partial class LaunchCommand
         {
             LauncherBrand = nameof(MineOrc),
             LauncherVersion = MineOrcApp.Version,
-            MainClass = _version.MainClass,
+            MainClass = ProfileOrchestrator.GetMainClass(_version, _profile!),
             NativesDirectory = _nativesDirectory!,
             MaxMemory = MaxMemory != 0 ? MaxMemory : DefaultMaxMemory,
             MinMemory = MinMemory != 0 ? MinMemory : null,
         };
     }
-    
+
     private static async Task<int> ExecuteLaunchStepAsync(ProcessStartInfo startInfo,
         CancellationToken cancellationToken)
     {

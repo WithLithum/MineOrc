@@ -7,5 +7,7 @@ public sealed record ProfileInfo
 {
     public required string ClientVersion { get; init; }
     
+    public IReadOnlyList<ProfileExtension>? Extensions { get; init; }
+    
     public required DateTime Created { get; init; }
 }
