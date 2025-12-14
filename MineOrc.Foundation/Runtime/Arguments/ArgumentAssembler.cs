@@ -148,7 +148,7 @@ public static class ArgumentAssembler
             dict.Add("resolution_height", size.Height.ToString("D"));
         }
 
-        dict.AddIfNotNull("auth_xuid", settings.Session.Detail?.XboxUserHash);
+        dict.AddIfNotNull("auth_xuid", settings.Session.XboxId);
         dict.AddIfNotNull("quickPlayPath", settings.QuickPlayPath);
         dict.AddIfNotNull("quickPlaySingleplayer", settings.QuickPlaySingleplayer);
         dict.AddIfNotNull("quickPlayMultiplayer", settings.QuickPlayMultiplayer);

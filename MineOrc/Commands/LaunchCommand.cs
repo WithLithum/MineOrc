@@ -24,7 +24,7 @@ internal partial class LaunchCommand
 
     private ProfileInfo? _profile;
     private ClientManifest? _version;
-    private SessionWithProfile? _auth;
+    private PlayAuthSession? _auth;
     private string? _javaCommand;
 
     private IEnumerable<string>? _classPath;
@@ -132,9 +132,9 @@ internal partial class LaunchCommand
         return info.ExecutablePath;
     }
 
-    private async Task<SessionWithProfile?> AuthenticateAsync(CancellationToken cancellationToken)
+    private async Task<PlayAuthSession?> AuthenticateAsync(CancellationToken cancellationToken)
     {
-        SessionWithProfile? authResult;
+        PlayAuthSession? authResult;
         if (Demo)
         {
             authResult = DemoAuthenticator.CreateSession();

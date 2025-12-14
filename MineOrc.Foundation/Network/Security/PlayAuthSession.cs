@@ -3,6 +3,6 @@
 
 namespace MineOrc.Foundation.Network.Security;
 
-public sealed record SessionWithProfile(ISessionProfile Profile,
+public sealed record PlayAuthSession(ISessionProfile Profile,
     IAuthSession Session,
-    IAuthDetail? Detail = null);
+    string XboxId);

@@ -17,9 +17,10 @@ internal static class DevAuthenticator
         public string Name => "MineOrc_Dev";
     }
     
-    internal static SessionWithProfile CreateSession()
+    internal static PlayAuthSession CreateSession()
     {
-        return new SessionWithProfile(new DevProfile(), new OfflineAuthSession());
+        return new PlayAuthSession(new DevProfile(), new OfflineAuthSession(),
+            "MINEORC_DEV");
     }
 }
 

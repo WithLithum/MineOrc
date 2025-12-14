@@ -12,12 +12,12 @@ namespace MineOrc.Network.Security;
 
 public static class InteractiveAuthenticator
 {
-    public static async Task<SessionWithProfile?> AuthenticateAsync(
+    public static async Task<PlayAuthSession?> AuthenticateAsync(
         CancellationToken cancellationToken)
     {
         var status = AnsiConsole.Status();
 
-        SessionWithProfile? swp = null;
+        PlayAuthSession? swp = null;
         try
         {
             await status.StartAsync("Logging in",
@@ -46,7 +46,7 @@ public static class InteractiveAuthenticator
         return swp;
     }
 
-    private static async Task<SessionWithProfile> ExecuteLoginAsync(StatusContext context,
+    private static async Task<PlayAuthSession> ExecuteLoginAsync(StatusContext context,
         CancellationToken cancellationToken)
     {
         context.Status = "Logging in with Microsoft Account";
@@ -91,9 +91,6 @@ public static class InteractiveAuthenticator
         var profile = await MinecraftServices.GetAuthenticatedProfile(mcResult,
             MineOrcApp.HttpClient).ConfigureAwait(false);
         
-        return new SessionWithProfile(profile, mcResult, new SecurityAuthDetail
-        {
-            XboxUserHash = xstsResult.UserHash,
-        });
+        return new PlayAuthSession(profile, mcResult, xstsResult.UserHash);
     }
 }

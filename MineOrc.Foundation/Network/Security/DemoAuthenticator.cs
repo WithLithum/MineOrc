@@ -5,10 +5,11 @@ namespace MineOrc.Foundation.Network.Security;
 
 public static class DemoAuthenticator
 {
-    public static SessionWithProfile CreateSession()
+    public static PlayAuthSession CreateSession()
     {
-        return new SessionWithProfile(new DemoProfile(),
-            new OfflineAuthSession());
+        return new PlayAuthSession(new DemoProfile(),
+            new OfflineAuthSession(),
+            "DEMO_MODE_USER");
     }
     
     private sealed class DemoProfile : ISessionProfile

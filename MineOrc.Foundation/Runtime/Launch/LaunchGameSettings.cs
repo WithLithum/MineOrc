@@ -11,7 +11,7 @@ public sealed record LaunchGameSettings
 {
     public required string ClientId { get; init; }
     
-    public required SessionWithProfile Session { get; init; }
+    public required PlayAuthSession Session { get; init; }
     
     public required string AssetsVersion { get; init; }
     

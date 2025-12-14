@@ -118,7 +118,7 @@ internal partial class LaunchCommand
             AssetsRoot = GameApplication.Assets.RootDirectory,
             AssetsVersion = _version!.Assets,
             Session = _auth!,
-            ClientId = "TODO", // TODO make us a real client ID
+            ClientId = MineOrcApp.Secrets.EntraAppId,
             GameDirectory = _profileDirectory!,
             VersionName = _version.Id,
             VersionType = _version.Type,
