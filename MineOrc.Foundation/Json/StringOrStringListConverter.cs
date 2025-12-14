@@ -21,6 +21,19 @@ public class StringOrStringListConverter : JsonConverter<IReadOnlyList<string>>
 
     public override void Write(Utf8JsonWriter writer, IReadOnlyList<string> value, JsonSerializerOptions options)
     {
-        throw new NotImplementedException();
+        if (value.Count == 1)
+        {
+            writer.WriteStringValue(value[0]);
+            return;
+        }
+        
+        writer.WriteStartArray();
+        
+        foreach (var item in value)
+        {
+            writer.WriteStringValue(item);
+        }
+        
+        writer.WriteEndArray();
     }
 }
