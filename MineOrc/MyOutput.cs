@@ -44,7 +44,7 @@ public static class MyOutput
     [StringFormatMethod("format")]
     public static void Error([StringSyntax("CompositeFormat")] string format, params object[] args)
     {
-        AnsiConsole.MarkupLineInterpolated($"[bold white]{MineOrcApp.BaseName}:[/] {string.Format(format, args)}");
+        AnsiConsole.MarkupLineInterpolated($"[bold white]{MineOrcApp.BaseName}:[/] [red]{string.Format(format, args)}[/]");
     }
 
     public static void Error(Exception exception, string message)
