@@ -2,10 +2,12 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 using System.Text.Json.Serialization;
+using MineOrc.Foundation.Utilities.Maven;
 
 namespace MineOrc.Platforms.Fabric.Meta;
 
 [JsonSourceGenerationOptions(PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase)]
+[JsonSerializable(typeof(MavenCoordinate))]
 [JsonSerializable(typeof(FabricVersionRef))]
 [JsonSerializable(typeof(FabricLibraryInfo))]
 [JsonSerializable(typeof(FabricLibrariesMeta))]
