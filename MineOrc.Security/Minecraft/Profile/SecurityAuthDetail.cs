@@ -3,9 +3,9 @@
 
 using MineOrc.Foundation.Network.Security;
 
-namespace MineOrc.Network.Security;
+namespace MineOrc.Security.Minecraft.Profile;
 
-public interface IAccountModel
+public sealed record SecurityAuthDetail : IAuthDetail
 {
-    IAuthenticationSource GetAuthenticationSource();
+    public required string XboxUserHash { get; init; }
 }

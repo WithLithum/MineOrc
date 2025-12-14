@@ -8,6 +8,7 @@ using MineOrc.Foundation.Network.Security;
 using MineOrc.Foundation.Runtime.Arguments;
 using MineOrc.Foundation.Runtime.Launch;
 using MineOrc.Instancing.Operations;
+using MineOrc.Network.Security;
 using MineOrc.Resources;
 using Spectre.Console;
 
@@ -23,7 +24,7 @@ internal partial class LaunchCommand
 
     private ProfileInfo? _profile;
     private ClientManifest? _version;
-    private MinecraftAuthResult? _auth;
+    private SessionWithProfile? _auth;
     private string? _javaCommand;
 
     private IEnumerable<string>? _classPath;
@@ -131,44 +132,33 @@ internal partial class LaunchCommand
         return info.ExecutablePath;
     }
 
-    private async Task<MinecraftAuthResult?> AuthenticateAsync(CancellationToken cancellationToken)
+    private async Task<SessionWithProfile?> AuthenticateAsync(CancellationToken cancellationToken)
     {
-        IAuthenticationSource authSource;
+        SessionWithProfile? authResult;
         if (Demo)
         {
-            authSource = new DemoAuthenticationSource();
+            authResult = DemoAuthenticator.CreateSession();
         }
         #if DEBUG
         else if (UseDevAuth)
         {
-            authSource = new OfflineAuthenticationSource("MineOrcDev");
+            authResult = DevAuthenticator.CreateSession();
         }
         #endif
         else
         {
-            var tempSource = GetDefaultAuthenticationInternal();
+            var tempSource = 
+                await InteractiveAuthenticator.AuthenticateAsync(cancellationToken)
+                    .ConfigureAwait(false);
             if (tempSource == null)
             {
                 return null;
             }
 
-            authSource = tempSource;
+            authResult = tempSource;
         }
 
-        return await authSource.TryLoginSilentlyAsync(cancellationToken).ConfigureAwait(false);
-    }
-
-    private static IAuthenticationSource? GetDefaultAuthenticationInternal()
-    {
-        var defaultName = MineOrcApp.AccountManager.DefaultAccount;
-        if (string.IsNullOrWhiteSpace(defaultName)
-            || !MineOrcApp.AccountManager.TryGetAccount(defaultName, out var account))
-        {
-            MyOutput.Error(Texts.CommandLaunchFailNoDefaultAccount);
-            return null;
-        }
-
-        return account.GetAuthenticationSource();
+        return authResult;
     }
 
     private static async Task<bool> RestoreInternalAsync(ClientManifest version,

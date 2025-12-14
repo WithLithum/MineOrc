@@ -124,21 +124,16 @@ public static class ArgumentAssembler
 
     public static ArgumentValueResolver CreateGameResolver(LaunchGameSettings settings)
     {
-        var auth = settings.MinecraftAuthResult;
-        if (!auth.Succeeded)
-        {
-            throw new ArgumentException("The authentication result does not indicate success.",
-                nameof(settings));
-        }
+        var session = settings.Session.Session;
+        var profile = settings.Session.Profile;
 
         var dict = new Dictionary<string, string>
         {
-            { "auth_player_name", auth.Profile.UserName },
-            { "auth_uuid", auth.OverrideId ?? auth.Profile.Id.ToString("N") },
-            { "auth_access_token", auth.AccessToken },
-            { "auth_xuid", auth.Xuid },
+            { "auth_player_name", profile.Name },
+            { "auth_uuid", profile.Id.ToString("N") },
+            { "auth_access_token", session.AccessToken },
             { "clientid", settings.ClientId },
-            { "user_type", auth.UserType },
+            { "user_type", "msa" },
             { "assets_index_name", settings.AssetsVersion },
             { "assets_root", settings.AssetsRoot },
             { "game_directory", settings.GameDirectory },
@@ -153,6 +148,7 @@ public static class ArgumentAssembler
             dict.Add("resolution_height", size.Height.ToString("D"));
         }
 
+        dict.AddIfNotNull("auth_xuid", settings.Session.Detail?.XboxUserHash);
         dict.AddIfNotNull("quickPlayPath", settings.QuickPlayPath);
         dict.AddIfNotNull("quickPlaySingleplayer", settings.QuickPlaySingleplayer);
         dict.AddIfNotNull("quickPlayMultiplayer", settings.QuickPlayMultiplayer);

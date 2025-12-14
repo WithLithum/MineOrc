@@ -64,8 +64,6 @@ public static class MineOrcApp
 
     public static readonly JavaRegistryManager JavaRegistry = new(JavaConfigPath);
 
-    public static readonly AccountManager AccountManager = new();
-
     public static readonly ProfileManager ProfileManager = new(ProfilesPath);
 
     #region Initialization routine

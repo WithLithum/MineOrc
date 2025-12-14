@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace MineOrc.Foundation.Network.Security;
 
+[Obsolete("Use SessionWithProfile instead.")]
 public sealed record MinecraftAuthResult
 {
     [MemberNotNullWhen(true, nameof(AccessToken),
