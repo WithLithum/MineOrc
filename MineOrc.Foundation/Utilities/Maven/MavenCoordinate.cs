@@ -7,6 +7,10 @@ using MineOrc.Foundation.Json;
 
 namespace MineOrc.Foundation.Utilities.Maven;
 
+/// <summary>
+/// Represents a short, Group-Artefact-Version (GAV) maven coordinate. This implementation does not
+/// support additional fields such as classifiers.
+/// </summary>
 [JsonConverter(typeof(MavenCoordinateConverter))]
 public sealed record MavenCoordinate : ISpanParsable<MavenCoordinate>
 {
@@ -29,10 +33,18 @@ public sealed record MavenCoordinate : ISpanParsable<MavenCoordinate>
 
     public required string Version { get; init; }
 
-    public Uri CreateUriLink(Uri root)
+    public Uri ToUri(Uri root, string extension)
     {
         var dotGroup = Group.Replace('.', '/');
-        return new Uri(root, $"{dotGroup}/{Artefact}/{Version}/{Artefact}-{Version}.jar");
+        return new Uri(root, $"{dotGroup}/{Artefact}/{Version}/{Artefact}-{Version}.{extension}");
+    }
+
+    public string ToPath(string root, string extension)
+    {
+        var dotGroup = Group.Replace('.', Path.DirectorySeparatorChar);
+        var sp = Path.DirectorySeparatorChar;
+        return Path.GetFullPath($"{dotGroup}{sp}{Artefact}{sp}{Version}{sp}{Artefact}-{Version}.{extension}",
+            root);
     }
     
     public static MavenCoordinate Parse(string s)

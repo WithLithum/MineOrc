@@ -4,13 +4,13 @@
 namespace MineOrc.Tests.Utils;
 
 [AttributeUsage(AttributeTargets.Method)]
-public sealed class WindowsFact : FactAttribute
+public sealed class UnixFactAttribute : FactAttribute
 {
-    public WindowsFact()
+    public UnixFactAttribute()
     {
-        if (!OperatingSystem.IsWindows())
+        if (Environment.OSVersion.Platform != PlatformID.Unix)
         {
-            Skip = "Test is Windows only";
+            Skip = "Test is Unix only";
         }
     }
 }
