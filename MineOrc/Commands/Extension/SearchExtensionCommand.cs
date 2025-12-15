@@ -39,7 +39,7 @@ public static class SearchExtensionCommand
         var gameVersion = parse.GetRequiredValue(ArgumentGameVersion);
         var limit = parse.GetValue(CommonArgs.SearchLimit);
 
-        if (!PlatformService.ExtensionProviders.TryGetValue(platformName, out var provider))
+        if (!ExtensionService.Providers.TryGetValue(platformName, out var provider))
         {
             MyOutput.Error(Smart.Format(Texts.CommandExtensionFailNoPlatform,
                 new { platform = platformName }));

@@ -310,4 +310,31 @@
     <data name="CommandExtensionList" xml:space="preserve">
         <value>List available extension types</value>
     </data>
+    <data name="CommandExtensionAdd" xml:space="preserve">
+        <value>Add an extension to a profile</value>
+    </data>
+    <data name="CommandExtensionAddArgumentProfile" xml:space="preserve">
+        <value>The profile to add extension to</value>
+    </data>
+    <data name="CommandExtensionAddArgumentName" xml:space="preserve">
+        <value>The extension to add</value>
+    </data>
+    <data name="CommandExtensionAddArgumentVersion" xml:space="preserve">
+        <value>The version of the extension to add</value>
+    </data>
+    <data name="CommandExtensionAddOptionForce" xml:space="preserve">
+        <value>Override existing extension</value>
+    </data>
+    <data name="CommandExtensionAddFailForce" xml:space="preserve">
+        <value>extension '{type}' already exists; use '--force' to override</value>
+    </data>
+    <data name="OperationGenericIoDenied" xml:space="preserve">
+        <value>access denied: {message}</value>
+    </data>
+    <data name="OperationGenericFailHttpStatus" xml:space="preserve">
+        <value>network operation failed: status code {code} ({text})</value>
+    </data>
+    <data name="OperationGenericFailNetwork" xml:space="preserve">
+        <value>network operation failed: {message}</value>
+    </data>
 </root>

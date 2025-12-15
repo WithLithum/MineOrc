@@ -299,4 +299,31 @@
     <data name="CommandExtensionList" xml:space="preserve">
         <value>列出可用的扩展类型</value>
     </data>
+    <data name="CommandExtensionAdd" xml:space="preserve">
+        <value>向实例添加扩展</value>
+    </data>
+    <data name="CommandExtensionAddArgumentProfile" xml:space="preserve">
+        <value>要添加扩展的实例</value>
+    </data>
+    <data name="CommandExtensionAddArgumentName" xml:space="preserve">
+        <value>要添加的扩展类型</value>
+    </data>
+    <data name="CommandExtensionAddArgumentVersion" xml:space="preserve">
+        <value>要添加的扩展版本</value>
+    </data>
+    <data name="CommandExtensionAddOptionForce" xml:space="preserve">
+        <value>覆盖已存在的扩展</value>
+    </data>
+    <data name="CommandExtensionAddFailForce" xml:space="preserve">
+        <value>扩展类型’{type}‘已存在，如需覆盖请指定‘--force’</value>
+    </data>
+    <data name="OperationGenericIoDenied" xml:space="preserve">
+        <value>访问被拒绝：{message}</value>
+    </data>
+    <data name="OperationGenericFailHttpStatus" xml:space="preserve">
+        <value>网络操作失败：状态码 {code}（{text}）</value>
+    </data>
+    <data name="OperationGenericFailNetwork" xml:space="preserve">
+        <value>网络操作失败：{message}</value>
+    </data>
 </root>

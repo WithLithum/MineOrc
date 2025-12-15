@@ -29,7 +29,10 @@ public sealed class FabricPlatformExtensionProvider : IPlatformExtensionProvider
             cancellationToken).ConfigureAwait(false);
         
         return await FabricEvaluator.CreateExtensionOnlineAsync(meta,
-            httpClient,
-            cancellationToken).ConfigureAwait(false);
+                httpClient,
+                cancellationToken).ConfigureAwait(false) with
+            {
+                Version = version,
+            };
     }
 }

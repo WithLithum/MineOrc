@@ -21,7 +21,7 @@ public static class ListExtensionCommand
 
     private static void Execute(ParseResult obj)
     {
-        foreach (var extension in PlatformService.ExtensionProviders.Keys)
+        foreach (var extension in ExtensionService.Providers.Keys)
         {
             AnsiConsole.WriteLine(extension);
         }

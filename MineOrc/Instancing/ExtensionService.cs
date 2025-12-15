@@ -6,10 +6,10 @@ using MineOrc.Platforms.Fabric;
 
 namespace MineOrc.Instancing;
 
-public static class PlatformService
+public static class ExtensionService
 {
     public static readonly IReadOnlyDictionary<string, IPlatformExtensionProvider>
-        ExtensionProviders =
+        Providers =
             new Dictionary<string, IPlatformExtensionProvider>
             {
                 { "fabric", new FabricPlatformExtensionProvider() },

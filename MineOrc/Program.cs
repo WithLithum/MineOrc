@@ -27,7 +27,8 @@ var command = new RootCommand(Texts.RootDescription)
     new Command("extension", Texts.BranchExtension)
     {
         ListExtensionCommand.Create(),
-        SearchExtensionCommand.Create(),  
+        SearchExtensionCommand.Create(),
+        AddExtensionCommand.Create(),
     },
     NewCommand.CreateCommand(),
     LaunchCommand.CreateCommand(),

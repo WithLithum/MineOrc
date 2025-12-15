@@ -8,6 +8,8 @@ namespace MineOrc.Foundation.Instancing;
 
 public sealed record ProfileExtension
 {
+    public string? Version { get; init; }
+    
     public IReadOnlyList<LibraryInfo>? Libraries { get; init; }
     
     public IReadOnlyList<GameArgumentEntry>? GameArguments { get; init; }
