@@ -16,7 +16,7 @@ public static class ProfileOrchestrator
             return version.MainClass;
         }
 
-        var temp = profile.Extensions.LastOrDefault(x => x.MainClass != null);
+        var temp = profile.Extensions.Values.LastOrDefault(x => x.MainClass != null);
         return temp?.MainClass ?? version.MainClass;
     }
     
@@ -30,7 +30,7 @@ public static class ProfileOrchestrator
             return result;
         }
         
-        foreach (var extension in profile.Extensions)
+        foreach (var extension in profile.Extensions.Values)
         {
             if (extension.Libraries is null)
             {

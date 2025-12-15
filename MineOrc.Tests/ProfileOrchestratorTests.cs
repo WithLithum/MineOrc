@@ -1,6 +1,7 @@
 ﻿// SPDX-FileCopyrightText: 2025 WithLithum & contributors
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+using System.Collections.Frozen;
 using MineOrc.Foundation.Instancing;
 using MineOrc.Tests.Utils;
 
@@ -35,13 +36,15 @@ public class ProfileOrchestratorTests
         {
             ClientVersion = "MockVersion",
             Created = DateTime.MinValue,
-            Extensions =
-            [
-                new ProfileExtension
+            Extensions = new Dictionary<string, ProfileExtension>
+            {
                 {
-                    MainClass = "org.example.extension.ProfileClient",
+                    "example", new ProfileExtension
+                    {
+                        MainClass = "org.example.extension.ProfileClient",
+                    }
                 },
-            ],
+            },
         };
 
         // Act
@@ -51,7 +54,7 @@ public class ProfileOrchestratorTests
         // Assert
         Assert.Equal("org.example.extension.ProfileClient", result);
     }
-    
+
     [Fact]
     public void GetMainClass_MultipleExtensions_ReturnsLastExtensionMainClass()
     {
@@ -60,21 +63,27 @@ public class ProfileOrchestratorTests
         {
             ClientVersion = "MockVersion",
             Created = DateTime.MinValue,
-            Extensions =
-            [
-                new ProfileExtension
+            Extensions = new Dictionary<string, ProfileExtension>
+            {
                 {
-                    MainClass = "org.example.extension.ProfileClient",
+                    "example", new ProfileExtension
+                    {
+                        MainClass = "org.example.extension.ProfileClient",
+                    }
                 },
-                new ProfileExtension
                 {
-                    MainClass = "org.example.extension.SomeOtherExtension",
+                    "example2", new ProfileExtension
+                    {
+                        MainClass = "org.example.extension.SomeOtherExtension",
+                    }
                 },
-                new ProfileExtension
                 {
-                    MainClass = "com.example.extension.YetAnotherExtensionClient",
+                    "example3", new ProfileExtension
+                    {
+                        MainClass = "com.example.extension.YetAnotherExtensionClient",
+                    }
                 },
-            ],
+            },
         };
 
         // Act
