@@ -50,7 +50,8 @@ internal static class SearchVersionCommand
             SnapshotOption,
             OldBetaOption,
             OldAlphaOption,
-            MachineOption
+            MachineOption,
+            CommonArgs.SearchLimit,
         };
 
         command.Description = Texts.VersionSearchCommand;
@@ -67,6 +68,7 @@ internal static class SearchVersionCommand
         var includeOldBeta = parseResult.GetValue(OldBetaOption);
         var includeOldAlpha = parseResult.GetValue(OldAlphaOption);
         var machine = parseResult.GetValue(MachineOption);
+        var limit = parseResult.GetValue(CommonArgs.SearchLimit);
         
         if (string.IsNullOrWhiteSpace(term))
         {
@@ -91,7 +93,7 @@ internal static class SearchVersionCommand
             return 1;
         }
 
-        PrintVersions(versions, machine);
+        PrintVersions(versions, machine, limit);
         return 0;
     }
 
@@ -144,8 +146,14 @@ internal static class SearchVersionCommand
     }
 
     private static void PrintVersions(IEnumerable<VersionExcerpt> versions,
-        bool machineFormat)
+        bool machineFormat,
+        int limit)
     {
+        if (limit != 0)
+        {
+            versions = versions.Take(limit);
+        }
+        
         foreach (var version in versions)
         {
             if (machineFormat)

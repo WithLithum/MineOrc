@@ -21,6 +21,7 @@ public static class SearchFabricCommand
             Texts.CommandFabricSearch)
         {
             ArgumentGameVersion,
+            CommonArgs.SearchLimit,
         };
         
         command.SetAction(ExecuteAsync);
@@ -30,8 +31,9 @@ public static class SearchFabricCommand
     private static async Task<int> ExecuteAsync(ParseResult parse, CancellationToken cancellationToken)
     {
         var gameVersion = parse.GetRequiredValue(ArgumentGameVersion);
+        var limit = parse.GetValue(CommonArgs.SearchLimit);
 
-        IReadOnlyList<FabricLoaderMeta> list;
+        IEnumerable<FabricLoaderMeta> list;
         try
         {
             list = await FabricMetaService
@@ -42,6 +44,11 @@ public static class SearchFabricCommand
         {
             MyOutput.Error(e, Texts.OperationGenericExceptionError);
             return ExitCodes.Failure;
+        }
+
+        if (limit != 0)
+        {
+            list = list.Take(limit);
         }
 
         foreach (var loader in list)

@@ -283,4 +283,10 @@
     <data name="BranchFabric" xml:space="preserve">
         <value>Search for or install Fabric Loader</value>
     </data>
+    <data name="CommandGenericOptionSearchLimit" xml:space="preserve">
+        <value>The amount of items to display</value>
+    </data>
+    <data name="ArgumentNumberNegative" xml:space="preserve">
+        <value>specified number is negative</value>
+    </data>
 </root>

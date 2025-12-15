@@ -55,4 +55,18 @@ public static class CommandHelper
     {
         return new Option<bool>(shortName, longName) { Description = description, };
     }
+
+    public static Option<int> PositiveInt32Option([LocalizationRequired(false)] string shortName,
+        [LocalizationRequired(false)] string longName,
+        [LocalizationRequired] string description)
+    {
+        return new Option<int>(shortName, longName)
+        {
+            Description = description,
+            Validators =
+            {
+                ArgValidation.NotNegative,
+            },
+        };
+    }
 }

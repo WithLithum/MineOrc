@@ -272,4 +272,10 @@
     <data name="BranchFabric" xml:space="preserve">
         <value>搜索或安装 Fabric Loader</value>
     </data>
+    <data name="CommandGenericOptionSearchLimit" xml:space="preserve">
+        <value>要显示的数量</value>
+    </data>
+    <data name="ArgumentNumberNegative" xml:space="preserve">
+        <value>指定的数字为负数</value>
+    </data>
 </root>
