@@ -16,4 +16,18 @@ public static class FabricMetaService
                 FabricJsonContext.Default.IReadOnlyListFabricLoaderMeta)
             .ConfigureAwait(false))!;
     }
+
+    public static async Task<FabricLoaderMeta> GetLoaderAsync(string gameVersion,
+        string loaderVersion,
+        HttpClient client,
+        CancellationToken cancellationToken = default)
+    {
+        var url = $"https://meta.fabricmc.net/v2/versions/loader/{Uri.EscapeDataString(gameVersion)}" +
+                  $"/{Uri.EscapeDataString(loaderVersion)}";
+
+        return (await client.GetFromJsonAsync(url,
+                FabricJsonContext.Default.FabricLoaderMeta,
+                cancellationToken: cancellationToken)
+            .ConfigureAwait(false))!;
+    }
 }

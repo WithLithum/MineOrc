@@ -10,6 +10,8 @@ namespace MineOrc.Foundation.Runtime;
 
 public static class LibraryEvaluator
 {
+    public static readonly Uri MinecraftLibraries = new("https://libraries.minecraft.net");
+    
     public static async Task<IReadOnlyCollection<LibraryArtefactInfo>> EvaluateAsync(
         IEnumerable<LibraryInfo> libraries,
         CancellationToken cancellationToken = default)

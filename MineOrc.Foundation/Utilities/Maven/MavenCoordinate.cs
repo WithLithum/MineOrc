@@ -35,16 +35,25 @@ public sealed record MavenCoordinate : ISpanParsable<MavenCoordinate>
 
     public Uri ToUri(Uri root, string extension)
     {
-        var dotGroup = Group.Replace('.', '/');
-        return new Uri(root, $"{dotGroup}/{Artefact}/{Version}/{Artefact}-{Version}.{extension}");
+        return new Uri(root, CreatePath(extension, '/'));
     }
 
     public string ToPath(string root, string extension)
     {
-        var dotGroup = Group.Replace('.', Path.DirectorySeparatorChar);
-        var sp = Path.DirectorySeparatorChar;
-        return Path.GetFullPath($"{dotGroup}{sp}{Artefact}{sp}{Version}{sp}{Artefact}-{Version}.{extension}",
+        return Path.GetFullPath(CreatePath(extension, Path.DirectorySeparatorChar),
             root);
+    }
+
+    public string ToArtefactPath(string extension)
+    {
+        return CreatePath(extension, '/');
+    }
+
+    private string CreatePath(string extension, char directorySeparator)
+    {
+        var sp = directorySeparator;
+        var dotGroup = Group.Replace('.', '/');
+        return $"{dotGroup}{sp}{Artefact}{sp}{Version}{sp}{Artefact}-{Version}.{extension}";
     }
     
     public static MavenCoordinate Parse(string s)

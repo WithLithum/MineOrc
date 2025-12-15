@@ -92,4 +92,18 @@ public class MavenCoordinateTests
         Assert.Equal($@"{root}/org/example/minecraft/1.0.0/minecraft-1.0.0.jar",
             result);
     }
+
+    [Fact]
+    public void ToArtefactPath_ExampleCoordinate_ConvertCorrectly()
+    {
+        // Arrange
+        var coordinate = new MavenCoordinate("org.example", "minecraft", "1.0.0");
+        
+        // Act
+        var result = coordinate.ToArtefactPath("jar");
+        
+        // Assert
+        Assert.Equal("org/example/minecraft/1.0.0/minecraft-1.0.0.jar",
+            result);
+    }
 }

@@ -7,7 +7,7 @@ public record ArtefactInfo
 {
     public string? Sha1 { get; init; }
     
-    public required int Size { get; init; }
+    public int? Size { get; init; }
     
     public required Uri Url { get; init; }
 }
