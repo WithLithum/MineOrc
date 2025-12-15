@@ -278,4 +278,7 @@
     <data name="ArgumentNumberNegative" xml:space="preserve">
         <value>指定的数字为负数</value>
     </data>
+    <data name="OperationNoticeNoHash" xml:space="preserve">
+        <value>工件‘{artefact}’没有校验码</value>
+    </data>
 </root>

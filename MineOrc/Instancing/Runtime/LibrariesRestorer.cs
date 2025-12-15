@@ -3,9 +3,11 @@
 
 using MineOrc.Foundation.Manifest.Libraries;
 using MineOrc.Foundation.Network.Results;
+using MineOrc.Foundation.Runtime;
 using MineOrc.Foundation.Utilities;
 using MineOrc.Network;
 using MineOrc.Resources;
+using SmartFormat;
 using Spectre.Console;
 
 namespace MineOrc.Instancing.Runtime;
@@ -29,10 +31,13 @@ internal sealed class LibrariesRestorer : QueueDispatchAction<LibraryArtefactInf
     {
         try
         {
-            if (await GameApplication.Libraries.VerifyArtefactAsync(artefactInfo,
-                    cancellationToken).ConfigureAwait(false))
+            var verifyResult = await GameApplication.Libraries.VerifyArtefactAsync(artefactInfo,
+                cancellationToken).ConfigureAwait(false);
+
+            if (verifyResult == VerifyResult.NoHash)
             {
-                return true;
+                MyOutput.Notice(Smart.Format(Texts.OperationNoticeNoHash,
+                    new { artefact = artefactInfo.Path }));
             }
         }
         catch (IOException io)

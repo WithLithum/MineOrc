@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 using MineOrc.Foundation.Manifest.Libraries;
+using MineOrc.Foundation.Runtime;
 using MineOrc.Foundation.Utilities;
 
 namespace MineOrc.Management.Runtime.Libraries;
@@ -15,12 +16,21 @@ public class LibraryManager
         _rootPath = rootPath;
     }
 
-    public async ValueTask<bool> VerifyArtefactAsync(LibraryArtefactInfo artefact,
+    public async ValueTask<VerifyResult> VerifyArtefactAsync(LibraryArtefactInfo artefact,
         CancellationToken cancellationToken = default)
     {
         var path = GetArtefactPath(artefact.Path);
+        if (artefact.Sha1 == null)
+        {
+            return File.Exists(path)
+                ? VerifyResult.NoHash
+                : VerifyResult.Damaged;
+        }
+        
         return await HashHelper.VerifyFileAsync(path, artefact.Sha1, cancellationToken)
-            .ConfigureAwait(false);
+            .ConfigureAwait(false)
+            ? VerifyResult.Intact
+            : VerifyResult.Damaged;
     }
 
     public string GetArtefactPath(LibraryArtefactInfo artefact)

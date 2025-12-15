@@ -4,8 +4,10 @@
 using MineOrc.Foundation.Manifest;
 using MineOrc.Foundation.Manifest.Network;
 using MineOrc.Foundation.Network.Results;
+using MineOrc.Foundation.Runtime;
 using MineOrc.Network;
 using MineOrc.Resources;
+using SmartFormat;
 
 namespace MineOrc.Instancing.Operations;
 
@@ -39,15 +41,22 @@ public class RestoreClientJarAction : IAsyncForegroundAction
             return false;
         }
 
-        if (await GameApplication.Versions.ValidateJarAsync(manifest.Id, clientArtefact)
-                .ConfigureAwait(false))
+        var verify = await GameApplication.Versions.ValidateJarAsync(manifest.Id, clientArtefact)
+            .ConfigureAwait(false);
+        switch (verify)
         {
-            // Valid client, no need to download
-            return true;
+            case VerifyResult.NoHash:
+                MyOutput.Notice(Smart.Format(Texts.OperationNoticeNoHash,
+                    new { artefact = _versionId }));
+                return true;
+            case VerifyResult.Intact:
+                return true;
+            case VerifyResult.Damaged:
+                // Download
+                return await DoDownloadAsync(clientArtefact, manifest, cancellationToken).ConfigureAwait(false);
+            default:
+                throw new InvalidOperationException($"Unknown verify result '{verify:D}'");
         }
-
-        // Download
-        return await DoDownloadAsync(clientArtefact, manifest, cancellationToken).ConfigureAwait(false);
     }
 
     private static async Task<bool> DoDownloadAsync(ArtefactInfo clientArtefact,

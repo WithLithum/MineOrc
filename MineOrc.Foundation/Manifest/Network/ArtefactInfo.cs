@@ -5,7 +5,7 @@ namespace MineOrc.Foundation.Manifest.Network;
 
 public record ArtefactInfo
 {
-    public required string Sha1 { get; init; }
+    public string? Sha1 { get; init; }
     
     public required int Size { get; init; }
     

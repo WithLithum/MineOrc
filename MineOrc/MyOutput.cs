@@ -9,6 +9,11 @@ namespace MineOrc;
 
 public static class MyOutput
 {
+    public static void Notice([LocalizationRequired] string message)
+    {
+        AnsiConsole.MarkupLineInterpolated($"[bold white]{MineOrcApp.BaseName}:[/] [blue]notice:[/] [white]{message}[/]");
+    }
+    
     public static void Warn(string message)
     {
         AnsiConsole.MarkupLineInterpolated($"[bold white]{MineOrcApp.BaseName}:[/] [bold yellow]warn:[/] [gold1]{message}[/]");

@@ -5,6 +5,7 @@ using System.Text.Json;
 using JetBrains.Annotations;
 using MineOrc.Foundation.Manifest;
 using MineOrc.Foundation.Manifest.Network;
+using MineOrc.Foundation.Runtime;
 using MineOrc.Foundation.Utilities;
 using MineOrc.Management.Resources;
 
@@ -48,15 +49,22 @@ public class VersionManager
         }
     }
 
-    public async ValueTask<bool> ValidateJarAsync(string name, ArtefactInfo artefact)
+    public async ValueTask<VerifyResult> ValidateJarAsync(string name, ArtefactInfo artefact)
     {
         if (!Exists(name))
         {
-            return false;
+            return VerifyResult.Damaged;
+        }
+
+        if (artefact.Sha1 == null)
+        {
+            return VerifyResult.NoHash;
         }
 
         return await HashHelper.VerifyFileAsync(GetJarPath(name),
-            artefact.Sha1).ConfigureAwait(false);
+            artefact.Sha1).ConfigureAwait(false)
+            ? VerifyResult.Intact
+            : VerifyResult.Damaged;
     }
 
     public async ValueTask<bool> ValidateManifestAsync(VersionExcerpt excerpt)

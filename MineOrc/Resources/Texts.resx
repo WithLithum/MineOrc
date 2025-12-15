@@ -289,4 +289,7 @@
     <data name="ArgumentNumberNegative" xml:space="preserve">
         <value>specified number is negative</value>
     </data>
+    <data name="OperationNoticeNoHash" xml:space="preserve">
+        <value>artefact '{artefact}' has no checksum specified</value>
+    </data>
 </root>
