@@ -73,30 +73,47 @@ public sealed partial class ProfileManager
         }
     }
 
+    public async Task UpdateProfileAsync(string profileName, ProfileInfo info)
+    {
+        ThrowIfInvalidProfileName(profileName);
+
+        if (!HasProfile(profileName))
+        {
+            throw new InvalidOperationException(string.Format(ExceptionMessages.ProfileNotExists,
+                profileName));
+        }
+        
+        var profileDir = GetProfileDirectory(profileName);
+        var profileFile = Path.Combine(profileDir,
+            ProfileJsonName);
+        
+        // Officially save the profile
+        var stream = File.Create(profileFile);
+        await using (stream.ConfigureAwait(false))
+        {
+            await JsonSerializer.SerializeAsync(stream,
+                info,
+                MineOrcFilesJsonContext.Default.ProfileInfo).ConfigureAwait(false);
+        }
+    }
+
     public async Task<ProfileInfo> ReadProfileAsync(string profileName)
     {
         ThrowIfInvalidProfileName(profileName);
 
-        ProfileInfo? profile;
         var profileDir = Path.GetFullPath(profileName,
             _baseDirectory);
         var profileFile = Path.Combine(profileDir,
             ProfileJsonName);
 
-        profile = await ReadProfileOrDefaultInternalAsync(profileName,
-                profileFile)
+        var profile = await ReadProfileOrDefaultInternalAsync(profileFile)
             .ConfigureAwait(false);
 
-        if (profile == null)
-        {
-            throw new ProfileException(string.Format(ExceptionMessages.ProfileConfigNull,
-                profileName));
-        }
-
-        return profile;
+        return profile ?? throw new ProfileException(string.Format(ExceptionMessages.ProfileConfigNull,
+            profileName));
     }
 
-    private static async Task<ProfileInfo?> ReadProfileOrDefaultInternalAsync(string profileName, string profileFile)
+    private static async Task<ProfileInfo?> ReadProfileOrDefaultInternalAsync(string profileFile)
     {
         var stream = File.OpenRead(profileFile);
         await using (stream.ConfigureAwait(false))

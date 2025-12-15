@@ -281,4 +281,22 @@
     <data name="OperationNoticeNoHash" xml:space="preserve">
         <value>工件‘{artefact}’没有校验码</value>
     </data>
+    <data name="CommandExtensionSearch" xml:space="preserve">
+        <value>列出指定扩展的符合条件的版本</value>
+    </data>
+    <data name="CommandExtensionArgumentPlatformId" xml:space="preserve">
+        <value>扩展 ID</value>
+    </data>
+    <data name="CommandExtensionArgumentGameVersion" xml:space="preserve">
+        <value>适配的游戏版本</value>
+    </data>
+    <data name="CommandExtensionFailNoPlatform" xml:space="preserve">
+        <value>名为 ‘{platform}’ 的扩展不存在</value>
+    </data>
+    <data name="BranchExtension" xml:space="preserve">
+        <value>搜索或安装实例扩展（如模组加载器）</value>
+    </data>
+    <data name="CommandExtensionList" xml:space="preserve">
+        <value>列出可用的扩展类型</value>
+    </data>
 </root>

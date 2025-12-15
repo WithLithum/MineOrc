@@ -12,8 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <EmbeddedResource Update="Resources\ExceptionMessages.resx">
-      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\ExceptionMessages.resx"  EmitFormatMethods="true" />
     </ItemGroup>
 
     <ItemGroup>

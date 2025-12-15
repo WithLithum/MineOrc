@@ -292,4 +292,22 @@
     <data name="OperationNoticeNoHash" xml:space="preserve">
         <value>artefact '{artefact}' has no checksum specified</value>
     </data>
+    <data name="CommandExtensionSearch" xml:space="preserve">
+        <value>Lists versions of the specific extension that matches the criteria</value>
+    </data>
+    <data name="CommandExtensionArgumentPlatformId" xml:space="preserve">
+        <value>The identifier of the extension</value>
+    </data>
+    <data name="CommandExtensionArgumentGameVersion" xml:space="preserve">
+        <value>The game version that the extension works with</value>
+    </data>
+    <data name="CommandExtensionFailNoPlatform" xml:space="preserve">
+        <value>extension '{platform}' does not exist</value>
+    </data>
+    <data name="BranchExtension" xml:space="preserve">
+        <value>Query or install extensions (such as mod loaders)</value>
+    </data>
+    <data name="CommandExtensionList" xml:space="preserve">
+        <value>List available extension types</value>
+    </data>
 </root>

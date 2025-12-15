@@ -21,9 +21,10 @@ var command = new RootCommand(Texts.RootDescription)
         RegisterJavaCommand.CreateCommand(),
         DefaultJavaCommand.CreateCommand(),
     },
-    new Command("fabric", Texts.BranchFabric)
+    new Command("extension", Texts.BranchExtension)
     {
-        SearchFabricCommand.CreateCommand(),  
+        ListExtensionCommand.Create(),
+        SearchExtensionCommand.Create(),  
     },
     NewCommand.CreateCommand(),
     LaunchCommand.CreateCommand(),
