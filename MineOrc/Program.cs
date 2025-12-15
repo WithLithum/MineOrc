@@ -4,6 +4,9 @@
 using System.CommandLine;
 using MineOrc;
 using MineOrc.Commands;
+using MineOrc.Commands.Extension;
+using MineOrc.Commands.Runtimes;
+using MineOrc.Commands.Versions;
 using MineOrc.Resources;
 using Command = System.CommandLine.Command;
 

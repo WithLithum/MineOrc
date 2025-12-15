@@ -6,7 +6,7 @@ using MineOrc.Instancing;
 using MineOrc.Instancing.Operations;
 using MineOrc.Resources;
 
-namespace MineOrc.Commands;
+namespace MineOrc.Commands.Versions;
 
 internal static class InstallVersionCommand
 {

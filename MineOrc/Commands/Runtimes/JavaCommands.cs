@@ -4,7 +4,7 @@
 using System.Text.Json;
 using MineOrc.Resources;
 
-namespace MineOrc.Commands;
+namespace MineOrc.Commands.Runtimes;
 
 public static class JavaCommands
 {

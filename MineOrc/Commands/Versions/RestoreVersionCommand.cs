@@ -8,7 +8,7 @@ using MineOrc.Instancing;
 using MineOrc.Instancing.Operations;
 using MineOrc.Resources;
 
-namespace MineOrc.Commands;
+namespace MineOrc.Commands.Versions;
 
 public static class RestoreVersionCommand
 {

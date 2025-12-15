@@ -2,11 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 using System.CommandLine;
-using System.Text.Json;
 using MineOrc.Foundation.Runtime.Java;
 using MineOrc.Resources;
 
-namespace MineOrc.Commands;
+namespace MineOrc.Commands.Runtimes;
 
 internal static class RegisterJavaCommand
 {

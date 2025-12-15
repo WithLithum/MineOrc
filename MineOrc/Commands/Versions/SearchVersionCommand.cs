@@ -7,7 +7,7 @@ using MineOrc.Foundation.Manifest;
 using MineOrc.Resources;
 using Spectre.Console;
 
-namespace MineOrc.Commands;
+namespace MineOrc.Commands.Versions;
 
 internal static class SearchVersionCommand
 {

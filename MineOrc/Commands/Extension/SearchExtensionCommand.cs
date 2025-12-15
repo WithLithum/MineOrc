@@ -7,7 +7,7 @@ using MineOrc.Resources;
 using SmartFormat;
 using Spectre.Console;
 
-namespace MineOrc.Commands;
+namespace MineOrc.Commands.Extension;
 
 public static class SearchExtensionCommand
 {

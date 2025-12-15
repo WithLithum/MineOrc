@@ -6,7 +6,7 @@ using System.Globalization;
 using MineOrc.Resources;
 using Spectre.Console;
 
-namespace MineOrc.Commands;
+namespace MineOrc.Commands.Runtimes;
 
 internal static class ListJavaCommand
 {

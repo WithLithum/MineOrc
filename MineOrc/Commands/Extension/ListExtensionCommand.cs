@@ -6,7 +6,7 @@ using MineOrc.Instancing;
 using MineOrc.Resources;
 using Spectre.Console;
 
-namespace MineOrc.Commands;
+namespace MineOrc.Commands.Extension;
 
 public static class ListExtensionCommand
 {
