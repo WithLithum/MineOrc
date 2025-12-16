@@ -2,12 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 using MineOrc.Foundation.Manifest.Options;
+using MineOrc.Foundation.Utilities.Maven;
 
 namespace MineOrc.Foundation.Manifest.Libraries;
 
 public sealed record LibraryInfo
 {
-    public required string Name { get; init; }
+    public required MavenCoordinate Name { get; init; }
     
     public required LibraryDownloadInfo Downloads { get; init; }
     

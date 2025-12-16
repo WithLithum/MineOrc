@@ -34,10 +34,17 @@ internal sealed class LibrariesRestorer : QueueDispatchAction<LibraryArtefactInf
             var verifyResult = await GameApplication.Libraries.VerifyArtefactAsync(artefactInfo,
                 cancellationToken).ConfigureAwait(false);
 
+            // Intact or no hash - skip download ;)
             if (verifyResult == VerifyResult.NoHash)
             {
                 MyOutput.Notice(Smart.Format(Texts.OperationNoticeNoHash,
                     new { artefact = artefactInfo.Path }));
+                return true;
+            }
+
+            if (verifyResult == VerifyResult.Intact)
+            {
+                return true;
             }
         }
         catch (IOException io)

@@ -3,6 +3,7 @@
 
 using MineOrc.Foundation.Manifest;
 using MineOrc.Foundation.Manifest.Libraries;
+using MineOrc.Foundation.Utilities.Maven;
 
 namespace MineOrc.Foundation.Instancing;
 
@@ -32,12 +33,16 @@ public static class ProfileOrchestrator
         
         foreach (var extension in profile.Extensions.Values)
         {
-            if (extension.Libraries is null)
+            if (extension.Libraries is null
+                || extension.Libraries.Count == 0)
             {
                 continue;
             }
-            
-            result = result.Concat(extension.Libraries);
+
+            result = result.ExceptBy(extension.Libraries.Select(x => x.Name),
+                x => x.Name,
+                MavenCoordinateNoVersionComparer.Instance)
+                .Concat(extension.Libraries);
         }
         
         return result;

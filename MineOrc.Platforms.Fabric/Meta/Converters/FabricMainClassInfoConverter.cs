@@ -55,6 +55,9 @@ public sealed class FabricMainClassInfoConverter : JsonConverter<FabricMainClass
 
     public override void Write(Utf8JsonWriter writer, FabricMainClassInfo value, JsonSerializerOptions options)
     {
-        throw new NotImplementedException();
+        writer.WriteStartObject();
+        writer.WriteString("client", value.Client);
+        writer.WriteString("server", value.Server);
+        writer.WriteEndObject();
     }
 }

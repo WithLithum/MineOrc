@@ -162,13 +162,17 @@ internal partial class LaunchCommand
     }
 
     private static async Task<bool> RestoreInternalAsync(ClientManifest version,
+        ProfileInfo profile,
         CancellationToken cancellationToken)
     {
+        var versionLibraries = ProfileOrchestrator.GetLibraries(version,
+            profile).ToArray();
+        
         IEnumerable<IAsyncForegroundAction> actions =
         [
             new RestoreClientJarAction(version.Id),
             new RestoreAssetsAction(version.AssetIndex),
-            new RestoreLibrariesAction(version.Libraries),
+            new RestoreLibrariesAction(versionLibraries),
         ];
 
         return await ForegroundActions.ExecuteMany(actions, cancellationToken)

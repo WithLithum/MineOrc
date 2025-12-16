@@ -20,7 +20,7 @@ internal sealed class RestoreLibrariesAction : QueueDispatchActionWrapper<Librar
 
     protected override async ValueTask<IReadOnlyCollection<LibraryArtefactInfo>?> GetPayloadsAsync(CancellationToken cancellationToken)
     {
-        return await LibraryEvaluator.EvaluateAsync(_libraries).ConfigureAwait(false);
+        return await LibraryEvaluator.EvaluateAsync(_libraries, cancellationToken).ConfigureAwait(false);
     }
 
     protected override QueueDispatchAction<LibraryArtefactInfo> CreateAction(IReadOnlyCollection<LibraryArtefactInfo> payload)

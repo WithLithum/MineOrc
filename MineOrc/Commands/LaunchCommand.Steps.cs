@@ -64,7 +64,7 @@ internal partial class LaunchCommand
     {
         if (!NoRestore)
         {
-            if (!await RestoreInternalAsync(_version!, cancellationToken)
+            if (!await RestoreInternalAsync(_version!, _profile!, cancellationToken)
                     .ConfigureAwait(false))
             {
                 return false;

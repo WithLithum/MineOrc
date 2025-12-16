@@ -66,7 +66,7 @@ public static class FabricEvaluator
 
         return new LibraryInfo
         {
-            Name = fabric.Maven.ToString(),
+            Name = fabric.Maven,
             Downloads = new LibraryDownloadInfo
             {
                 Artifact = artefact,
@@ -136,7 +136,7 @@ public static class FabricEvaluator
 
         return new LibraryInfo
         {
-            Name = fabric.Name.ToString(),
+            Name = fabric.Name,
             Downloads = new LibraryDownloadInfo
             {
                 Artifact = artefact,
