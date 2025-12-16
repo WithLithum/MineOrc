@@ -14,9 +14,14 @@ MineOrc is an instance manager and launcher for Minecraft: Java Edition.
 - [ ] Microsoft Authentication (MSA)
 - [ ] Mod loaders support
 
-## Running
+## Download & Usage
 
 MineOrc requires .NET 10 Runtime. You can get it [here](https://dot.net/).
+
+There are no release builds at the moment, but you can get a CI build from
+[here](https://nightly.link/WithLithum/MineOrc/workflows/cake/trunk/App%20binaries).
+In any case it is inaccessible because it was throttled by GitHub, login and
+use the 'Actions' page to get one.
 
 To get a list of commands, run `mineorc --help`.
 
