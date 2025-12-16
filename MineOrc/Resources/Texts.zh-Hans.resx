@@ -326,4 +326,16 @@
     <data name="OperationGenericFailNetwork" xml:space="preserve">
         <value>网络操作失败：{message}</value>
     </data>
+    <data name="CommandExtensionRemove" xml:space="preserve">
+        <value>从实例移除扩展</value>
+    </data>
+    <data name="CommandExtensionRemoveArgumentName" xml:space="preserve">
+        <value>要移除的扩展的名称</value>
+    </data>
+    <data name="CommandExtensionRemoveArgumentProfile" xml:space="preserve">
+        <value>要移除的扩展所在的实例</value>
+    </data>
+    <data name="CommandExtensionRemoveFailNoExtension" xml:space="preserve">
+        <value>实例‘{profile}’中不存在名为‘{extension}‘的扩展</value>
+    </data>
 </root>

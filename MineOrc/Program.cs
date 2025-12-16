@@ -29,6 +29,7 @@ var command = new RootCommand(Texts.RootDescription)
         ListExtensionCommand.Create(),
         SearchExtensionCommand.Create(),
         AddExtensionCommand.Create(),
+        RemoveExtensionCommand.Create(),
     },
     NewCommand.CreateCommand(),
     LaunchCommand.CreateCommand(),

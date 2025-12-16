@@ -337,4 +337,19 @@
     <data name="OperationGenericFailNetwork" xml:space="preserve">
         <value>network operation failed: {message}</value>
     </data>
+    <data name="CommandExtensionRemove" xml:space="preserve">
+        <value>Removes an extension from profile</value>
+    </data>
+    <data name="CommandExtensionRemoveArgumentName" xml:space="preserve">
+        <value>The name of the extension to remove</value>
+    </data>
+    <data name="CommandExtensionRemoveArgumentProfile" xml:space="preserve">
+        <value>The profile to remove extension from</value>
+    </data>
+    <data name="CommandExtensionRemoveFailNoProfile" xml:space="preserve">
+        <value>no such profile '{profile}'</value>
+    </data>
+    <data name="CommandExtensionRemoveFailNoExtension" xml:space="preserve">
+        <value>no such extension  '{extension}' in profile '{profile}'</value>
+    </data>
 </root>
