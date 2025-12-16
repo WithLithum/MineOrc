@@ -11,4 +11,7 @@ public static class CommonPaths
     internal static readonly string Solution = Path.GetFullPath("MineOrc.slnx",
         Path.GetDirectoryName(Environment.CurrentDirectory)
         ?? Environment.CurrentDirectory);
+    
+    internal static readonly string RepositoryRoot = Path.GetDirectoryName(Environment.CurrentDirectory)
+        ?? Environment.CurrentDirectory;
 }
