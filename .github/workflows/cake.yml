@@ -14,4 +14,9 @@ jobs:
               env:
                   MINEORC_BUILD_ENTRA_APP_ID: ${{ secrets.MINEORC_BUILD_ENTRA_APP_ID }}
                   MINEORC_BUILD_ENTRA_TENANT_ID: ${{ secrets.MINEORC_BUILD_ENTRA_TENANT_ID }}
-              run: "${{ github.workspace }}/build.sh -t GitHubAction"
+              run: "${{ github.workspace }}/build.sh"
+            - name: Upload artefact
+              uses: actions/upload-artifact@v6
+              with:
+                  name: 'App binaries'
+                  path: '${{ github.workspace }}/MineOrc/bin'

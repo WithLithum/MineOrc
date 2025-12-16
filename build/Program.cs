@@ -18,8 +18,3 @@ public static class Program
 [TaskName("Default")]
 [IsDependentOn(typeof(TestTask))]
 public class DefaultTask : FrostingTask;
-
-[TaskName("GitHubAction")]
-[IsDependentOn(typeof(DefaultTask))]
-[IsDependentOn(typeof(PublishArtefactTask))]
-public class GitHubActionTask : FrostingTask;
