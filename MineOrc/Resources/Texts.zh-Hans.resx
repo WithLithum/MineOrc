@@ -338,4 +338,7 @@
     <data name="CommandExtensionRemoveFailNoExtension" xml:space="preserve">
         <value>实例‘{profile}’中不存在名为‘{extension}‘的扩展</value>
     </data>
+    <data name="UnhandledException" xml:space="preserve">
+        <value>未捕获的异常</value>
+    </data>
 </root>

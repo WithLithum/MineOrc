@@ -352,4 +352,7 @@
     <data name="CommandExtensionRemoveFailNoExtension" xml:space="preserve">
         <value>no such extension  '{extension}' in profile '{profile}'</value>
     </data>
+    <data name="UnhandledException" xml:space="preserve">
+        <value>unhandled exception</value>
+    </data>
 </root>

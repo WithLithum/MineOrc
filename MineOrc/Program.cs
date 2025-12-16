@@ -38,8 +38,11 @@ var command = new RootCommand(Texts.RootDescription)
 
 AppDomain.CurrentDomain.UnhandledException += (_, args) =>
 {
-    MyOutput.Error((Exception)args.ExceptionObject, "unhandled exception");
-    MyOutput.Error(((Exception)args.ExceptionObject).Message);
+    MyOutput.Error((Exception)args.ExceptionObject, Texts.UnhandledException);
+    if (args.IsTerminating)
+    {
+        Environment.Exit(ExitCodes.Failure);
+    }
 };
 
 if (!await MineOrcApp.InitializeAsync().ConfigureAwait(false))
