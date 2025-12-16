@@ -30,6 +30,6 @@ public sealed class PublishArtefactTask : FrostingTask<BuildContext>
         
         context.Information("Publishing artefact file '{0}'", zipFile);
         context.BuildSystem().GitHubActions.Commands.UploadArtifact(new FilePath(zipFile),
-            "app.zip").RunSynchronously();
+            "app.zip").Wait();
     }
 }
