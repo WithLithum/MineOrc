@@ -12,7 +12,7 @@ namespace MineOrc.Foundation.Utilities.Maven;
 /// support additional fields such as classifiers.
 /// </summary>
 [JsonConverter(typeof(MavenCoordinateConverter))]
-public sealed record MavenCoordinate : ISpanParsable<MavenCoordinate>
+public sealed partial record MavenCoordinate : ISpanParsable<MavenCoordinate>
 {
     [JsonConstructor]
     public MavenCoordinate()
@@ -20,11 +20,13 @@ public sealed record MavenCoordinate : ISpanParsable<MavenCoordinate>
     }
 
     [SetsRequiredMembers]
-    public MavenCoordinate(string group, string artefact, string version)
+    public MavenCoordinate(string group, string artefact, string version,
+        string? classifier = null)
     {
         Group = group;
         Artefact = artefact;
         Version = version;
+        Classifier = classifier;
     }
 
     public required string Group { get; init; }
@@ -32,6 +34,8 @@ public sealed record MavenCoordinate : ISpanParsable<MavenCoordinate>
     public required string Artefact { get; init; }
 
     public required string Version { get; init; }
+    
+    public string? Classifier { get; init; }
 
     public Uri ToUri(Uri root, string extension)
     {
@@ -53,68 +57,10 @@ public sealed record MavenCoordinate : ISpanParsable<MavenCoordinate>
     {
         var sp = directorySeparator;
         var dotGroup = Group.Replace('.', '/');
-        return $"{dotGroup}{sp}{Artefact}{sp}{Version}{sp}{Artefact}-{Version}.{extension}";
-    }
-    
-    public static MavenCoordinate Parse(string s)
-        => Parse(s, null);
-
-    public static MavenCoordinate Parse(ReadOnlySpan<char> s)
-        => Parse(s, null);
-
-    public static MavenCoordinate Parse(string s, IFormatProvider? provider)
-    {
-        return Parse(s.AsSpan(), provider);
-    }
-
-    public static MavenCoordinate Parse(ReadOnlySpan<char> s, IFormatProvider? provider)
-    {
-        if (!TryParse(s, provider, out var result))
-        {
-            throw new FormatException();
-        }
-
-        return result;
-    }
-
-    public static bool TryParse(string s, [MaybeNullWhen(false)] out MavenCoordinate result)
-        => TryParse(s, null, out result);
-
-    public static bool TryParse(ReadOnlySpan<char> s,
-        [MaybeNullWhen(false)] out MavenCoordinate result)
-        => TryParse(s, null, out result);
-
-    public static bool TryParse([NotNullWhen(true)] string? s,
-        IFormatProvider? provider,
-        [MaybeNullWhen(false)] out MavenCoordinate result)
-    {
-        if (s == null)
-        {
-            result = null;
-            return false;
-        }
-
-        return TryParse(s.AsSpan(), provider, out result);
-    }
-
-    public static bool TryParse(ReadOnlySpan<char> s, IFormatProvider? provider,
-        [MaybeNullWhen(false)] out MavenCoordinate result)
-    {
-        Span<Range> ranges = stackalloc Range[4];
-        if (s.Split(ranges, ':') != 3)
-        {
-            result = null;
-            return false;
-        }
-
-        var groupPart = s[ranges[0]];
-        var artefactPart = s[ranges[1]];
-        var versionPart = s[ranges[2]];
-
-        result = new MavenCoordinate(groupPart.ToString(),
-            artefactPart.ToString(),
-            versionPart.ToString());
-        return true;
+        
+        return Classifier == null
+        ? $"{dotGroup}{sp}{Artefact}{sp}{Version}{sp}{Artefact}-{Version}.{extension}"
+        : $"{dotGroup}{sp}{Artefact}{sp}{Version}{sp}{Artefact}-{Version}-{Classifier}.{extension}";
     }
 
     public override string ToString()
