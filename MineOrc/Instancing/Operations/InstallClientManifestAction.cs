@@ -3,7 +3,6 @@
 
 using MineOrc.Foundation.Manifest;
 using MineOrc.Resources;
-using SmartFormat;
 
 namespace MineOrc.Instancing.Operations;
 
@@ -35,8 +34,7 @@ public sealed class InstallClientManifestAction : IAsyncForegroundAction
         var excerpt = manifest.Versions.FirstOrDefault(x => x.Id == _installName);
         if (excerpt == null)
         {
-            MyOutput.Error(Smart.Format(Texts.InstallManifestFailNoSuchVersion,
-                new { Version = _installName }));
+            MyOutput.Error(Texts.FormatInstallManifestFailNoSuchVersion(_installName));
             return false;
         }
 

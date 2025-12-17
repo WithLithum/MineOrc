@@ -3,9 +3,6 @@
 
 using System.CommandLine;
 using MineOrc.Network.Security;
-using MineOrc.Resources;
-using MineOrc.Security.Minecraft;
-using MineOrc.Security.Xbox;
 using Spectre.Console;
 
 namespace MineOrc.Commands;

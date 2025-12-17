@@ -7,7 +7,6 @@ using MineOrc.Foundation.Network.Results;
 using MineOrc.Foundation.Runtime;
 using MineOrc.Network;
 using MineOrc.Resources;
-using SmartFormat;
 
 namespace MineOrc.Instancing.Operations;
 
@@ -46,8 +45,7 @@ public class RestoreClientJarAction : IAsyncForegroundAction
         switch (verify)
         {
             case VerifyResult.NoHash:
-                MyOutput.Notice(Smart.Format(Texts.OperationNoticeNoHash,
-                    new { artefact = _versionId }));
+                MyOutput.Notice(Texts.FormatOperationNoticeNoHash(_versionId));
                 return true;
             case VerifyResult.Intact:
                 return true;

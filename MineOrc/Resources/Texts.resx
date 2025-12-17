@@ -62,7 +62,7 @@
         <value>failed to download</value>
     </data>
     <data name="ActionExecuteError" xml:space="preserve">
-        <value>error while executing action '{ActionName}'</value>
+        <value>error while executing action '{actionName}'</value>
     </data>
     <data name="RestoreClientJarAction" xml:space="preserve">
         <value>Restore client jar</value>
@@ -92,16 +92,16 @@
         <value>cannot save client manifest</value>
     </data>
     <data name="OperationDownloadFailHttp" xml:space="preserve">
-        <value>failed to download: error {0}</value>
+        <value>failed to download: error {error}</value>
     </data>
     <data name="OperationHashFail" xml:space="preserve">
         <value>failed to verify hash</value>
     </data>
     <data name="AssetRestoreMissingIndex" xml:space="preserve">
-        <value>missing or invalid asset index '{0}'</value>
+        <value>missing or invalid asset index '{indexName}'</value>
     </data>
     <data name="AssetRestoreIndexReadFailed" xml:space="preserve">
-        <value>failed to read index '{0}'</value>
+        <value>failed to read index '{indexName}'</value>
     </data>
     <data name="VersionRestoreCommand" xml:space="preserve">
         <value>Restore the assets and libraries of a version</value>
@@ -109,8 +109,8 @@
     <data name="VersionRestoreVersionArgument" xml:space="preserve">
         <value>The version to restore</value>
     </data>
-    <data name="VersionRestoreFailNoVersion" xml:space="preserve">
-        <value>version '{0}' does not exist, install it first</value>
+    <data name="CommandVersionRestoreFailNoVersion" xml:space="preserve">
+        <value>version '{version}' does not exist, install it first</value>
     </data>
     <data name="OperationReadClientManifestFailed" xml:space="preserve">
         <value>failed to read client manifest</value>
@@ -188,7 +188,7 @@
         <value>error when creating required directories</value>
     </data>
     <data name="CommandNewFailAlreadyExists" xml:space="preserve">
-        <value>profile '{0}' already exists</value>
+        <value>profile named '{name}' already exists</value>
     </data>
     <data name="OperationGenericExceptionError" xml:space="preserve">
         <value>error occurred</value>
@@ -206,10 +206,10 @@
         <value>Do not install the specified version if not already installed</value>
     </data>
     <data name="CommandNewFailNameInvalid" xml:space="preserve">
-        <value>profile name '{0}' does not conform to pattern '{1}'</value>
+        <value>profile name '{name}' does not conform to pattern '{rule}'</value>
     </data>
     <data name="CommandNewFailNoInstallVersion" xml:space="preserve">
-        <value>version '{0}' does not exist and version install is disabled</value>
+        <value>version '{version}' does not exist and version install is disabled</value>
     </data>
     <data name="CommandLaunch" xml:space="preserve">
         <value>Launches a profile</value>
@@ -233,10 +233,10 @@
         <value>Launch in Demo Mode</value>
     </data>
     <data name="CommandGenericNoProfile" xml:space="preserve">
-        <value>no such profile: "{0}"</value>
+        <value>no such profile with name '{name}'</value>
     </data>
     <data name="CommandLaunchFailNoVersion" xml:space="preserve">
-        <value>profile "{0}" has a non-existent version; try restore it first</value>
+        <value>profile '{profile}' has a non-existent version; try restore it first</value>
     </data>
     <data name="CommandLaunchOptionNoRestore" xml:space="preserve">
         <value>Do not restore the profile</value>
@@ -251,7 +251,7 @@
         <value>can't find a default Java to use; try specify or register one</value>
     </data>
     <data name="OperationGenericMakeDirFail" xml:space="preserve">
-        <value>cannot create directory '{0}'</value>
+        <value>cannot create directory '{directory}'</value>
     </data>
     <data name="CommandLaunchFailProcessStart" xml:space="preserve">
         <value>cannot create process</value>
@@ -272,7 +272,7 @@
         <value>missing client ID or tenant, will not be able to login or authenticate</value>
     </data>
     <data name="OperationFailHttpError" xml:space="preserve">
-        <value>HTTP error status code {0} ('{1}')</value>
+        <value>HTTP error status code {code} ('{text}')</value>
     </data>
     <data name="CommandFabricSearch" xml:space="preserve">
         <value>Finds a Fabric Loader version</value>

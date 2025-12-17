@@ -39,7 +39,7 @@ public sealed class RestoreAssetsAction : QueueDispatchActionWrapper<KeyValuePai
             
             if (readIndex == null)
             {
-                MyOutput.Error(Texts.AssetRestoreMissingIndex, _indexArtefact.Id);
+                MyOutput.Error(Texts.FormatAssetRestoreMissingIndex(_indexArtefact.Id));
                 return null;
             }
 
@@ -47,7 +47,7 @@ public sealed class RestoreAssetsAction : QueueDispatchActionWrapper<KeyValuePai
         }
         catch (Exception ex) when (ex is JsonException or IOException)
         {
-            MyOutput.Error(ex, Texts.AssetRestoreIndexReadFailed);
+            MyOutput.Error(ex, Texts.FormatAssetRestoreIndexReadFailed(_indexArtefact.Id));
             return null;
         }
 

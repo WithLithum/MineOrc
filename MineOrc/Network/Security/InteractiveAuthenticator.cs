@@ -2,10 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 using MineOrc.Foundation.Network.Security;
-using MineOrc.Resources;
 using MineOrc.Security.Minecraft;
-using MineOrc.Security.Minecraft.Profile;
 using MineOrc.Security.Xbox;
+using MineOrc.UI;
 using Spectre.Console;
 
 namespace MineOrc.Network.Security;
@@ -32,10 +31,7 @@ public static class InteractiveAuthenticator
         }
         catch (HttpRequestException ex) when (ex.StatusCode.HasValue)
         {
-            var code = ex.StatusCode.Value;
-            MyOutput.Error(Texts.OperationFailHttpError,
-                code.ToString("D"),
-                code.ToString("G"));
+            CommonMsg.ErrorHttpStatus(ex.StatusCode.Value);
         }
         catch (Exception ex) when (ex is HttpRequestException or IOException)
         {

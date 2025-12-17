@@ -51,7 +51,7 @@
         <value>下载失败</value>
     </data>
     <data name="ActionExecuteError" xml:space="preserve">
-        <value>执行任务 '{ActionName}' 时出错</value>
+        <value>执行任务 '{actionName}' 时出错</value>
     </data>
     <data name="RestoreClientJarAction" xml:space="preserve">
         <value>还原客户端核心</value>
@@ -81,16 +81,16 @@
         <value>无法保存客户端清单</value>
     </data>
     <data name="OperationDownloadFailHttp" xml:space="preserve">
-        <value>下载失败：错误代码 {0}</value>
+        <value>下载失败：错误代码 {error}</value>
     </data>
     <data name="OperationHashFail" xml:space="preserve">
         <value>校验哈希码失败</value>
     </data>
     <data name="AssetRestoreMissingIndex" xml:space="preserve">
-        <value>资源索引‘{0}‘不存在或无效</value>
+        <value>资源索引‘{indexName}‘不存在或无效</value>
     </data>
     <data name="AssetRestoreIndexReadFailed" xml:space="preserve">
-        <value>读取资源索引‘{0}‘失败</value>
+        <value>读取资源索引‘{indexName}‘失败</value>
     </data>
     <data name="VersionRestoreCommand" xml:space="preserve">
         <value>还原客户端版本资源</value>
@@ -98,8 +98,8 @@
     <data name="VersionRestoreVersionArgument" xml:space="preserve">
         <value>要还原的版本</value>
     </data>
-    <data name="VersionRestoreFailNoVersion" xml:space="preserve">
-        <value>版本‘{0}’不存在，请先安装</value>
+    <data name="CommandVersionRestoreFailNoVersion" xml:space="preserve">
+        <value>版本‘{version}’不存在，请先安装</value>
     </data>
     <data name="OperationReadClientManifestFailed" xml:space="preserve">
         <value>读取客户端清单失败</value>
@@ -177,7 +177,7 @@
         <value>创建程序目录时出错</value>
     </data>
     <data name="CommandNewFailAlreadyExists" xml:space="preserve">
-        <value>实例‘{0}’已存在</value>
+        <value>名为‘{name}’的实例已存在</value>
     </data>
     <data name="OperationGenericExceptionError" xml:space="preserve">
         <value>发生错误</value>
@@ -195,10 +195,10 @@
         <value>如果指定的版本未安装则不安装该版本</value>
     </data>
     <data name="CommandNewFailNameInvalid" xml:space="preserve">
-        <value>实例名称‘{0}’不符合规则’{1}‘</value>
+        <value>实例名称‘{name}’不符合规则’{rule}‘</value>
     </data>
     <data name="CommandNewFailNoInstallVersion" xml:space="preserve">
-        <value>版本‘{0}’不存在，且不允许安装新版本</value>
+        <value>版本‘{version}’不存在，且不允许安装新版本</value>
     </data>
     <data name="CommandLaunch" xml:space="preserve">
         <value>启动指定实例</value>
@@ -222,10 +222,10 @@
         <value>以演示模式启动游戏</value>
     </data>
     <data name="CommandGenericNoProfile" xml:space="preserve">
-        <value>无此实例："{0}"</value>
+        <value>没有名为‘{name}’的实例</value>
     </data>
     <data name="CommandLaunchFailNoVersion" xml:space="preserve">
-        <value>实例“{0}”指定了不存在的版本，请先尝试还原该实例</value>
+        <value>实例’{profile}‘指定了不存在的版本，请先尝试还原该实例</value>
     </data>
     <data name="CommandLaunchOptionNoRestore" xml:space="preserve">
         <value>不要还原指定的实例</value>
@@ -240,7 +240,7 @@
         <value>无法找到默认 Java，请先注册或指定一个 Java</value>
     </data>
     <data name="OperationGenericMakeDirFail" xml:space="preserve">
-        <value>无法创建文件夹‘{0}’</value>
+        <value>无法创建文件夹‘{directory}’</value>
     </data>
     <data name="CommandLaunchFailProcessStart" xml:space="preserve">
         <value>无法创建进程</value>
@@ -261,7 +261,7 @@
         <value>因客户端 ID 或 Tenant 缺失，将无法进行正版登录</value>
     </data>
     <data name="OperationFailHttpError" xml:space="preserve">
-        <value>HTTP 状态码 {0}（{1}）</value>
+        <value>HTTP 状态码 {code}（{text}）</value>
     </data>
     <data name="CommandFabricSearch" xml:space="preserve">
         <value>搜索 Fabric Loader 版本</value>

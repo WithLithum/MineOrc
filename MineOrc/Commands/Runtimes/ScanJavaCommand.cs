@@ -4,7 +4,6 @@
 using System.CommandLine;
 using MineOrc.Management.Runtime.Java;
 using MineOrc.Resources;
-using SmartFormat;
 
 namespace MineOrc.Commands.Runtimes;
 
@@ -48,8 +47,7 @@ public sealed class ScanJavaCommand
             },
             cancellationToken).ConfigureAwait(false);
 
-        MyOutput.Notice(Smart.Format(Texts.CommandJavaScanResult,
-            new { amount = count }));
+        MyOutput.Notice(Texts.FormatCommandJavaScanResult(count));
         return await JavaCommands.SaveChangesAsync().ConfigureAwait(false);
     }
 }

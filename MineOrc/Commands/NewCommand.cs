@@ -36,7 +36,7 @@ internal static class NewCommand
         if (string.IsNullOrWhiteSpace(value)
             || !ProfileManager.ProfileNameRegex.IsMatch(value))
         {
-            arg.AddError(string.Format(Texts.CommandNewFailNameInvalid,
+            arg.AddError(Texts.FormatCommandNewFailNameInvalid(
                 value,
                 ProfileManager.ProfileNameRegex));
         }
@@ -65,7 +65,7 @@ internal static class NewCommand
 
         if (MineOrcApp.ProfileManager.HasProfile(name))
         {
-            MyOutput.Error(Texts.CommandNewFailAlreadyExists, name);
+            MyOutput.Error(Texts.FormatCommandNewFailAlreadyExists(name));
             return ExitCodes.Failure;
         }
 
@@ -105,7 +105,7 @@ internal static class NewCommand
 
         if (noInstallVersion)
         {
-            MyOutput.Error(Texts.CommandNewOptionNoInstallVersion, version);
+            MyOutput.Error(Texts.FormatCommandNewFailNoInstallVersion(version));
             return false;
         }
 

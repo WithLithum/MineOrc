@@ -6,8 +6,8 @@ using System.CommandLine;
 using MineOrc.Foundation.Instancing;
 using MineOrc.Instancing;
 using MineOrc.Resources;
+using MineOrc.UI;
 using MineOrc.UI.Utilities;
-using SmartFormat;
 
 namespace MineOrc.Commands.Extension;
 
@@ -53,7 +53,7 @@ public static class AddExtensionCommand
         // Get data and services
         if (!MineOrcApp.ProfileManager.HasProfile(profileName))
         {
-            MyOutput.Error(Texts.CommandGenericNoProfile, profileName);
+            CommonMsg.ErrorNoProfile(profileName);
             return ExitCodes.Failure;
         }
 
@@ -62,16 +62,14 @@ public static class AddExtensionCommand
         
         if (!ExtensionService.Providers.TryGetValue(type, out var provider))
         {
-            MyOutput.Error(Smart.Format(Texts.CommandExtensionFailNoPlatform,
-                new { platform = type }));
+            MyOutput.Error(Texts.FormatCommandExtensionFailNoPlatform(type));
             return ExitCodes.Failure;
         }
         
         // Check for --force
         if (!force && profile.Extensions != null && profile.Extensions.ContainsKey(type))
         {
-            MyOutput.Error(Smart.Format(Texts.CommandExtensionAddFailForce,
-                new { type }));
+            MyOutput.Error(Texts.FormatCommandExtensionAddFailForce(type));
             return ExitCodes.Failure;
         }
         

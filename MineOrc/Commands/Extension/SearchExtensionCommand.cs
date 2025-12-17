@@ -4,7 +4,6 @@
 using System.CommandLine;
 using MineOrc.Instancing;
 using MineOrc.Resources;
-using SmartFormat;
 using Spectre.Console;
 
 namespace MineOrc.Commands.Extension;
@@ -41,8 +40,7 @@ public static class SearchExtensionCommand
 
         if (!ExtensionService.Providers.TryGetValue(platformName, out var provider))
         {
-            MyOutput.Error(Smart.Format(Texts.CommandExtensionFailNoPlatform,
-                new { platform = platformName }));
+            MyOutput.Error(Texts.FormatCommandExtensionFailNoPlatform(platformName));
             return ExitCodes.Failure;
         }
 

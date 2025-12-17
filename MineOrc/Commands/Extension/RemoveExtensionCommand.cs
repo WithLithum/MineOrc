@@ -5,6 +5,7 @@ using System.Collections.Frozen;
 using System.CommandLine;
 using MineOrc.Foundation.Instancing;
 using MineOrc.Resources;
+using MineOrc.UI;
 using MineOrc.UI.Utilities;
 
 namespace MineOrc.Commands.Extension;
@@ -42,7 +43,7 @@ public static class RemoveExtensionCommand
         // Get profile
         if (!MineOrcApp.ProfileManager.HasProfile(profileName))
         {
-            MyOutput.Error(Texts.CommandGenericNoProfile, profileName);
+            CommonMsg.ErrorNoProfile(profileName);
             return ExitCodes.Failure;
         }
 

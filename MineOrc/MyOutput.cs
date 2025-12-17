@@ -25,6 +25,7 @@ public static class MyOutput
         AnsiConsole.MarkupLineInterpolated($"[grey]{exception}[/]");
     }
     
+    [Obsolete("Use resource format methods instead.")]
     [StringFormatMethod("format")]
     public static void Warn([StringSyntax("CompositeFormat")] string format,
         params object[] args)
@@ -32,6 +33,7 @@ public static class MyOutput
         AnsiConsole.MarkupLineInterpolated($"[bold white]{MineOrcApp.BaseName}:[/] [bold yellow]warn:[/] [gold1]{string.Format(format, args)}[/]");
     }
     
+    [Obsolete("Use resource format methods instead.")]
     [StringFormatMethod("format")]
     public static void Warn(Exception exception,
         [StringSyntax("CompositeFormat")] string format,
@@ -46,6 +48,7 @@ public static class MyOutput
         AnsiConsole.MarkupLineInterpolated($"[bold white]{MineOrcApp.BaseName}:[/] [red]{message}[/]");
     }
 
+    [Obsolete("Use resource format methods instead.")]
     [StringFormatMethod("format")]
     public static void Error([StringSyntax("CompositeFormat")] string format, params object[] args)
     {
@@ -58,6 +61,7 @@ public static class MyOutput
         AnsiConsole.MarkupLineInterpolated($"[grey]{exception}[/]");
     }
     
+    [Obsolete("Use resource format methods instead.")]
     [StringFormatMethod("format")]
     public static void Error(Exception exception,
         [StringSyntax("CompositeFormat")] string format,

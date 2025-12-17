@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 using MineOrc.Resources;
-using SmartFormat;
 
 namespace MineOrc.UI.Utilities;
 
@@ -16,8 +15,7 @@ public static class PCall
         }
         catch (UnauthorizedAccessException ex)
         {
-            MyOutput.Error(Smart.Format(Texts.OperationGenericIoDenied,
-                new { message = ex.Message }));
+            MyOutput.Error(Texts.FormatOperationGenericIoDenied(ex.Message));
             return false;
         }
         catch (IOException ex)
@@ -37,18 +35,15 @@ public static class PCall
         }
         catch (HttpRequestException ex) when (ex.StatusCode.HasValue)
         {
-            MyOutput.Error(Smart.Format(Texts.OperationGenericFailHttpStatus,
-                new
-                {
-                    code = ex.StatusCode.Value.ToString("D"),
-                    text = ex.StatusCode.Value.ToString("G")
-                }));
+            MyOutput.Error(Texts.FormatOperationGenericFailHttpStatus(
+                code: ex.StatusCode.Value.ToString("D"),
+                text: ex.StatusCode.Value.ToString("G")
+            ));
             return false;
         }
         catch (HttpRequestException ex)
         {
-            MyOutput.Error(Smart.Format(Texts.OperationGenericFailNetwork,
-                new { message = ex.Message }));
+            MyOutput.Error(Texts.FormatOperationGenericFailNetwork(ex.Message));
             return false;
         }
         catch (IOException ex)

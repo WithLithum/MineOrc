@@ -8,6 +8,7 @@ using MineOrc.Foundation.Runtime;
 using MineOrc.Foundation.Runtime.Launch;
 using MineOrc.Instancing;
 using MineOrc.Resources;
+using MineOrc.UI;
 
 namespace MineOrc.Commands;
 
@@ -20,7 +21,7 @@ internal partial class LaunchCommand
     {
         if (!MineOrcApp.ProfileManager.HasProfile(ProfileName))
         {
-            MyOutput.Error(Texts.CommandGenericNoProfile, ProfileName);
+            CommonMsg.ErrorNoProfile(ProfileName);
             return false;
         }
 
@@ -36,7 +37,7 @@ internal partial class LaunchCommand
     {
         if (!GameApplication.Versions.Exists(_profile!.ClientVersion))
         {
-            MyOutput.Error(Texts.CommandLaunchFailNoVersion, ProfileName);
+            MyOutput.Error(Texts.FormatCommandLaunchFailNoVersion(ProfileName));
             return false;
         }
 

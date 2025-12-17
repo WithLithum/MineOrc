@@ -14,7 +14,7 @@ public static class RestoreVersionCommand
 {
     private static readonly Argument<string> VersionArgument = new("version")
     {
-        Description = Texts.VersionRestoreVersionArgument
+        Description = Texts.VersionRestoreVersionArgument,
     };
 
     internal static Command CreateCommand()
@@ -35,7 +35,7 @@ public static class RestoreVersionCommand
 
         if (!GameApplication.Versions.Exists(version))
         {
-            MyOutput.Error(Texts.VersionRestoreFailNoVersion, version);
+            MyOutput.Error(Texts.FormatCommandVersionRestoreFailNoVersion(version));
             return 1;
         }
 

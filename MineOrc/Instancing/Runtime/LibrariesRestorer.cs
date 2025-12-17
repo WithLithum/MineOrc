@@ -7,7 +7,6 @@ using MineOrc.Foundation.Runtime;
 using MineOrc.Foundation.Utilities;
 using MineOrc.Network;
 using MineOrc.Resources;
-using SmartFormat;
 using Spectre.Console;
 
 namespace MineOrc.Instancing.Runtime;
@@ -37,8 +36,7 @@ internal sealed class LibrariesRestorer : QueueDispatchAction<LibraryArtefactInf
             // Intact or no hash - skip download ;)
             if (verifyResult == VerifyResult.NoHash)
             {
-                MyOutput.Notice(Smart.Format(Texts.OperationNoticeNoHash,
-                    new { artefact = artefactInfo.Path }));
+                MyOutput.Notice(Texts.FormatOperationNoticeNoHash(artefactInfo.Path));
                 return true;
             }
 
