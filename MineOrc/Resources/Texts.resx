@@ -346,13 +346,19 @@
     <data name="CommandExtensionRemoveArgumentProfile" xml:space="preserve">
         <value>The profile to remove extension from</value>
     </data>
-    <data name="CommandExtensionRemoveFailNoProfile" xml:space="preserve">
-        <value>no such profile '{profile}'</value>
-    </data>
     <data name="CommandExtensionRemoveFailNoExtension" xml:space="preserve">
         <value>no such extension  '{extension}' in profile '{profile}'</value>
     </data>
     <data name="UnhandledException" xml:space="preserve">
         <value>unhandled exception</value>
+    </data>
+    <data name="CommandJavaScan" xml:space="preserve">
+        <value>Scan for Java runtimes installed</value>
+    </data>
+    <data name="CommandJavaScanResult" xml:space="preserve">
+        <value>found {amount} runtimes</value>
+    </data>
+    <data name="CommandJavaScanFailNoLocator" xml:space="preserve">
+        <value>Java runtime scanning does not support current environment</value>
     </data>
 </root>

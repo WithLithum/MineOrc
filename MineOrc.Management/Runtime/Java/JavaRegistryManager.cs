@@ -75,8 +75,31 @@ public sealed class JavaRegistryManager
         _infos.Add(key, info);
     }
 
+    public int AddRange(IEnumerable<KeyValuePair<string, JavaInfo>> items,
+        bool forgiveAddFail = false)
+    {
+        var count = 0;
+        foreach (var item in items)
+        {
+            if (!_infos.TryAdd(item.Key, item.Value)
+                && !forgiveAddFail)
+            {
+                throw new ArgumentException($"Key '{item.Key}' already exists.",
+                    nameof(items));
+            }
+            count++;
+        }
+
+        return count;
+    }
+
     public bool TryAdd(string key, JavaInfo info)
     {
         return _infos.TryAdd(key, info);
+    }
+
+    public void RemoveAutoAdded()
+    {
+        _infos = new Dictionary<string, JavaInfo>(_infos.Where(x => !x.Value.AutoAdded));
     }
 }

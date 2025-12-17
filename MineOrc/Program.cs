@@ -23,6 +23,7 @@ var command = new RootCommand(Texts.RootDescription)
         ListJavaCommand.CreateCommand(),
         RegisterJavaCommand.CreateCommand(),
         DefaultJavaCommand.CreateCommand(),
+        ScanJavaCommand.Create(),
     },
     new Command("extension", Texts.BranchExtension)
     {

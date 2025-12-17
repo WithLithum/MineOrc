@@ -341,4 +341,13 @@
     <data name="UnhandledException" xml:space="preserve">
         <value>未捕获的异常</value>
     </data>
+    <data name="CommandJavaScan" xml:space="preserve">
+        <value>搜索已安装的 Java 运行时</value>
+    </data>
+    <data name="CommandJavaScanResult" xml:space="preserve">
+        <value>找到{amount}个运行时</value>
+    </data>
+    <data name="CommandJavaScanFailNoLocator" xml:space="preserve">
+        <value>当前环境不支持扫描 Java 运行时</value>
+    </data>
 </root>
