@@ -54,6 +54,7 @@ public static class AddExtensionCommand
         if (!MineOrcApp.ProfileManager.HasProfile(profileName))
         {
             MyOutput.Error(Texts.CommandGenericNoProfile, profileName);
+            return ExitCodes.Failure;
         }
 
         var profile = await MineOrcApp.ProfileManager.ReadProfileAsync(profileName)
