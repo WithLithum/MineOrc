@@ -8,37 +8,41 @@ using MineOrc.Foundation.Manifest.Network;
 using MineOrc.Foundation.Runtime;
 using MineOrc.Foundation.Utilities;
 using MineOrc.Management.Resources;
+using Owasp.Untrust.BoxedPaths;
+using Owasp.Untrust.BoxedPaths.IO;
 
 namespace MineOrc.Management.Versions;
 
 public class VersionManager
 {
     private readonly string _rootPath;
+    private readonly PathSandbox _pathSandbox;
 
     public VersionManager(string rootPath)
     {
         _rootPath = rootPath;
+        _pathSandbox = PathSandbox.BoxRoot(rootPath);
     }
 
     [MustDisposeResource]
     public Stream CreateManifest(string name)
     {
         var manifestPath = GetManifestPath(name);
-        var parent = Path.GetDirectoryName(manifestPath);
+        var parent = BoxedPath.GetDirectoryName(manifestPath);
         if (parent == null)
         {
             throw new InvalidOperationException(
                 "Manifest path indicates device root which is impossible.");
         }
 
-        Directory.CreateDirectory(parent);
-        return File.Create(manifestPath);
+        BoxedDirectory.CreateDirectory(parent);
+        return new BoxedFileStream(manifestPath, FileMode.Create);
     }
 
     public async Task<ClientManifest> GetManifestAsync(string name,
         CancellationToken cancellationToken = default)
     {
-        var stream = File.OpenRead(GetManifestPath(name));
+        var stream = BoxedFile.OpenRead(GetManifestPath(name));
         await using (stream.ConfigureAwait(false))
         {
             return await JsonSerializer.DeserializeAsync(stream,
@@ -82,16 +86,16 @@ public class VersionManager
     {
         var manifestPath = GetManifestPath(name);
 
-        return File.Exists(manifestPath);
+        return BoxedFile.Exists(manifestPath);
     }
 
-    public string GetJarPath(string name)
+    public BoxedPath GetJarPath(string name)
     {
-        return Path.Combine(_rootPath, name, $"{name}.jar");
+        return BoxedPath.Combine(BoxedPath.Of(_pathSandbox, name), $"{name}.jar");
     }
 
-    private string GetManifestPath(string name)
+    private BoxedPath GetManifestPath(string name)
     {
-        return Path.Combine(_rootPath, name, $"{name}.json");
+        return BoxedPath.Combine(BoxedPath.Of(_pathSandbox, name), $"{name}.json");
     }
 }

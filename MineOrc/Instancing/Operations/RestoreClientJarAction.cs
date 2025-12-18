@@ -62,7 +62,7 @@ public class RestoreClientJarAction : IAsyncForegroundAction
         CancellationToken cancellationToken)
     {
         var result = await NetworkHelper.DownloadFileForegroundAsync(clientArtefact.Url,
-                GameApplication.Versions.GetJarPath(manifest.Id),
+                GameApplication.Versions.GetJarPath(manifest.Id).ValidateAndExpose(),
                 cancellationToken)
             .ConfigureAwait(false);
 

@@ -4,16 +4,18 @@
 using MineOrc.Foundation.Manifest.Libraries;
 using MineOrc.Foundation.Runtime;
 using MineOrc.Foundation.Utilities;
+using Owasp.Untrust.BoxedPaths;
+using Owasp.Untrust.BoxedPaths.IO;
 
 namespace MineOrc.Management.Runtime.Libraries;
 
 public class LibraryManager
 {
-    private readonly string _rootPath;
+    private readonly PathSandbox _pathSandbox;
 
     public LibraryManager(string rootPath)
     {
-        _rootPath = rootPath;
+        _pathSandbox = PathSandbox.BoxRoot(rootPath);
     }
 
     public async ValueTask<VerifyResult> VerifyArtefactAsync(LibraryArtefactInfo artefact,
@@ -22,7 +24,7 @@ public class LibraryManager
         var path = GetArtefactPath(artefact.Path);
         if (artefact.Sha1 == null)
         {
-            return File.Exists(path)
+            return BoxedFile.Exists(path)
                 ? VerifyResult.NoHash
                 : VerifyResult.Damaged;
         }
@@ -33,14 +35,13 @@ public class LibraryManager
             : VerifyResult.Damaged;
     }
 
-    public string GetArtefactPath(LibraryArtefactInfo artefact)
+    public BoxedPath GetArtefactPath(LibraryArtefactInfo artefact)
     {
         return GetArtefactPath(artefact.Path);
     }
 
-    private string GetArtefactPath(string relativePath)
+    private BoxedPath GetArtefactPath(string relativePath)
     {
-        return Path.GetFullPath(relativePath.Replace('/', Path.DirectorySeparatorChar),
-            _rootPath);
+        return BoxedPath.Of(_pathSandbox, relativePath.Replace('/', Path.DirectorySeparatorChar));
     }
 }

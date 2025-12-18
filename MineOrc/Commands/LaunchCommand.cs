@@ -11,6 +11,7 @@ using MineOrc.Instancing.Operations;
 using MineOrc.Management.Profiles;
 using MineOrc.Network.Security;
 using MineOrc.Resources;
+using Owasp.Untrust.BoxedPaths;
 using Spectre.Console;
 
 namespace MineOrc.Commands;
@@ -27,7 +28,7 @@ internal partial class LaunchCommand
     private PlayAuthSession? _auth;
     private string? _javaCommand;
 
-    private IEnumerable<string>? _classPath;
+    private IEnumerable<BoxedPath>? _classPath;
     private LaunchGameSettings? _gameSettings;
     private LaunchJvmSettings? _jvmSettings;
 
@@ -110,7 +111,7 @@ internal partial class LaunchCommand
         // Start!
         var startInfo = ArgumentAssembler.CreateStartInfo(_javaCommand,
             _version!.Arguments,
-            _classPath!,
+            _classPath!.Select(x => x.ValidateAndExpose()),
             _jvmSettings,
             _gameSettings
         );
