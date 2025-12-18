@@ -49,16 +49,18 @@ public static class AddExtensionCommand
         var version = parse.GetRequiredValue(ArgumentVersion);
         var profileName = parse.GetRequiredValue(ArgumentProfile);
         var force = parse.GetValue(OptionForce);
-
-        // Get data and services
-        if (!MineOrcApp.ProfileManager.HasProfile(profileName))
+        
+        // Get profile
+        var profile = await MineOrcApp.ProfileManager.GetProfileOrDefaultAsync(profileName)
+            .ConfigureAwait(false);
+        if (profile == null)
         {
             CommonMsg.ErrorNoProfile(profileName);
             return ExitCodes.Failure;
         }
-
-        var profile = await MineOrcApp.ProfileManager.ReadProfileAsync(profileName)
-            .ConfigureAwait(false);
+        
+        // Get metadata
+        var metadata = profile.Metadata;
         
         if (!ExtensionService.Providers.TryGetValue(type, out var provider))
         {
@@ -67,7 +69,7 @@ public static class AddExtensionCommand
         }
         
         // Check for --force
-        if (!force && profile.Extensions != null && profile.Extensions.ContainsKey(type))
+        if (!force && metadata.Extensions != null && metadata.Extensions.ContainsKey(type))
         {
             MyOutput.Error(Texts.FormatCommandExtensionAddFailForce(type));
             return ExitCodes.Failure;
@@ -75,10 +77,9 @@ public static class AddExtensionCommand
         
         // Install
         ProfileExtension? extension = null;
-        var pProfile = profile;
         if (!await PCall.NetworkAsync(async () =>
                 extension = await provider.CreateExtensionAsync(version,
-                    pProfile.ClientVersion,
+                    metadata.ClientVersion,
                     MineOrcApp.HttpClient,
                     cancellationToken).ConfigureAwait(false)).ConfigureAwait(false))
         {
@@ -86,14 +87,14 @@ public static class AddExtensionCommand
         }
         
         // Update profile
-        var dict = new Dictionary<string, ProfileExtension>(profile.Extensions
+        var dict = new Dictionary<string, ProfileExtension>(metadata.Extensions
             ?? FrozenDictionary<string, ProfileExtension>.Empty)
         {
             [type] = extension!,
         };
-        profile = profile with { Extensions = dict };
+        var newMeta = metadata with { Extensions = dict };
 
-        return await PCall.LocalIoAsync(() => MineOrcApp.ProfileManager.UpdateProfileAsync(profileName, profile))
+        return await PCall.LocalIoAsync(() => profile.UpdateMetadataAsync(newMeta))
                 .ConfigureAwait(false)
             ? ExitCodes.Success
             : ExitCodes.Failure;

@@ -8,6 +8,7 @@ using MineOrc.Foundation.Network.Security;
 using MineOrc.Foundation.Runtime.Arguments;
 using MineOrc.Foundation.Runtime.Launch;
 using MineOrc.Instancing.Operations;
+using MineOrc.Management.Profiles;
 using MineOrc.Network.Security;
 using MineOrc.Resources;
 using Spectre.Console;
@@ -20,9 +21,8 @@ internal partial class LaunchCommand
 
     // Command state
     private string? _nativesDirectory;
-    private string? _profileDirectory;
-
-    private ProfileInfo? _profile;
+    
+    private ProfileInstance? _profile;
     private ClientManifest? _version;
     private PlayAuthSession? _auth;
     private string? _javaCommand;

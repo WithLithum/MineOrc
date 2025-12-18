@@ -41,31 +41,32 @@ public static class RemoveExtensionCommand
         var profileName = parse.GetRequiredValue(ArgumentProfile);
 
         // Get profile
-        if (!MineOrcApp.ProfileManager.HasProfile(profileName))
+        var profile = await MineOrcApp.ProfileManager.GetProfileOrDefaultAsync(profileName)
+            .ConfigureAwait(false);
+        if (profile == null)
         {
             CommonMsg.ErrorNoProfile(profileName);
             return ExitCodes.Failure;
         }
 
-        var profile = await MineOrcApp.ProfileManager.ReadProfileAsync(profileName)
-            .ConfigureAwait(false);
+        var metadata = profile.Metadata;
 
         // Check existence
-        if (profile.Extensions == null
-            || !profile.Extensions.ContainsKey(extensionName))
+        if (metadata.Extensions == null
+            || !metadata.Extensions.ContainsKey(extensionName))
         {
             MyOutput.Error(Texts.CommandExtensionRemoveFailNoExtension);
             return ExitCodes.Failure;
         }
 
         // Update profile
-        var dict = new Dictionary<string, ProfileExtension>(profile.Extensions
+        var dict = new Dictionary<string, ProfileExtension>(metadata.Extensions
                                                             ?? FrozenDictionary<string,
                                                                 ProfileExtension>.Empty);
         dict.Remove(extensionName);
 
-        return await PCall.LocalIoAsync(() => MineOrcApp.ProfileManager.UpdateProfileAsync(profileName,
-            profile with { Extensions = dict })).ConfigureAwait(false)
+        return await PCall.LocalIoAsync(() => profile.UpdateMetadataAsync(
+            metadata with { Extensions = dict })).ConfigureAwait(false)
             ? ExitCodes.Success
             : ExitCodes.Failure;
     }

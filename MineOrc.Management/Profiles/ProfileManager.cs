@@ -31,7 +31,7 @@ public sealed partial class ProfileManager
         }
     }
 
-    public string GetProfileDirectory(string profileName)
+    private string GetProfileDirectory(string profileName)
     {
         ThrowIfInvalidProfileName(profileName);
 
@@ -73,31 +73,15 @@ public sealed partial class ProfileManager
         }
     }
 
-    public async Task UpdateProfileAsync(string profileName, ProfileInfo info)
-    {
-        ThrowIfInvalidProfileName(profileName);
-
-        if (!HasProfile(profileName))
-        {
-            throw new InvalidOperationException(string.Format(ExceptionMessages.ProfileNotExists,
-                profileName));
-        }
-        
-        var profileDir = GetProfileDirectory(profileName);
-        var profileFile = Path.Combine(profileDir,
-            ProfileJsonName);
-        
-        // Officially save the profile
-        var stream = File.Create(profileFile);
-        await using (stream.ConfigureAwait(false))
-        {
-            await JsonSerializer.SerializeAsync(stream,
-                info,
-                MineOrcFilesJsonContext.Default.ProfileInfo).ConfigureAwait(false);
-        }
-    }
-
-    public async Task<ProfileInfo> ReadProfileAsync(string profileName)
+    /// <summary>
+    /// Gets the specified profile.
+    /// </summary>
+    /// <param name="profileName">The name of the profile to acquire.</param>
+    /// <returns>The profile, or <see langword="null"/> if it does not exist.</returns>
+    /// <exception cref="ProfileException">
+    /// The contents of the profile configuration file is <c>null</c>.
+    /// </exception>
+    public async Task<ProfileInstance?> GetProfileOrDefaultAsync(string profileName)
     {
         ThrowIfInvalidProfileName(profileName);
 
@@ -106,11 +90,16 @@ public sealed partial class ProfileManager
         var profileFile = Path.Combine(profileDir,
             ProfileJsonName);
 
-        var profile = await ReadProfileOrDefaultInternalAsync(profileFile)
-            .ConfigureAwait(false);
+        if (!File.Exists(profileFile))
+        {
+            return null;
+        }
 
-        return profile ?? throw new ProfileException(string.Format(ExceptionMessages.ProfileConfigNull,
-            profileName));
+        var profile = await ReadProfileOrDefaultInternalAsync(profileFile)
+                          .ConfigureAwait(false)
+                      ?? throw new ProfileException(ExceptionMessages.ProfileConfigNull);
+
+        return new ProfileInstance(profileDir, profileFile, profile);
     }
 
     private static async Task<ProfileInfo?> ReadProfileOrDefaultInternalAsync(string profileFile)

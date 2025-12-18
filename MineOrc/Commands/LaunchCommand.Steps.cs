@@ -15,19 +15,16 @@ namespace MineOrc.Commands;
 internal partial class LaunchCommand
 {
     [MemberNotNullWhen(true,
-        nameof(_profile),
-        nameof(_profileDirectory))]
+        nameof(_profile))]
     private async Task<bool> ExecuteProfileStepAsync()
     {
-        if (!MineOrcApp.ProfileManager.HasProfile(ProfileName))
+        _profile = await MineOrcApp.ProfileManager.GetProfileOrDefaultAsync(ProfileName)
+            .ConfigureAwait(false);
+        if (_profile == null)
         {
             CommonMsg.ErrorNoProfile(ProfileName);
             return false;
         }
-
-        _profile = await MineOrcApp.ProfileManager.ReadProfileAsync(ProfileName)
-            .ConfigureAwait(false);
-        _profileDirectory = MineOrcApp.ProfileManager.GetProfileDirectory(ProfileName);
 
         return true;
     }
@@ -35,14 +32,14 @@ internal partial class LaunchCommand
     [MemberNotNullWhen(true, nameof(_version))]
     private async Task<bool> ExecuteVersionStepAsync(CancellationToken cancellationToken)
     {
-        if (!GameApplication.Versions.Exists(_profile!.ClientVersion))
+        if (!GameApplication.Versions.Exists(_profile!.Metadata.ClientVersion))
         {
             MyOutput.Error(Texts.FormatCommandLaunchFailNoVersion(ProfileName));
             return false;
         }
 
         _version = await GameApplication.Versions
-            .GetManifestAsync(_profile.ClientVersion, cancellationToken)
+            .GetManifestAsync(_profile.Metadata.ClientVersion, cancellationToken)
             .ConfigureAwait(false);
 
         return true;
@@ -65,7 +62,7 @@ internal partial class LaunchCommand
     {
         if (!NoRestore)
         {
-            if (!await RestoreInternalAsync(_version!, _profile!, cancellationToken)
+            if (!await RestoreInternalAsync(_version!, _profile!.Metadata, cancellationToken)
                     .ConfigureAwait(false))
             {
                 return false;
@@ -105,7 +102,7 @@ internal partial class LaunchCommand
     {
         var evaluated =
             await LibraryEvaluator.EvaluateAsync(ProfileOrchestrator.GetLibraries(_version!,
-                        _profile!),
+                        _profile!.Metadata),
                     cancellationToken)
                 .ConfigureAwait(false);
 
@@ -123,7 +120,7 @@ internal partial class LaunchCommand
             AssetsVersion = _version!.Assets,
             Session = _auth!,
             ClientId = MineOrcApp.Secrets.EntraAppId,
-            GameDirectory = _profileDirectory!,
+            GameDirectory = _profile!.Root,
             VersionName = _version.Id,
             VersionType = _version.Type,
             IsDemoMode = Demo,
@@ -133,7 +130,7 @@ internal partial class LaunchCommand
         {
             LauncherBrand = nameof(MineOrc),
             LauncherVersion = MineOrcApp.Version,
-            MainClass = ProfileOrchestrator.GetMainClass(_version, _profile!),
+            MainClass = ProfileOrchestrator.GetMainClass(_version, _profile!.Metadata),
             NativesDirectory = _nativesDirectory!,
             MaxMemory = MaxMemory != 0 ? MaxMemory : DefaultMaxMemory,
             MinMemory = MinMemory != 0 ? MinMemory : null,
