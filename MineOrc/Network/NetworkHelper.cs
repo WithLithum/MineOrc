@@ -5,6 +5,8 @@ using Downloader;
 using JetBrains.Annotations;
 using Meziantou.Framework;
 using MineOrc.Foundation.Network.Results;
+using Owasp.Untrust.BoxedPaths;
+using Owasp.Untrust.BoxedPaths.IO;
 using Spectre.Console;
 
 namespace MineOrc.Network;
@@ -12,15 +14,14 @@ namespace MineOrc.Network;
 public static class NetworkHelper
 {
     [MustUseReturnValue("Network request may fail")]
-    public static async Task<NetworkResult> DownloadFileSilentAsync(Uri fromUri,
-        string toFile,
+    public static async Task<NetworkResult> DownloadToStreamSilentAsync(Uri fromUri,
+        [HandlesResourceDisposal] Stream target,
         CancellationToken cancellationToken = default)
     {
         try
         {
             var source = await MineOrcApp.HttpClient.GetStreamAsync(fromUri,
                 cancellationToken).ConfigureAwait(false);
-            var target = File.Create(toFile);
             
             await using (source.ConfigureAwait(false))
             await using (target.ConfigureAwait(false))
@@ -36,6 +37,26 @@ public static class NetworkHelper
         }
 
         return NetworkResult.Ok;
+    }
+    
+    [MustUseReturnValue("Network request may fail")]
+    public static async Task<NetworkResult> DownloadFileSilentAsync(Uri fromUri,
+        string toFile,
+        CancellationToken cancellationToken = default)
+    {
+        return await DownloadToStreamSilentAsync(fromUri, File.Create(toFile), cancellationToken)
+            .ConfigureAwait(false);
+    }
+    
+    [MustUseReturnValue("Network request may fail")]
+    public static async Task<NetworkResult> DownloadFileSilentAsync(Uri fromUri,
+        BoxedPath toFile,
+        CancellationToken cancellationToken = default)
+    {
+        var stream = new BoxedFileStream(toFile, FileMode.Create);
+        
+        return await DownloadToStreamSilentAsync(fromUri, stream, cancellationToken)
+            .ConfigureAwait(false);
     }
 
     [MustUseReturnValue("Network request may fail")]

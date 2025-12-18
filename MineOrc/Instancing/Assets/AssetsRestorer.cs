@@ -20,7 +20,7 @@ internal sealed class AssetsRestorer : QueueDispatchAction<KeyValuePair<string, 
 
     #region Verify & download
 
-    private async ValueTask<bool> VerifyAsync(AssetInfo asset,
+    private static async ValueTask<bool> VerifyAsync(AssetInfo asset,
         CancellationToken cancellationToken = default)
     {
         if (!GameApplication.Assets.HasAssetObject(asset))
@@ -43,7 +43,7 @@ internal sealed class AssetsRestorer : QueueDispatchAction<KeyValuePair<string, 
     }
 
     [MustUseReturnValue]
-    private async Task<bool> DownloadAsync(AssetInfo assetInfo,
+    private static async Task<bool> DownloadAsync(AssetInfo assetInfo,
         string key,
         CancellationToken cancellationToken)
     {

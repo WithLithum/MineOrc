@@ -3,6 +3,8 @@
 
 using System.Security.Cryptography;
 using JetBrains.Annotations;
+using Owasp.Untrust.BoxedPaths;
+using Owasp.Untrust.BoxedPaths.IO;
 
 namespace MineOrc.Foundation.Utilities;
 
@@ -32,6 +34,23 @@ public static class HashHelper
         }
 
         var stream = File.OpenRead(path);
+        await using (stream.ConfigureAwait(false))
+        {
+            return await VerifyStreamAsync(stream, sha1, cancellationToken)
+                .ConfigureAwait(false);
+        }
+    }
+    
+    public static async ValueTask<bool> VerifyFileAsync(BoxedPath path,
+        string sha1,
+        CancellationToken cancellationToken = default)
+    {
+        if (!BoxedFile.Exists(path))
+        {
+            return false;
+        }
+
+        var stream = BoxedFile.OpenRead(path);
         await using (stream.ConfigureAwait(false))
         {
             return await VerifyStreamAsync(stream, sha1, cancellationToken)

@@ -28,4 +28,7 @@
     <data name="ClientManifestNull" xml:space="preserve">
         <value>客户端清单文件内容仅为 null。</value>
     </data>
+    <data name="AssetObjectIdInvalid" xml:space="preserve">
+        <value>资源文件名称‘{name}'不符合规则‘{rule}’。</value>
+    </data>
 </root>

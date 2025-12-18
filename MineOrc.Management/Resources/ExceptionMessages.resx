@@ -35,4 +35,7 @@
     <data name="ClientManifestNull" xml:space="preserve">
         <value>Version manifest file contains only a null value.</value>
     </data>
+    <data name="AssetObjectIdInvalid" xml:space="preserve">
+        <value>Asset object ID '{name}' does not conform to the rule '{rule}'.</value>
+    </data>
 </root>
