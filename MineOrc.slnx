@@ -2,7 +2,9 @@
 <!-- SPDX-License-Identifier: GPL-3.0-or-later -->
 
 <Solution>
-  <Folder Name="/API support/" />
+  <Folder Name="/API support/">
+    <Project Path="MineOrc.Services.Modrinth/MineOrc.Services.Modrinth.csproj" />
+  </Folder>
   <Folder Name="/Platform support/">
     <Project Path="MineOrc.Platforms.Fabric/MineOrc.Platforms.Fabric.csproj" />
   </Folder>
