@@ -2,6 +2,10 @@
 <!-- SPDX-License-Identifier: GPL-3.0-or-later -->
 
 <Solution>
+  <Folder Name="/API support/" />
+  <Folder Name="/Platform support/">
+    <Project Path="MineOrc.Platforms.Fabric/MineOrc.Platforms.Fabric.csproj" />
+  </Folder>
   <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />
     <File Path="COPYING.txt" />
@@ -12,7 +16,6 @@
   <Project Path="build/Build.csproj" />
   <Project Path="MineOrc.Foundation/MineOrc.Foundation.csproj" />
   <Project Path="MineOrc.Management/MineOrc.Management.csproj" />
-  <Project Path="MineOrc.Platforms.Fabric/MineOrc.Platforms.Fabric.csproj" />
   <Project Path="MineOrc.Security/MineOrc.Security.csproj" />
   <Project Path="MineOrc.Tests/MineOrc.Tests.csproj" />
   <Project Path="MineOrc/MineOrc.csproj" />
