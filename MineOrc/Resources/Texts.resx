@@ -47,7 +47,7 @@
         <value>Includes pre-Classic, Classic, Infdev and Alpha versions</value>
     </data>
     <data name="RootDescription" xml:space="preserve">
-        <value>The Minecraft Instance Orchestrator</value>
+        <value>An instance orchestrator for Minecraft: Java Edition</value>
     </data>
     <data name="MachineOption" xml:space="preserve">
         <value>Prints output in a machine-readable format</value>
